@@ -1,0 +1,10 @@
+.card-item {
+    padding: 10px;
+}
+.card-button {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.card-date {
+    font-style: bold;
+}

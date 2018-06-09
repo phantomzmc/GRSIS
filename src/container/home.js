@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
+import '../css/home.css';
 
-import logo from './logo.svg';
-import './App.css';
+import Navbar from '../component/nav/nav'
+import VdoHeader from '../component/header/header'
+import SearchEvent from '../component/search/search'
+import CardEvents from '../component/card/card';
+import Pagenation from '../component/pagenation/pagenation'
+import Footer from '../component/footer/footer'
 
-import Navbar from '../src/component/nav/nav'
-import VdoHeader from '../src/component/header/header'
-import SearchEvent from '../src/component/search/search'
-import CardEvents from '../src/component/card/card';
-import Pagenation from '../src/component/pagenation/pagenation'
-import Footer from '../src/component/footer/footer'
-
-class App extends Component {
+class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      titleSearch: "ค้นหารายการวิ่ง",
+      text1: "Shutter Running ",
+      text2: " ImageSevice"
+    }
+  }
   render() {
     return (
-
       <div className="App">
         <div className="nav-bar">
           <Navbar />
@@ -26,7 +31,11 @@ class App extends Component {
           <Row>
             <Col xs="12" sm="12" md="12">
               <div className="content-container">
-                <SearchEvent />
+                <SearchEvent
+                  title={this.state.titleSearch}
+                  text1={this.state.text1}
+                  text2={this.state.text2}
+                />
               </div>
             </Col>
             <Col xs="12" sm="12" md="12">
@@ -52,4 +61,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Home;
