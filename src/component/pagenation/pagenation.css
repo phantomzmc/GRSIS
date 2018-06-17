@@ -1,0 +1,9 @@
+.pagenation {
+    flex: 1;
+    padding: 30px;
+    position: relative;
+}
+.page-item {
+    align-self: center;
+    justify-content: center;
+}

@@ -1,0 +1,28 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.credit-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 450px;
+    height: 250px;;
+    background-color: skyblue;
+    border-radius: 10px;
+}
+.credit-detail{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.credit-detail2{
+    padding: 2.5%;
+}
+.title { 
+    padding-top: 5%;
+}
+.text-card {
+    color : white;
+}
