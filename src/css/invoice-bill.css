@@ -1,0 +1,49 @@
+.content-head  {
+    margin-top: 20px;
+    padding-top : 100px;
+    padding-bottom: 50px;
+    padding-left: 150px;
+    padding-right: 150px;
+    text-align: right;
+    background-color: gainsboro;
+    width: 100%;
+    height: 100%;
+}
+.logo-head-bill { 
+    display: flex;
+    justify-content: flex-end;
+    align-content: flex-end;
+    padding: 20px;
+}
+.text-head-bill {
+    margin-top: 20px;
+    font-family: 'kanit';
+}
+.card-title { 
+    font-family:  'kanit';
+    text-align: center;
+}
+.card-item {
+    margin-top: 50px;
+    padding: 10px;
+}
+.card-button {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.card-date {
+    font-family: 'kanit';
+    font-style: bold;
+}
+.card-status-payment {
+    font-family: 'kanit';
+    font-style: bold;
+    color: lightgreen
+}
+.card-detail {
+    padding: 30px;
+    text-align: left;
+}
+.card-sub-detail {
+    padding: 20px;
+}
