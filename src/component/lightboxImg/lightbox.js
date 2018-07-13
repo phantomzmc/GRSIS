@@ -13,7 +13,6 @@ class LigthBoxImage extends Component {
         this.handleClick = this.handleClick.bind(this)
     }
     handleClick() {
-        // this.props.close()
         this.props.nextPage()
     }
     render() {
@@ -26,11 +25,13 @@ class LigthBoxImage extends Component {
                                 <CardTitle className="cards-title"><h3 style={{ color: '#fff' }}>รายละเอียด</h3></CardTitle>
                                 <div className="content">
                                     <Col xs="12" sm="7" md="7">
-                                        <CardImg width="100px" src={this.state.img} alt="Card image cap" />
+                                        <div className="img-ligth">
+                                            <CardImg width="200px" src={this.state.img} alt="Card image cap" />
+                                        </div>
                                     </Col>
                                     <Col xs="12" sm="5" md="5">
                                         <CardBody >
-                                            <CardTitle>Card title</CardTitle>
+                                            <CardTitle></CardTitle>
                                             <TabsLightBox />
                                             <Button color="success" size="lg" block onClick={this.handleClick}>สั่งซื้อรายการนี้</Button>
                                         </CardBody>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table,Button } from 'reactstrap';
+import { Table, Button,Input } from 'reactstrap';
 
 class ListTable3 extends React.Component {
     render() {
@@ -16,7 +16,16 @@ class ListTable3 extends React.Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
+                            <td>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </td>
                             <td>ภาพพร้อมกรอบตั้งโต๊ะ</td>
                             <td>
                                 <Button outline color="primary">S</Button>
@@ -24,45 +33,90 @@ class ListTable3 extends React.Component {
                             <td>350.00 บาท</td>
                         </tr>
                         <tr>
-                            <th scope="row">2</th>
+                            <td>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </td>
                             <td>ภาพพร้อมกรอบลอยเคลือบฟิล์ม</td>
                             <td>
-                            <Button outline color="primary">M</Button>
+                                <Button outline color="primary">M</Button>
 
                             </td>
                             <td>450.00 บาท</td>
                         </tr>
                         <tr>
-                            <th scope="row">3</th>
+                            <td>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </td>
                             <td>ภาพพร้อมกรอบลอยเคลือบฟิล์ม</td>
                             <td>
-                            <Button outline color="primary">L</Button>
+                                <Button outline color="primary">L</Button>
 
                             </td>
                             <td>600.00 บาท</td>
                         </tr>
                         <tr>
-                            <th scope="row">1</th>
+                            <td>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </td>
                             <td>ภาพพร้อมกรอบลอยเคลือบฟิล์ม</td>
-                            <td> 
+                            <td>
                                 <Button outline color="primary">XL</Button>
                             </td>
                             <td>750.00 บาท</td>
                         </tr>
                         <tr>
-                            <th scope="row">2</th>
+                            <td>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </td>
                             <td>ภาพพร้อมกรอบลอยเคลือบฟิล์ม</td>
                             <td>
-                            <Button outline color="primary">XXL</Button>
+                                <Button outline color="primary">XXL</Button>
 
                             </td>
                             <td>900.00 บาท</td>
                         </tr>
                         <tr>
-                            <th scope="row">3</th>
+                            <td>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </td>
                             <td>ภาพพร้อมกรอบลอยเคลือบฟิล์ม</td>
                             <td>
-                            <Button outline color="primary">XXXL</Button>
+                                <Button outline color="primary">XXXL</Button>
 
                             </td>
                             <td>900.00 บาท</td>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table } from 'reactstrap';
 import { Image } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import '../css/cart.css'
 
 
@@ -21,15 +22,19 @@ class CartImages extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td className="image-in-cart">
-                                <Image src="http://stocks.shutterrunning.com/photos/AU-01/GIN%200001.jpg" width="150" />
-                            </td>
-                            <td>Digital File .JPG</td>
-                            <td>1</td>
-                            <td>100.00 บาท</td>
-                        </tr>
+                        {
+                            this.props.cartImage.image.map((dynamicData, i=1) =>
+                                <tr>
+                                    {/* <th scope="row"></th> */}
+                                    <td>{i}</td>
+                                    <td className="image-in-cart">
+                                        <Image src={dynamicData} width="150" />
+                                    </td>
+                                    <td>Digital File .JPG</td>
+                                    <td>1</td>
+                                    <td>100.00 บาท</td>
+                                </tr>
+                            )}
                     </tbody>
                     <tfoot>
                         <tr>
@@ -44,4 +49,10 @@ class CartImages extends Component {
     }
 }
 
-export default CartImages
+const mapStateToProps = state => {
+    return {
+        cartImage: state.cartImage
+    }
+}
+
+export default connect(mapStateToProps)(CartImages)
