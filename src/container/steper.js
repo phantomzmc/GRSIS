@@ -10,6 +10,7 @@ import VdoHeader from '../component/header/header'
 import CartImages from './cart'
 import FormRegister from '../component/form/form'
 import PaymentLayout from '../component/payment/payment'
+import Invoice from '../container/invoice-bill'
 import Footer from '../component/footer/footer'
 
 class StepControl extends Component {
@@ -26,7 +27,8 @@ class StepControl extends Component {
             currentStep: 0,
             isOpenCart: true,
             isOpenForm: false,
-            isOpenPayment: false
+            isOpenPayment: false,
+            isOpenInvoice : false
         }
         this.onClickNext = this.onClickNext.bind(this);
         this.onClickPrev = this.onClickPrev.bind(this)
@@ -58,6 +60,12 @@ class StepControl extends Component {
                 isOpenPayment: true
             })
         }
+        else if (currentStep == 2){
+            this.setState({
+                isOpenPayment : false,
+                isOpenInvoice : true
+            })
+        }
     }
     render() {
         return (
@@ -81,6 +89,7 @@ class StepControl extends Component {
                                     {this.state.isOpenCart && <CartImages />}
                                     {this.state.isOpenForm && <FormRegister />}
                                     {this.state.isOpenPayment && <PaymentLayout />}
+                                    {this.state.isOpenInvoice && <Invoice />}
                                 </div>
                                 <div className="btn-groud">
                                     {!this.state.isOpenCart &&

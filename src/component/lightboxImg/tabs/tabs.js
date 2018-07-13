@@ -65,6 +65,9 @@ class TabsLightBox extends React.Component {
                         <Row>
                             <Col sm="12">
                                 <ListTable2 />
+                                <div style={{ paddingTop : "10px" ,paddingBottom : "10px"}}>
+                                    <label style={{ fontFamily : "kanit"}}>*** หมายเหตุ : ราคาต่อหนึ่งภาพพร้อมกรอบ รวมค่าจัดส่งแล้ว</label>
+                                </div>
                             </Col>
                         </Row>
                     </TabPane>
@@ -72,6 +75,9 @@ class TabsLightBox extends React.Component {
                         <Row>
                             <Col sm="12">
                                 <ListTable3 />
+                                <div style={{ paddingTop : "10px" ,paddingBottom : "10px"}}>
+                                    <label style={{ fontFamily : "kanit"}}>*** ภาพอย่างเดียว จะบวกเพิ่มค่าจัดส่ง 20 บาท/การสั่งซื้อ (เลือกมากกว่า 1 ภาพ ก็บวกเพิ่มแค่ 20 บาท)</label>
+                                </div>
                             </Col>
                         </Row>
                     </TabPane>

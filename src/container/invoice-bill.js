@@ -14,7 +14,7 @@ class Invoice extends Component {
                 <div className="content-head">
                     <div classname="head-bill">
                         <div className="logo-head-bill">
-                            <Image src="http://shutterrunning.com/assets/img/logos/str-logo-sm.png" size='small' />
+                            <Image src="http://shutterrunning.com/assets/img/logos/str-logo-sm.png" size='small' width="100"/>
                         </div>
                         <h2 className="text-head-bill">Shutter Running ImageService</h2>
                         <label className="text-head-bill">7 Market Today krungthepkreetra 7 Huamark<br />Bangkapi Bangkok , Thailand 10240</label>

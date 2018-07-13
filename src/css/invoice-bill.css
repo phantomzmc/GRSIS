@@ -1,11 +1,6 @@
 .content-head  {
-    margin-top: 20px;
-    padding-top : 100px;
     padding-bottom: 50px;
-    padding-left: 150px;
-    padding-right: 150px;
     text-align: right;
-    background-color: gainsboro;
     width: 100%;
     height: 100%;
 }
