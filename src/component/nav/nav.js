@@ -1,9 +1,9 @@
 import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-import { Icon } from "semantic-ui-react";
+import { Icon, Popup } from "semantic-ui-react";
 import { connect } from "react-redux";
 import NotificationBadge from 'react-notification-badge';
-import CartImage from '../../container/cart'
+import CartImage from '../../component/charge/charge-table'
 import { Effect } from 'react-notification-badge';
 import './nav.css'
 
@@ -32,7 +32,7 @@ class NavBar extends React.Component {
       collapsed: !this.state.collapsed
     });
   }
- 
+
   render() {
     return (
       <div className="nav-container">
@@ -61,7 +61,12 @@ class NavBar extends React.Component {
               <div>
                 <NotificationBadge count={this.state.count} effect={Effect.SCALE} frameLength={120.0} />
               </div>
-              <Icon name='shopping cart' size='big' inverted color='white' />
+              <Popup
+                trigger={<Icon name='shopping cart' size='big' inverted color='white' />}
+                content={<CartImage />}
+                basic
+              />
+
             </NavItem>
           </Nav>
         </Navbar>
