@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-
+import axios from 'axios'
+import { connect } from 'react-redux'
 import '../css/home.css';
 
 import Navbar from '../component/nav/nav'
@@ -18,6 +19,25 @@ class Home extends Component {
       text1: "Shutter Running ",
       text2: " ImageSevice"
     }
+  }
+  componentDidMount() {
+    let data = {
+      email: "grs@guurun.com",
+      password: "1f5ZIAEbhLg2GF6"
+  }
+    axios.post("http://api.shutterrunning2014.com/api/v2/user/session",data, {
+      headers: {
+        "api_key": "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88",
+      },
+      responseType: 'json'
+    })
+      .then((response) => {
+        this.setState({ isLoading: false, token: response.data.session_token });
+        console.log(this.state.token)
+        this.props.setToken(this.state.token)
+      }).catch((error) => {
+        console.error(error)
+      });
   }
   render() {
     return (
@@ -46,9 +66,6 @@ class Home extends Component {
                 <div className="event-card">
                   <CardEvents />
                 </div>
-                <div>
-                  <Pagenation />
-                </div>
               </div>
             </Col>
           </Row>
@@ -61,4 +78,15 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return {
+    setToken: (token) => {
+      dispatch({
+          type: "setToken",
+          payload: token
+      })
+  }
+  }
+}
+
+export default connect(null,mapDispatchToProps)(Home);

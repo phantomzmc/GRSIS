@@ -4,6 +4,15 @@ const cart = {
     image: [],
     counter: 0
 }
+const token = (state = { token: "" }, action) => {
+    switch (action.type){
+        case "setToken" : {
+            state.token = action.payload
+            break;
+        }
+    }
+    return state
+};
 
 const cartImage = (state = cart, action) => {
     switch (action.type) {
@@ -27,7 +36,8 @@ const myLogger = store => next => action => {
 
 const store = createStore(
     combineReducers({
-        cartImage
+        cartImage,
+        token
     }),
     {},
     applyMiddleware(myLogger)

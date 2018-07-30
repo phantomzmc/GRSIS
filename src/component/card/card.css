@@ -8,3 +8,8 @@
 .card-date {
     font-style: bold;
 }
+.pagenation {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}
