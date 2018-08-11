@@ -7,3 +7,14 @@
     align-self: center;
     justify-content: center;
 }
+.button-items { 
+    background-color: #ff5500;
+    color: #fff;
+    border-color: #ff5500;
+}
+.button-items-disabled {
+    background-color: #ff5500;
+    color: #fff;
+    border-color: #ff5500; 
+    opacity: unset;
+}

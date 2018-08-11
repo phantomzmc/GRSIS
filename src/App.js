@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import axios from 'axios'
 import './App.css';
+import 'bulma/css/bulma.css'
 import Navbar from '../src/component/nav/nav'
 import VdoHeader from '../src/component/header/header'
 import SearchEvent from '../src/component/search/search'

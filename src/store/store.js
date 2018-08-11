@@ -14,6 +14,16 @@ const token = (state = { token: "" }, action) => {
     return state
 };
 
+const event = (state= {} ,action) => {
+    switch (action.type){
+        case "setEvent" : {
+            state.event = action.payload
+            break;
+        }
+    }
+    return state
+}
+
 const cartImage = (state = cart, action) => {
     switch (action.type) {
         case "addImage": {
@@ -36,6 +46,7 @@ const myLogger = store => next => action => {
 
 const store = createStore(
     combineReducers({
+        event,
         cartImage,
         token
     }),

@@ -49,9 +49,9 @@ class ShowImageEvent extends Component {
                                 <div className="event-card">
                                     <ImageGrid />
                                 </div>
-                                <div>
+                                {/* <div>
                                     <Pagenation />
-                                </div>
+                                </div> */}
                                 {/* <div>
                                     <LigthBoxImage />
                                 </div> */}

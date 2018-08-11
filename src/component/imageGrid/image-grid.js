@@ -1,12 +1,17 @@
 import React from 'react';
-import Gallery from 'react-photo-gallery';
-import Lightbox from 'lightbox-react';
+import Image from "react-image";
+import Gallery from '../../lib/Gallery';
+// import Lightbox from 'lightbox-react';
+import Lightbox from 'react-images';
+import { Container, Col, Row } from "reactstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { withRouter } from 'react-router-dom'
 import { connect } from "react-redux";
+import axios from 'axios'
 import images from './dataimage'
 import LigthBoxImage from "../lightboxImg/lightbox";
+import Pagenation from '../pagenation/pagenation'
 import './image-grid.css'
 
 
@@ -19,13 +24,46 @@ class ImageLayout extends React.Component {
             photoIndex: 0,
             isOpen: false,
             isOpenImage: false,
+            eventid: "214",
             data: [],
-            counter: 0
+            counter: 0,
+            pageOfItems : []
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
+        this.onChangePage = this.onChangePage.bind(this)
+    }
+    componentWillMount(){
+        this.setState({
+            eventid : this.props.event.event.EventID
+        })
     }
     componentDidMount() {
-        console.log(images[0])
+        let token = this.props.token.token
+        console.log(token)
+        let data = ({
+            params: [
+                { name: "EventID", value: this.state.eventid },
+                { name: "PhotoGrapherID", value: "" },
+                { name: "BibNumber", value: "" },
+                { name: "Time", value: "" },
+                { name: "PageNo", value: "1" },
+                { name: "RowPerPage", value: "100" }
+            ]
+        })
+
+        axios.post("http://api.shutterrunning2014.com/api/v2/stris/_proc/Main.uspGetImageLists_", data, {
+            headers: {
+                "X-DreamFactory-API-Key": "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88",
+                "X-DreamFactory-Session-Token": this.props.token.token
+            },
+            responseType: 'json'
+        })
+            .then((response) => {
+                this.setState({ images: response.data });
+                console.log(this.state.images)
+            }).catch((error) => {
+                this.props.history.push("./")
+            });
     }
     counterimage() {
         let { count, countter } = 0
@@ -41,11 +79,11 @@ class ImageLayout extends React.Component {
             this.setState({ isOpen: false })
             this.submit()
         }, 1000)
-        data.push(images[photoIndex].src)
+        data.push(images[photoIndex].ImageURL)
         this.props.addImage(data)
         this.counterimage()
     }
-    ha
+
 
     submit = () => {
         confirmAlert({
@@ -64,36 +102,52 @@ class ImageLayout extends React.Component {
             ]
         })
     };
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({ pageOfItems: pageOfItems });
+    }
     render() {
-        let { images, photoIndex, isOpen, isOpenImage } = this.state
+        let { photoIndex, isOpen, isOpenImage } = this.state
         return (
-            <div >
-                <Gallery photos={images} onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
-                {isOpen &&
-                    <Lightbox
-                        mainSrc={
-                            <div className="ligthbox-style">
-                                {isOpenImage &&
-                                    <LigthBoxImage
-                                        image={this.state.images[photoIndex].src}
-                                        nextPage={this.onPressNextPage}
+            //     <Gallery photos={images} onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
+            <div>
+                <div class='ui doubling four column grid'>
+                    {
+                        this.state.pageOfItems.map((item, i) =>
+                            <div class='column'>
+                                <img src={item.ImageURL} class='ui image' onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
+                                {isOpen &&
+                                    <Lightbox
+                                        mainSrc={
+                                            <div className="ligthbox-style">
+                                                {isOpenImage &&
+                                                    <LigthBoxImage
+                                                        image={this.state.images[photoIndex].ImageURL}
+                                                        nextPage={this.onPressNextPage}
+                                                    />
+                                                }
+                                            </div>
+
+                                        }
+                                        nextSrc={images[(photoIndex + 1) % images.length]}
+                                        prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+
+                                        onCloseRequest={() => this.setState({ isOpen: false })}
+                                        onMovePrevRequest={() => this.setState({
+                                            photoIndex: (photoIndex + images.length - 1) % images.length,
+                                        })}
+                                        onMoveNextRequest={() => this.setState({
+                                            photoIndex: (photoIndex + 1) % images.length,
+                                        })}
                                     />
                                 }
                             </div>
-
-                        }
-                        nextSrc={images[(photoIndex + 1) % images.length]}
-                        prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-
-                        onCloseRequest={() => this.setState({ isOpen: false })}
-                        onMovePrevRequest={() => this.setState({
-                            photoIndex: (photoIndex + images.length - 1) % images.length,
-                        })}
-                        onMoveNextRequest={() => this.setState({
-                            photoIndex: (photoIndex + 1) % images.length,
-                        })}
-                    />
-                }
+                        )
+                    }
+                </div>
+                <div className="pagenation">
+                    <Pagenation items={this.state.images} onChangePage={this.onChangePage} />
+                </div>
             </div>
         )
     }
@@ -101,7 +155,8 @@ class ImageLayout extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-
+        token: state.token,
+        event : state.event
     }
 }
 const mapDispatchToProps = dispatch => {

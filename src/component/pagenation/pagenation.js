@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pagination ,PaginationItem,PaginationLink} from 'reactstrap'
+import { Pagination, PaginationItem, PaginationLink, InputGroup, Input } from 'reactstrap'
+import { Icon } from "semantic-ui-react";
 import './pagenation.css'
 
 const propTypes = {
@@ -117,22 +118,42 @@ class Pagenation extends React.Component {
         return (
             <div className="pagination">
                 <Pagination aria-label="" className="page-item">
-                    <PaginationItem className={pager.currentPage === 1 ? 'disabled' : ''}>
-                        <PaginationLink onClick={() => this.setPage(1)}>First</PaginationLink>
+                    <PaginationItem 
+                        className={pager.currentPage === 1 ? 'disabled' : ''}>
+                        <PaginationLink
+                            onClick={() => this.setPage(1)}>
+                            <Icon name="fast backward"/>
+                        </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem className={pager.currentPage === 1 ? 'disabled' : ''}>
-                        <PaginationLink onClick={() => this.setPage(pager.currentPage - 1)}>Previous</PaginationLink>
-                    </PaginationItem>
-                    {pager.pages.map((page, index) =>
+
+                    {/* {pager.pages.map((page, index) =>
                         <PaginationItem key={index} className={pager.currentPage === page ? 'active' : ''}>
                             <PaginationLink onClick={() => this.setPage(page)}>{page}</PaginationLink>
                         </PaginationItem>
-                    )}
-                    <PaginationItem className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                        <PaginationLink onClick={() => this.setPage(pager.currentPage + 1)}>Next</PaginationLink>
+                    )} */}
+                    <PaginationItem className={pager.currentPage === 1 ? 'disabled' : ''}>
+                        <PaginationLink
+                            onClick={() => this.setPage(pager.currentPage - 1)}>
+                            <Icon name="backward" />
+                        </PaginationLink>
                     </PaginationItem>
+                        <Input
+                            placeholder={pager.currentPage}
+                            onChange={(page) => this.setState(pager.currentPage = page)}
+                        />
                     <PaginationItem className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                        <PaginationLink onClick={() => this.setPage(pager.totalPages)}>Last</PaginationLink>
+                        <PaginationLink
+                            onClick={() => this.setPage(pager.currentPage + 1)}>
+                            <Icon name="forward" />
+
+                        </PaginationLink>
+                    </PaginationItem>
+
+                    <PaginationItem className={pager.currentPage === pager.totalPages ? 'disabled' : ''} >
+                        <PaginationLink
+                            onClick={() => this.setPage(pager.totalPages)}>
+                            <Icon name="fast forward" />
+                        </PaginationLink>
                     </PaginationItem>
                 </Pagination>
             </div>

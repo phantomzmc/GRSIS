@@ -1,15 +1,50 @@
 .card-item {
     padding: 10px;
 }
+
 .card-button {
     padding-top: 20px;
     padding-bottom: 10px;
 }
+
 .card-date {
     font-style: bold;
 }
+
 .pagenation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-page {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.style-inputPage {
+    width: 100px;
     display: flex;
     align-self: center;
     justify-content: center;
+}
+
+.btn-page {
+    background-color: coral;
+    border-color: coral;
+    border-radius: 5px;
+}
+
+.btn-page :hover {
+    background-color: #ff5500;
+    border-color: #ff5500;
+    border-radius: 5px;
+}
+
+.icon-color {
+    color: white;
+}
+
+.textPage {
+    padding: 10px;
 }

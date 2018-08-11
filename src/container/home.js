@@ -24,8 +24,8 @@ class Home extends Component {
     let data = {
       email: "grs@guurun.com",
       password: "1f5ZIAEbhLg2GF6"
-  }
-    axios.post("http://api.shutterrunning2014.com/api/v2/user/session",data, {
+    }
+    axios.post("http://api.shutterrunning2014.com/api/v2/user/session", data, {
       headers: {
         "api_key": "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88",
       },
@@ -68,6 +68,7 @@ class Home extends Component {
                 </div>
               </div>
             </Col>
+
           </Row>
         </Container>
         <footer className="footer">
@@ -82,11 +83,11 @@ const mapDispatchToProps = dispatch => {
   return {
     setToken: (token) => {
       dispatch({
-          type: "setToken",
-          payload: token
+        type: "setToken",
+        payload: token
       })
-  }
+    }
   }
 }
 
-export default connect(null,mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);
