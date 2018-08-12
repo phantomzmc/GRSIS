@@ -27,7 +27,7 @@ class ImageLayout extends React.Component {
             eventid: "214",
             data: [],
             counter: 0,
-            pageOfItems : []
+            pageNo : 1            
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -37,7 +37,10 @@ class ImageLayout extends React.Component {
             eventid : this.props.event.event.EventID
         })
     }
-    componentDidMount() {
+    componentDidMount(){
+        this.feedImage()
+    }
+    feedImage() {
         let token = this.props.token.token
         console.log(token)
         let data = ({
@@ -46,8 +49,8 @@ class ImageLayout extends React.Component {
                 { name: "PhotoGrapherID", value: "" },
                 { name: "BibNumber", value: "" },
                 { name: "Time", value: "" },
-                { name: "PageNo", value: "1" },
-                { name: "RowPerPage", value: "100" }
+                { name: "PageNo", value: this.state.pageNo },
+                { name: "RowPerPage", value: "36" }
             ]
         })
 
@@ -83,8 +86,7 @@ class ImageLayout extends React.Component {
         this.props.addImage(data)
         this.counterimage()
     }
-
-
+    
     submit = () => {
         confirmAlert({
             title: <label style={{ fontFamily: 'kanit' }}>ข้อมูลการสั่งซื้อ</label>,
@@ -102,10 +104,12 @@ class ImageLayout extends React.Component {
             ]
         })
     };
-    onChangePage(pageOfItems) {
-        // update state with new page of items
-        this.setState({ pageOfItems: pageOfItems });
+    onChangePage = (pageNum) => {
+        this.setState({ pageNo: pageNum });
+        console.log("pageNum" + pageNum)
+        this.feedImage()
     }
+    
     render() {
         let { photoIndex, isOpen, isOpenImage } = this.state
         return (
@@ -113,7 +117,7 @@ class ImageLayout extends React.Component {
             <div>
                 <div class='ui doubling four column grid'>
                     {
-                        this.state.pageOfItems.map((item, i) =>
+                        this.state.images.map((item, i) =>
                             <div class='column'>
                                 <img src={item.ImageURL} class='ui image' onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
                                 {isOpen &&
@@ -146,7 +150,8 @@ class ImageLayout extends React.Component {
                     }
                 </div>
                 <div className="pagenation">
-                    <Pagenation items={this.state.images} onChangePage={this.onChangePage} />
+                    <Pagenation 
+                        numPage={(page) => this.onChangePage(page)} />
                 </div>
             </div>
         )

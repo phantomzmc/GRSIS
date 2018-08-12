@@ -3,18 +3,47 @@
     padding: 30px;
     position: relative;
 }
+
 .page-item {
     align-self: center;
     justify-content: center;
 }
-.button-items { 
+
+.button-items {
     background-color: #ff5500;
     color: #fff;
     border-color: #ff5500;
 }
+
 .button-items-disabled {
     background-color: #ff5500;
     color: #fff;
-    border-color: #ff5500; 
+    border-color: #ff5500;
     opacity: unset;
+}
+
+.btn-page {
+    background-color: coral;
+    border-color: coral;
+    border-radius: 5px;
+}
+
+.btn-page :hover {
+    background-color: #ff5500;
+    border-color: #ff5500;
+    border-radius: 5px;
+}
+
+.icon-color {
+    color: white;
+}
+
+.textPage {
+    padding: 10px;
+}
+.style-inputPage {
+    width: 100px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
 }

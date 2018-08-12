@@ -73,23 +73,12 @@ class CardEvents extends Component {
     gotoShowimage() {
         this.props.history.push("/showimage")
     }
-    // onChangePage(pageOfItems) {
-    //     this.setState({ pageOfItems: pageOfItems });
-    // }
-    nextPage = () => {
-        this.setState({ pageNo: this.state.pageNo + 1 })
+    onChangePage = (pageNum) => {
+        this.setState({ pageNo: pageNum });
+        console.log("pageNum" + pageNum)
         this.getEvent()
     }
-    handleChange = (e) => {
-        this.setState({ pageNo: e.target.value })
-        this.getEvent()
-    }
-    prePage = () => {
-        this.setState({ pageNo: this.state.pageNo - 1 })
-        console.log(this.state.pageNo)
-        this.getEvent()
-    }
-
+    
     render() {
         let uri = "https://shutterrunning.com/assets/img/eventbanner/"
         return (
@@ -132,39 +121,9 @@ class CardEvents extends Component {
 
                 </Container>
                 <div className="pagenation">
-                    <div>
-                        {this.state.pageNo == 1 ?
-                            <Button className="btn-page" disabled>
-                                <Icon name="backward" />
-                            </Button> :
-                            <div className="btn-page">
-                                <Button
-                                    className="btn-page"
-                                    onClick={() => this.prePage()}>
-                                    <Icon name="backward" />
-                                </Button>
-                            </div>
-                        }
-                    </div>
-                    <label className="textPage">หน้า</label>
-                    <div className="input-page">
-                        <form>
-                            <input
-                                className="style-inputPage"
-                                value={this.state.pageNo}
-                                onChange={this.handleChange.bind(this)}
-                            />
-                        </form>
-                    </div>
-                    <label className="textPage">จากหน้าที่</label>
-                    <div className="btn-page">
-                        <Button
-                            className="btn-page"
-                            onClick={() => this.nextPage()}>
-                            <Icon name="forward" className="icon-color" />
-                        </Button>
-                    </div>
-                    {/* <Pagenation items={this.state.dataSource} onChangePage={this.onChangePage} /> */}
+                    <Pagenation
+                        numPage={(pageNum) => this.onChangePage(pageNum)}
+                    />
                 </div>
 
             </div>
