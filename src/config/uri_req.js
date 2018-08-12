@@ -3,5 +3,6 @@ export default
     [
         {
             uspGetEventLists : url + "Main.uspGetEventLists",
+            uspGetEventSuggestion : url + "Main.uspGetEventSuggestion"
         }
     ]

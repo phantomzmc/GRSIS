@@ -38,6 +38,7 @@
     "react-router-dom": "^4.3.0",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.1.1",
+    "react-select": "^2.0.0",
     "react-simple-popover": "^0.2.4",
     "react-stepper-horizontal": "^1.0.10",
     "react-youtube": "^7.6.0",
