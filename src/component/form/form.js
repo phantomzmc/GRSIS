@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } 
 import './form.css'
 
 import SugestTambon from './sugestion/sug_tambon'
+import SugestAmphoe from './sugestion/sug_amphoe'
+import SugestProvince from './sugestion/sug_province'
 
 class FormRegister extends Component {
 
@@ -61,13 +63,15 @@ class FormRegister extends Component {
                                 <FormGroup row>
                                     <Label for="username" sm={2}>อำเภอ :  </Label>
                                     <Col sm={10}>
-                                        <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" />
+                                        <SugestAmphoe />
+                                        {/* <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" /> */}
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="lastname" sm={2}>จังหวัด : </Label>
                                     <Col sm={10}>
-                                        <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." />
+                                        <SugestProvince />
+                                        {/* <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." /> */}
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>

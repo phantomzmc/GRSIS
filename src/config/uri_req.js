@@ -3,6 +3,9 @@ export default
     [
         {
             uspGetEventLists : url + "Main.uspGetEventLists",
-            uspGetEventSuggestion : url + "Main.uspGetEventSuggestion"
+            uspGetEventSuggestion : url + "Main.uspGetEventSuggestion",
+            uspGetTambonSuggestions : url + "Main.uspGetTambonSuggestions",
+            uspGetProvinceSuggestions : url + "Main.uspGetProvinceSuggestions",
+            uspGetAmphoeSuggestions : url + "Main.uspGetAmphoeSuggestions"
         }
     ]

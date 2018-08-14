@@ -37,7 +37,7 @@ class SugestTambon extends Component {
     }
 
     loadData() {
-        const uri = req[0].uspGetTambonSuggestions
+        const uri = req[0].uspGetAmphoeSuggestions
         const api_key = apikey[0].apikey
         // const token = this.props.token.token
         const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjcsInVzZXJfaWQiOjcsImVtYWlsIjoiZ3JzQGd1dXJ1bi5jb20iLCJmb3JldmVyIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvYXBpLnNodXR0ZXJydW5uaW5nMjAxNC5jb21cL2FwaVwvdjJcL3VzZXJcL3Nlc3Npb24iLCJpYXQiOjE1MzQyMTI1MDgsImV4cCI6MTUzNDIxNjEwOCwibmJmIjoxNTM0MjEyNTA4LCJqdGkiOiI0ODExNWFiNmRiOGFhNTdhYmY2YTQ4MTY4Mzk2MTk5YSJ9.WBiaueVNnkAH0z34fCGruynSiTK7IlPnJNMwEIUxMr0"
