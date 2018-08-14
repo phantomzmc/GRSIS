@@ -20,13 +20,13 @@ class SugestTambon extends Component {
             emails: [],
             searchTerm: '',
             isItems: false,
-            tumporn: "",
+            province: "",
 
         }
         this.searchUpdated = this.searchUpdated.bind(this)
     }
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.tumporn && prevState.tumporn) {
+        if (this.state.province && prevState.province) {
             this.loadData = false
 
         }
@@ -65,7 +65,9 @@ class SugestTambon extends Component {
                 // this.props.navigation.navigate('EventList')
             });
     }
-
+    setValue(email) {
+        this.setState({ province: email.Value, isItems: false })
+    }
     searchUpdated(term) {
         this.setState({ searchTerm: term, isItems: true })
     }
@@ -77,7 +79,8 @@ class SugestTambon extends Component {
             <div>
                 <Form>
                     <SearchInput
-                        placeholder={this.state.emails}
+                        placeholder={this.state.province}
+                        value={this.state.province}
                         className="search-input"
                         onChange={(term) => { this.searchUpdated(term) }} />
                 </Form>
@@ -86,7 +89,12 @@ class SugestTambon extends Component {
                         {filteredEmails.map(email => {
                             return (
                                 <div className="list" key={email.Value}>
-                                    <li className="list-items" style={{ listStyleType: "none" }}>{email.Value}</li>
+                                    <li
+                                        className="list-items"
+                                        style={{ listStyleType: "none" }}
+                                        onClick={() => this.setValue(email)}>
+                                        {email.Value}
+                                    </li>
                                 </div>
                             )
                         })

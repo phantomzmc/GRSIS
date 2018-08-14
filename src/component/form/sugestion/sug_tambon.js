@@ -40,7 +40,7 @@ class SugestTambon extends Component {
         const uri = req[0].uspGetTambonSuggestions
         const api_key = apikey[0].apikey
         // const token = this.props.token.token
-        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjcsInVzZXJfaWQiOjcsImVtYWlsIjoiZ3JzQGd1dXJ1bi5jb20iLCJmb3JldmVyIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvYXBpLnNodXR0ZXJydW5uaW5nMjAxNC5jb21cL2FwaVwvdjJcL3VzZXJcL3Nlc3Npb24iLCJpYXQiOjE1MzQyMTI1MDgsImV4cCI6MTUzNDIxNjEwOCwibmJmIjoxNTM0MjEyNTA4LCJqdGkiOiI0ODExNWFiNmRiOGFhNTdhYmY2YTQ4MTY4Mzk2MTk5YSJ9.WBiaueVNnkAH0z34fCGruynSiTK7IlPnJNMwEIUxMr0"
+        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjcsInVzZXJfaWQiOjcsImVtYWlsIjoiZ3JzQGd1dXJ1bi5jb20iLCJmb3JldmVyIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvYXBpLnNodXR0ZXJydW5uaW5nMjAxNC5jb21cL2FwaVwvdjJcL3VzZXJcL3Nlc3Npb24iLCJpYXQiOjE1MzQyMTY4MTgsImV4cCI6MTUzNDIyMDQxOCwibmJmIjoxNTM0MjE2ODE4LCJqdGkiOiI0NDUzYmRmYjdjYTRhMTgwNzdkZGRlZmU5MWI3N2VjNyJ9.DjpghgG_Kz89rMAAJDUJ1Dmmv-tIK8sDaZLIdHBTqNU"
 
         let data = ({
             params: [
@@ -65,7 +65,9 @@ class SugestTambon extends Component {
                 // this.props.navigation.navigate('EventList')
             });
     }
-
+    setValue(email) {
+        this.setState({ tumporn: email.Value, isItems: false })
+    }
     searchUpdated(term) {
         this.setState({ searchTerm: term, isItems: true })
     }
@@ -77,7 +79,8 @@ class SugestTambon extends Component {
             <div>
                 <Form>
                     <SearchInput
-                        placeholder={this.state.emails}
+                        placeholder={this.state.tumporn}
+                        value={this.state.tumporn}
                         className="search-input"
                         onChange={(term) => { this.searchUpdated(term) }} />
                 </Form>
@@ -86,7 +89,12 @@ class SugestTambon extends Component {
                         {filteredEmails.map(email => {
                             return (
                                 <div className="list" key={email.Value}>
-                                    <li className="list-items" style={{ listStyleType: "none" }}>{email.Value}</li>
+                                    <li
+                                        className="list-items"
+                                        style={{ listStyleType: "none" }}
+                                        onClick={() => this.setValue(email)}>
+                                        {email.Value}
+                                    </li>
                                 </div>
                             )
                         })
