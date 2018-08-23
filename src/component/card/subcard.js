@@ -6,25 +6,20 @@ class SubCrad extends Component {
        imgPhoGra2 : {} 
     }
     componentDidMount(){
-        // console.log(this.props.PhotoGrapher)
-        this.setState({
-            imgPhoGra : this.props.photographer.PhotoGrapher,
-            imgPhoGra2 : this.props.photographer.PhotoGrapher
-        })
-        console.log(this.state.imgPhoGra)
-        console.log(this.state.imgPhoGra2)
+        console.log(this.props.photographer)
+        
 
     }
 
     render() {
         return (
             <div>
-                {/* {this.props.photographer.map((item) =>
+                {this.props.photographer.map((item) =>
                     <label>
                         {item.Name}
                     </label>
                 )
-                } */}
+                }
 
             </div>
 

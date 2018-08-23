@@ -12,6 +12,8 @@ import axios from 'axios'
 import images from './dataimage'
 import LigthBoxImage from "../lightboxImg/lightbox";
 import Pagenation from '../pagenation/pagenation'
+import req from '../../config/uri_req'
+import apikey from '../../config/apikey'
 import './image-grid.css'
 
 
@@ -41,8 +43,9 @@ class ImageLayout extends React.Component {
         this.feedImage()
     }
     feedImage() {
-        let token = this.props.token.token
-        console.log(token)
+        const token = this.props.token.token
+        const uri = req[0].uspGetImageLists_
+        const api_key = apikey[0].apikey
         let data = ({
             params: [
                 { name: "EventID", value: this.state.eventid },
@@ -54,17 +57,21 @@ class ImageLayout extends React.Component {
             ]
         })
 
-        axios.post("http://api.shutterrunning2014.com/api/v2/stris/_proc/Main.uspGetImageLists_", data, {
+        axios.post(uri, data, {
             headers: {
-                "X-DreamFactory-API-Key": "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88",
-                "X-DreamFactory-Session-Token": this.props.token.token
+                'Access-Control-Allow-Origin' :  '*',
+                'X-Content-Type-Options': 'nosniff',
+                "X-DreamFactory-API-Key": api_key,
+                "X-DreamFactory-Session-Token": this.props.token.token,
+                "Content-Type" : "application/x-www-form-urlencoded"
             },
-            responseType: 'json'
+            // responseType: 'json'
         })
             .then((response) => {
                 this.setState({ images: response.data });
                 console.log(this.state.images)
             }).catch((error) => {
+                console.log(error)
                 this.props.history.push("./")
             });
     }

@@ -9,6 +9,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import './card.css'
 import Pagenation from '../pagenation/pagenation'
+import SubCard from './subcard'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 
@@ -86,7 +87,7 @@ class CardEvents extends Component {
                 <Container>
                     <Row>
                         {
-                            this.state.dataSource.map((dynamicData, i) =>
+                            this.state.dataSource.map((dynamicData, i) =>                             
                                 <Col xs="12" sm="6" md="4">
                                     <CardDeck className="card-item">
                                         <Card >
@@ -105,9 +106,9 @@ class CardEvents extends Component {
                                             </CardBody>
                                             <CardBody>
                                                 <CardSubtitle>
-                                                    {/* <SubCard 
-                                                        photographer={dynamicData}
-                                                    /> */}
+                                                    <SubCard 
+                                                        photographer={JSON.parse(dynamicData.PhotoGrapher)}
+                                                    />
                                                 </CardSubtitle>
                                                 {/* <img width="50px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" /> */}
                                             </CardBody>

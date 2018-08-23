@@ -6,6 +6,7 @@ export default
             uspGetEventSuggestion : url + "Main.uspGetEventSuggestion",
             uspGetTambonSuggestions : url + "Main.uspGetTambonSuggestions",
             uspGetProvinceSuggestions : url + "Main.uspGetProvinceSuggestions",
-            uspGetAmphoeSuggestions : url + "Main.uspGetAmphoeSuggestions"
+            uspGetAmphoeSuggestions : url + "Main.uspGetAmphoeSuggestions",
+            uspGetImageLists_ : url + "Main.uspGetImageLists_"
         }
     ]
