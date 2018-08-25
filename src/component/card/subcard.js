@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
+import { Image } from 'semantic-ui-react'
 
 class SubCrad extends Component {
     state = {
-       imgPhoGra : [],
-       imgPhoGra2 : {} 
+        imgPhoGra: [],
+        imgPhoGra2: {}
     }
-    componentDidMount(){
+    componentDidMount() {
         console.log(this.props.photographer)
-        
+
 
     }
 
     render() {
+        let url = "https://shutterrunning.com/assets/img/Photographer/"
         return (
             <div>
                 {this.props.photographer.map((item) =>
-                    <label>
-                        {item.Name}
-                    </label>
+                    <Image src={url + item.Pic} avatar />
+
                 )
                 }
 

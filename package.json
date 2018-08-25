@@ -43,11 +43,15 @@
     "react-select": "^2.0.0",
     "react-simple-popover": "^0.2.4",
     "react-stepper-horizontal": "^1.0.10",
+    "react-video": "^1.5.3",
+    "react-video-play": "^2.0.3",
+    "react-vimeo": "^2.0.0",
     "react-youtube": "^7.6.0",
     "reactstrap": "^5.0.0-beta.3",
     "redux": "^4.0.0",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.79.1",
+    "video-react": "^0.13.0",
     "webfontloader": "^1.6.28"
   },
   "scripts": {

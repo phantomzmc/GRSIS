@@ -22,6 +22,7 @@ class TabsControl extends Component {
         }
     }
     render() {
+        const namephotogra = this.props.namePhotoGra
         return (
             <div>
                 <Container>
@@ -35,13 +36,15 @@ class TabsControl extends Component {
                                         <Icon name='align justify' size='small' inverted color='black' /> ทั้งหมด
                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames({ active: this.state.activeTab === '2' })}
-                                        onClick={() => { this.toggle('2'); }} >
-                                        <Icon name='angle right' size='small' inverted color='black' />ช่างหน่อง
-                                </NavLink>
-                                </NavItem>
+                                {namephotogra.map((item) =>
+                                    <NavItem>
+                                        <NavLink
+                                            className={classnames({ active: this.state.activeTab === item.ID })}
+                                            onClick={() => { this.toggle(item.ID); }} >
+                                            <Icon name='angle right' size='small' inverted color='black' />{item.Name}
+                                        </NavLink>
+                                    </NavItem>
+                                )}
                             </Nav>
                         </Col>
                     </Row>

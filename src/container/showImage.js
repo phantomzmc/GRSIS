@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
 import '../css/home.css';
-
+import { connect} from 'react-redux'
 import Navbar from '../component/nav/nav'
 import VdoHeader from '../component/header/header'
 import SearchEvent from '../component/search/search'
@@ -44,7 +44,9 @@ class ShowImageEvent extends Component {
                                 <hr className="hr-style1" />
                                 <hr className="hr-style2" />
                                 <div className="">
-                                    <TabsControl/>
+                                    <TabsControl
+                                        namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
+                                    />
                                 </div>
                                 <div className="event-card">
                                     <ImageGrid />
@@ -67,4 +69,16 @@ class ShowImageEvent extends Component {
     }
 }
 
-export default ShowImageEvent;
+const mapStateToProps = state => {
+    return {
+        event : state.event
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ShowImageEvent);

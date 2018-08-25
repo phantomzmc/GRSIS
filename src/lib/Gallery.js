@@ -124,7 +124,7 @@ var Gallery = function (_React$Component) {
                 rest = _objectWithoutProperties(photo, ['left', 'top', 'containerHeight']);
 
             return _react2.default.createElement(ImageComponent, {
-              key: photo.key || photo.src,
+              key: photo.key || photo.src || photo.ImageURL,
               margin: margin,
               index: index,
               photo: rest,
