@@ -10,11 +10,14 @@ class TabsControl extends Component {
 
         this.toggle = this.toggle.bind(this);
         this.state = {
-            activeTab: '1'
+            activeTab: ""
         };
     }
 
     toggle(tab) {
+        var tab = tab
+        this.props.photograID(tab)
+        console.log(tab)
         if (this.state.activeTab !== tab) {
             this.setState({
                 activeTab: tab
@@ -31,8 +34,8 @@ class TabsControl extends Component {
                             <Nav tabs>
                                 <NavItem>
                                     <NavLink
-                                        className={classnames({ active: this.state.activeTab === '1' })}
-                                        onClick={() => { this.toggle('1'); }}>
+                                        className={classnames({ active: this.state.activeTab === "" })}
+                                        onClick={() => { this.toggle(""); }}>
                                         <Icon name='align justify' size='small' inverted color='black' /> ทั้งหมด
                                     </NavLink>
                                 </NavItem>

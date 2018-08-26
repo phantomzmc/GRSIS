@@ -152,7 +152,7 @@ Gallery.propTypes = {
 };
 
 Gallery.defaultProps = {
-  columns: 3,
+  columns: 4,
   margin: 5,
   direction: 'row'
 };

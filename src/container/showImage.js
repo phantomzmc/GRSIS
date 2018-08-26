@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
 import '../css/home.css';
-import { connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Navbar from '../component/nav/nav'
 import VdoHeader from '../component/header/header'
 import SearchEvent from '../component/search/search'
@@ -13,11 +13,17 @@ import LigthBoxImage from '../component/lightboxImg/lightbox'
 import Footer from '../component/footer/footer'
 
 class ShowImageEvent extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            titleSearch : "BIB Number"
+            titleSearch: "BIB Number",
         }
+    }
+    sendIdPhotogra(id) {
+        var id = id
+        console.log(id)
+        this.setState({ photograid : id})
+        this.props.setPhotoGraID(id)
     }
     render() {
         return (
@@ -31,7 +37,7 @@ class ShowImageEvent extends Component {
                     <Row>
                         <Col xs="12" sm="12" md="12">
                             <div className="content-container">
-                                <SearchEvent 
+                                <SearchEvent
                                     title={this.state.titleSearch}
                                     text1="Search "
                                     text2=" BIB Number"
@@ -46,10 +52,13 @@ class ShowImageEvent extends Component {
                                 <div className="">
                                     <TabsControl
                                         namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
+                                        photograID={this.sendIdPhotogra.bind(this)}
                                     />
                                 </div>
                                 <div className="event-card">
-                                    <ImageGrid />
+                                    <ImageGrid
+                                        photograID={this.state.photograid}
+                                    />
                                 </div>
                                 {/* <div>
                                     <Pagenation />
@@ -71,14 +80,19 @@ class ShowImageEvent extends Component {
 
 const mapStateToProps = state => {
     return {
-        event : state.event
+        event: state.event
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
-
+    return {
+        setPhotoGraID: (photograID) => {
+            dispatch({
+                type: "setPhotoGraID",
+                payload: photograID
+            })
+        }
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ShowImageEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowImageEvent);

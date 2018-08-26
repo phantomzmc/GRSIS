@@ -5,8 +5,8 @@ const cart = {
     counter: 0
 }
 const token = (state = { token: "" }, action) => {
-    switch (action.type){
-        case "setToken" : {
+    switch (action.type) {
+        case "setToken": {
             state.token = action.payload
             break;
         }
@@ -14,10 +14,14 @@ const token = (state = { token: "" }, action) => {
     return state
 };
 
-const event = (state= {} ,action) => {
-    switch (action.type){
-        case "setEvent" : {
+const event = (state = { photoGraID: "" }, action) => {
+    switch (action.type) {
+        case "setEvent": {
             state.event = action.payload
+            break;
+        }
+        case "setPhotoGraID": {
+            state.photoGraID = action.payload
             break;
         }
     }

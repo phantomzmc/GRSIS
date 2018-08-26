@@ -38,13 +38,17 @@ class ImageLayout extends React.Component {
         this.setState({
             eventid: this.props.event.event.EventID
         })
-        this.feedImage(this.props.event.event.EventID)
-
     }
     componentDidMount() {
-        setTimeout(()=>{
-            console.log(images)
-        },3000)
+        this.feedImage(this.props.event.event.EventID)
+        console.log(this.props.event.photoGraID)
+    }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps.event.photoGraID)
+        console.log(this.props.photograID)
+        if (this.props.photograID != nextProps.event.photoGraID) {
+            this.feedImage(this.props.event.event.EventID)
+        }
     }
     feedImage(eventid) {
         const token = this.props.token.token
@@ -53,7 +57,7 @@ class ImageLayout extends React.Component {
         let data = ({
             params: [
                 { name: "EventID", value: eventid },
-                { name: "PhotoGrapherID", value: "" },
+                { name: "PhotoGrapherID", value: this.props.event.photoGraID },
                 { name: "BibNumber", value: "" },
                 { name: "Time", value: "" },
                 { name: "PageNo", value: this.state.pageNo },
@@ -75,7 +79,7 @@ class ImageLayout extends React.Component {
                 this.setState({ images: response.data });
                 console.log(this.state.images)
                 this.state.images.map((item, index) => {
-                    var tem = { src : item.ImageURL , width: 517, height: 775 }
+                    var tem = { src: item.ImageURL, width: 350, height: 517 }
                     console.log(tem)
                     images.splice(index, 1, tem)
                 })
