@@ -4,15 +4,35 @@ import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } fr
 import './lightbox.css'
 import TabsLightBox from './tabs/tabs'
 
+import orderlist from '../../json/orderlist' //json orderlist
+import orderlistFull from '../../json/orderlistFull'
+
 class LigthBoxImage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             img: this.props.image,
+            imgDetail : this.props.datail
         };
         this.handleClick = this.handleClick.bind(this)
     }
     handleClick() {
+        let { imgDetail } = this.state
+        console.log(this.props.detail)
+        let dataOrder = {
+            ImageID : this.props.detail.ImageID,
+            PropertyBuyImageID : "",
+            Quantity : ""
+        }
+        let dataOrderFull = {
+            ImageID : this.props.detail.ImageID,
+            ImageURL : this.props.detail.ImageURL,
+            PropertyBuyImageID : "",
+            Quantity : ""
+        }
+        orderlist.push(dataOrder)
+        orderlistFull.push(dataOrderFull)
+        console.log(orderlist)
         this.props.nextPage()
     }
     render() {

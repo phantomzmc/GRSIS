@@ -22,7 +22,7 @@ class ShowImageEvent extends Component {
     sendIdPhotogra(id) {
         var id = id
         console.log(id)
-        this.setState({ photograid : id})
+        this.setState({ photograid: id, showimage: false })
         this.props.setPhotoGraID(id)
     }
     render() {
@@ -58,6 +58,7 @@ class ShowImageEvent extends Component {
                                 <div className="event-card">
                                     <ImageGrid
                                         photograID={this.state.photograid}
+                                        showimage={this.state.showimage}
                                     />
                                 </div>
                                 {/* <div>

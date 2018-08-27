@@ -6573,6 +6573,10 @@ react-vimeo@^2.0.0:
     jsonp "^0.2.0"
     keymirror "^0.1.1"
 
+react-worker-image@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/react-worker-image/-/react-worker-image-1.0.11.tgz#fc623a46f36036459a164ede0f189073c77e0b83"
+
 react-youtube@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/react-youtube/-/react-youtube-7.6.0.tgz#ea4b7a9396f635b9f2a9f03bfe2a39b93cbdd59d"

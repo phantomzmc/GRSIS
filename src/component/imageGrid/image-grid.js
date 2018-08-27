@@ -3,7 +3,7 @@ import Image from "react-image";
 import Gallery from '../../lib/Gallery';
 import Lightbox from 'lightbox-react';
 // import Lightbox from 'react-images';
-import { Container, Col, Row } from "reactstrap";
+import { Container, Col, Row, Table } from "reactstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { withRouter } from 'react-router-dom'
@@ -15,6 +15,10 @@ import Pagenation from '../pagenation/pagenation'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 import './image-grid.css'
+import ImageWorker from 'react-worker-image';
+
+import orderlist from '../../json/orderlist'
+import orderlistFull from '../../json/orderlistFull';
 
 
 class ImageLayout extends React.Component {
@@ -29,7 +33,9 @@ class ImageLayout extends React.Component {
             eventid: "214",
             data: [],
             counter: 0,
-            pageNo: 1
+            pageNo: 1,
+            imagesFull: [],
+            showimage: false
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -38,17 +44,28 @@ class ImageLayout extends React.Component {
         this.setState({
             eventid: this.props.event.event.EventID
         })
+        this.feedImage(this.props.event.event.EventID)
+
     }
     componentDidMount() {
-        this.feedImage(this.props.event.event.EventID)
         console.log(this.props.event.photoGraID)
     }
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         console.log(nextProps.event.photoGraID)
         console.log(this.props.photograID)
         if (this.props.photograID != nextProps.event.photoGraID) {
-            this.feedImage(this.props.event.event.EventID)
+            this.setState({ showimage: false })
+            setTimeout(()=> {
+                this.feedImage(this.props.event.event.EventID)
+            },100)
         }
+    }
+    shouldComponentUpdate(nextProps) {
+        if (images !== nextProps.images) {
+            console.log("shouldComponentUpdate")
+            return true
+        }
+        return true
     }
     feedImage(eventid) {
         const token = this.props.token.token
@@ -76,13 +93,18 @@ class ImageLayout extends React.Component {
             // responseType: 'json'
         })
             .then((response) => {
-                this.setState({ images: response.data });
+                this.setState({ images: response.data, showimage: true });
                 console.log(this.state.images)
                 this.state.images.map((item, index) => {
                     var tem = { src: item.ImageURL, width: 350, height: 517 }
                     console.log(tem)
                     images.splice(index, 1, tem)
                 })
+                // this.state.images.map((item, index) => {
+                //     var tem = item.ImageURL
+                //     console.log(tem)
+                //     images.splice(index, 1, tem)
+                // })
             }).catch((error) => {
                 console.log(error)
                 this.props.history.push("./")
@@ -103,7 +125,9 @@ class ImageLayout extends React.Component {
             this.submit()
         }, 1000)
         data.push(images[photoIndex].ImageURL)
-        this.props.addImage(data)
+        // this.props.addImage(data)
+        this.props.addOrderList(orderlist)
+        this.props.addImage(orderlistFull)
         this.counterimage()
     }
 
@@ -125,18 +149,42 @@ class ImageLayout extends React.Component {
         })
     };
     onChangePage = (pageNum) => {
-        this.setState({ pageNo: pageNum });
+        this.setState({ pageNo: pageNum, showimage: false });
         console.log("pageNum" + pageNum)
-        this.feedImage()
+        setTimeout(() => {
+            this.feedImage(this.props.event.event.EventID)
+
+        }, 100)
     }
 
     render() {
         let { photoIndex, isOpen, isOpenImage } = this.state
         return (
             <div>
-                <Gallery
+                <Container>
+                    {this.state.showimage &&
+                        <Row>
+                            {
+                                images.map((dynamicData, i = 1) =>
+                                    <Col xs="12" sm="6" md="3">
+                                        <div>
+                                            <ImageWorker
+                                                src={dynamicData.src}
+                                                style={{ width: "100%", margin: 5 }}
+                                                containerClass="container-style" />
+                                        </div>
+                                    </Col>
+                                )}
+
+                            {/* <ImageWorker src="http://stocks.shutterrunning.com/photos/BB-01/POK%200014.jpg"/>
+                    <ImageWorker src="http://stocks.shutterrunning.com/photos/BB-01/POK%200015.jpg"/> */}
+
+                            {/* <Gallery
                     photos={images}
-                    onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
+                    onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} /> */}
+                        </Row>
+                    }
+                </Container>
                 <div>
 
                     {isOpen &&
@@ -145,6 +193,7 @@ class ImageLayout extends React.Component {
                                 <div className="ligthbox-style">
                                     {isOpenImage &&
                                         <LigthBoxImage
+                                            detail={this.state.images[photoIndex]}
                                             image={images[photoIndex].src}
                                             nextPage={this.onPressNextPage}
                                         />
@@ -193,6 +242,18 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: "counterCart",
                 payload: counter
+            })
+        },
+        addOrderList: (orderlist) => {
+            dispatch({
+                type: "addOrderList",
+                payload: orderlist
+            })
+        },
+        addOrderListFull: (orderlistFull) => {
+            dispatch({
+                type: "addOrderListFull",
+                payload: orderlistFull
             })
         }
     }

@@ -6,7 +6,17 @@ import '../css/cart.css'
 
 
 class CartImages extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            image: this.props.cartImage.image
+        }
+    }
+    componentDidMount() {
+        console.log(this.state.image)
+    }
     render() {
+        let { image } = this.state
         return (
             <div>
                 <h1>รายการสั่งซื้อทั้งหมด</h1>
@@ -23,12 +33,12 @@ class CartImages extends Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.cartImage.image.map((dynamicData, i=1) =>
+                            image.map((dynamicData, i = 1) =>
                                 <tr>
                                     {/* <th scope="row"></th> */}
                                     <td>{i}</td>
                                     <td className="image-in-cart">
-                                        <Image src={dynamicData} width="150" />
+                                        <Image src={dynamicData.ImageURL} width="150" />
                                     </td>
                                     <td>Digital File .JPG</td>
                                     <td>1</td>

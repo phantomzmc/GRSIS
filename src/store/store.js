@@ -41,6 +41,19 @@ const cartImage = (state = cart, action) => {
     }
     return state
 };
+const order = (state = { orderlist : [], orderlistFull : []}, action) => {
+    switch (action.type) {
+        case "addOrderList": {
+            state.orderlist = action.payload;
+            break;
+        }
+        case "addOrderlistFull": {
+            state.orderlistFull = action.payload
+            break;
+        }
+    }
+    return state
+}
 
 
 const myLogger = store => next => action => {
@@ -52,7 +65,8 @@ const store = createStore(
     combineReducers({
         event,
         cartImage,
-        token
+        token,
+        order
     }),
     {},
     applyMiddleware(myLogger)
