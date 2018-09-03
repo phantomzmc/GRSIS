@@ -93,7 +93,7 @@ class CardEvents extends Component {
                                         <Card >
                                             <CardImg top width="100%" src="" alt="Card image cap" src={uri + dynamicData.EventPic} />
                                             <CardBody>
-                                                <CardTitle>{dynamicData.EventName}</CardTitle>
+                                                <CardTitle className="cerd-title">{dynamicData.EventName}</CardTitle>
                                                 <CardSubtitle>
                                                     <label className="card-date">Date :</label> {dynamicData.EventDate}
                                                 </CardSubtitle>

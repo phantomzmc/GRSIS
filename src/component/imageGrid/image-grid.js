@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from "react-image";
-import Gallery from '../../lib/Gallery';
+// import Gallery from '../../lib/Gallery';
+import Gallery from 'react-photo-gallery';
+import { render } from "react-dom";
 import Lightbox from 'lightbox-react';
 // import Lightbox from 'react-images';
 import { Container, Col, Row, Table } from "reactstrap";
@@ -16,7 +18,7 @@ import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 import './image-grid.css'
 import ImageWorker from 'react-worker-image';
-
+import StackGrid from "react-stack-grid";
 import orderlist from '../../json/orderlist'
 import orderlistFull from '../../json/orderlistFull';
 
@@ -35,7 +37,8 @@ class ImageLayout extends React.Component {
             counter: 0,
             pageNo: 1,
             imagesFull: [],
-            showimage: false
+            showimage: false,
+            index: 0
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -55,9 +58,9 @@ class ImageLayout extends React.Component {
         console.log(this.props.photograID)
         if (this.props.photograID != nextProps.event.photoGraID) {
             this.setState({ showimage: false })
-            setTimeout(()=> {
+            setTimeout(() => {
                 this.feedImage(this.props.event.event.EventID)
-            },100)
+            }, 100)
         }
     }
     shouldComponentUpdate(nextProps) {
@@ -96,7 +99,7 @@ class ImageLayout extends React.Component {
                 this.setState({ images: response.data, showimage: true });
                 console.log(this.state.images)
                 this.state.images.map((item, index) => {
-                    var tem = { src: item.ImageURL, width: 350, height: 517 }
+                    var tem = { src: item.ImageURL }
                     console.log(tem)
                     images.splice(index, 1, tem)
                 })
@@ -156,35 +159,50 @@ class ImageLayout extends React.Component {
 
         }, 100)
     }
+    handleClickPrev = () => {
+        this.setState({ index: this.state.index - 1 });
+    };
+
+    handleClickNext = () => {
+        this.setState({ index: this.state.index + 1 });
+    };
+
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     render() {
-        let { photoIndex, isOpen, isOpenImage } = this.state
+        let { photoIndex, isOpen, isOpenImage, index } = this.state
         return (
             <div>
-                <Container>
-                    {this.state.showimage &&
+                {this.state.showimage &&
+                    // <Row>
+                    <Container>
                         <Row>
                             {
                                 images.map((dynamicData, i = 1) =>
-                                    <Col xs="12" sm="6" md="3">
-                                        <div>
+                                    <Col xs={12} md={4} sm={3}>
+                                        <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })}>
                                             <ImageWorker
                                                 src={dynamicData.src}
-                                                style={{ width: "100%", margin: 5 }}
-                                                containerClass="container-style" />
+                                                style={{ width: "100%", height: "50%" }}
+                                                containerClass="container-style"
+                                            />
                                         </div>
                                     </Col>
                                 )}
 
-                            {/* <ImageWorker src="http://stocks.shutterrunning.com/photos/BB-01/POK%200014.jpg"/>
-                    <ImageWorker src="http://stocks.shutterrunning.com/photos/BB-01/POK%200015.jpg"/> */}
-
-                            {/* <Gallery
-                    photos={images}
-                    onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} /> */}
                         </Row>
-                    }
-                </Container>
+                    </Container>
+
+                    // <Gallery
+                    //     photos={images}
+                    //     onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
+                }
                 <div>
 
                     {isOpen &&

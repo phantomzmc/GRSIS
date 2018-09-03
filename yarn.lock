@@ -412,6 +412,17 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
+autoresponsive-core@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/autoresponsive-core/-/autoresponsive-core-1.0.1.tgz#cbb77dffb5ee625fe3dae867671050632ba04916"
+
+autoresponsive-react@^1.1.31:
+  version "1.1.31"
+  resolved "https://registry.yarnpkg.com/autoresponsive-react/-/autoresponsive-react-1.1.31.tgz#dede25f8ff7f7d4d0066159aa1636025df7f0637"
+  dependencies:
+    autoresponsive-core "^1.0.1"
+    exenv "^1.2.0"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -1143,6 +1154,10 @@ base@^0.11.1:
     isobject "^3.0.1"
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
+
+batch-processor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
 
 batch@0.6.1:
   version "0.6.1"
@@ -2344,6 +2359,12 @@ dynamics.js@^1.1.0:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/dynamics.js/-/dynamics.js-1.1.5.tgz#b90bdc33605cefe652b8416e701f79bf6eefce32"
 
+easy-css-transform-builder@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/easy-css-transform-builder/-/easy-css-transform-builder-0.0.2.tgz#a541667a7919e17f67d82b11d3cb55fdd5433022"
+  dependencies:
+    invariant "^2.2.2"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
@@ -2361,6 +2382,12 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
 element-class@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/element-class/-/element-class-0.2.2.tgz#9d3bbd0767f9013ef8e1c8ebe722c1402a60050e"
+
+element-resize-detector@^1.1.12:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/element-resize-detector/-/element-resize-detector-1.1.14.tgz#af064a0a618a820ad570a95c5eec5b77be0128c1"
+  dependencies:
+    batch-processor "^1.0.0"
 
 elliptic@^6.0.0:
   version "6.4.0"
@@ -2695,6 +2722,10 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
+ev-emitter@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.1.1.tgz#8f18b0ce5c76a5d18017f71c0a795c65b9138f2a"
+
 event-emitter@~0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
@@ -2745,7 +2776,7 @@ exenv@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.0.tgz#3835f127abf075bfe082d0aed4484057c78e3c89"
 
-exenv@^1.2.0, exenv@^1.2.2:
+exenv@^1.2.0, exenv@^1.2.1, exenv@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
@@ -3675,6 +3706,12 @@ ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
+imagesloaded@^4.1.1:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/imagesloaded/-/imagesloaded-4.1.4.tgz#1376efcd162bb768c34c3727ac89cc04051f3cc7"
+  dependencies:
+    ev-emitter "^1.0.0"
+
 immutable@^3.7.4:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
@@ -3740,6 +3777,13 @@ inline-style-prefixer@^2.0.0:
   dependencies:
     bowser "^1.0.0"
     hyphenate-style-name "^1.0.1"
+
+inline-style-prefixer@^3.0.6:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.8.tgz#8551b8e5b4d573244e66a34b04f7d32076a2b534"
+  dependencies:
+    bowser "^1.7.3"
+    css-in-js-utils "^2.0.0"
 
 inquirer@3.3.0, inquirer@^3.0.6:
   version "3.3.0"
@@ -5091,6 +5135,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
+no-scroll@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/no-scroll/-/no-scroll-2.1.1.tgz#f37e08cb159b75a5bdbfc0a87cd9223e120e6e27"
+
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -6189,11 +6237,23 @@ react-flip-move@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-flip-move/-/react-flip-move-3.0.2.tgz#2f6f16ca6cb0a8490fba15a98b3440a76127e825"
 
-react-grid-gallery@^0.4.11:
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/react-grid-gallery/-/react-grid-gallery-0.4.11.tgz#409d9d49d35a751cd53787a5645d386b08f7540c"
+react-google-photo@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-google-photo/-/react-google-photo-0.1.0.tgz#e95152839d52c95c43da5cdd6403094409665d4b"
   dependencies:
-    react-images "^0.5.6"
+    classnames "^2.2.5"
+    no-scroll "^2.1.1"
+    prop-types "^15.6.1"
+    react-minimalist-portal "^2.2.0"
+    react-transition-group "^2.3.1"
+    screenfull "^3.3.2"
+
+react-grid-gallery@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-grid-gallery/-/react-grid-gallery-0.5.1.tgz#4e9d672d8f5fbae49c3db1669133fce03834e936"
+  dependencies:
+    prop-types "^15.5.8"
+    react-images "^0.5.16"
 
 react-hot-loader@^4.3.3:
   version "4.3.3"
@@ -6242,7 +6302,7 @@ react-images-upload@^1.2.0:
     react "^16.2.0"
     react-flip-move "^3.0.1"
 
-react-images@^0.5.19:
+react-images@^0.5.16, react-images@^0.5.19:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/react-images/-/react-images-0.5.19.tgz#9339570029e065f9f28a19f03fdb5d9d5aa109d3"
   dependencies:
@@ -6250,15 +6310,6 @@ react-images@^0.5.19:
     prop-types "^15.6.0"
     react-scrolllock "^2.0.1"
     react-transition-group "2"
-
-react-images@^0.5.6:
-  version "0.5.17"
-  resolved "https://registry.yarnpkg.com/react-images/-/react-images-0.5.17.tgz#6f76fd03b370176bead7d22cec06afe82fe1cec0"
-  dependencies:
-    aphrodite "^0.5.0"
-    prop-types "^15.6.0"
-    react-scrolllock "^2.0.1"
-    react-transition-group "^1.1.3"
 
 react-input-autosize@^2.2.1:
   version "2.2.1"
@@ -6281,6 +6332,12 @@ react-measure@^2.0.2:
     get-node-dimensions "^1.2.0"
     prop-types "^15.5.10"
     resize-observer-polyfill "^1.4.2"
+
+react-minimalist-portal@^2.2.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-minimalist-portal/-/react-minimalist-portal-2.3.1.tgz#4853e3f48a74a32c1b8767601887cdf7941eeba3"
+  dependencies:
+    prop-types "^15.6.1"
 
 react-modal-dialog@^4.0.7:
   version "4.0.7"
@@ -6336,9 +6393,9 @@ react-paginate@^5.2.3:
   dependencies:
     prop-types "^15.6.1"
 
-react-photo-gallery@^6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/react-photo-gallery/-/react-photo-gallery-6.1.2.tgz#a893ebe3453770912377f4763af6c23e28b1e64e"
+react-photo-gallery@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-photo-gallery/-/react-photo-gallery-6.2.0.tgz#2a1a1181172c0ac5a1fce83dac18d781f4ec23a1"
   dependencies:
     prop-types "~15.6.1"
     resize-observer-polyfill "^1.5.0"
@@ -6502,6 +6559,30 @@ react-simple-popover@^0.2.4:
     react-dom "^16.2.0"
     react-overlays "^0.8.3"
 
+react-sizeme@^2.2.0:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.5.2.tgz#e7041390cfb895ed15d896aa91d76e147e3b70b5"
+  dependencies:
+    element-resize-detector "^1.1.12"
+    invariant "^2.2.2"
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+    shallowequal "^1.0.2"
+
+react-stack-grid@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/react-stack-grid/-/react-stack-grid-0.7.1.tgz#cbf7353ce6c2acf712b827c36b0be234af84bee9"
+  dependencies:
+    easy-css-transform-builder "^0.0.2"
+    exenv "^1.2.1"
+    imagesloaded "^4.1.1"
+    inline-style-prefixer "^3.0.6"
+    invariant "^2.2.2"
+    prop-types "^15.5.10"
+    react-sizeme "^2.2.0"
+    react-transition-group "^1.2.0"
+    shallowequal "^1.0.1"
+
 react-stepper-horizontal@^1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/react-stepper-horizontal/-/react-stepper-horizontal-1.0.10.tgz#e2c0832b89ee1dab0ad8d715f4f97039242fd0a8"
@@ -6516,7 +6597,7 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
-react-transition-group@2, react-transition-group@^2.0.0, react-transition-group@^2.2.0:
+react-transition-group@2, react-transition-group@^2.0.0, react-transition-group@^2.2.0, react-transition-group@^2.3.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.4.0.tgz#1d9391fabfd82e016f26fabd1eec329dbd922b5a"
   dependencies:
@@ -6525,7 +6606,7 @@ react-transition-group@2, react-transition-group@^2.0.0, react-transition-group@
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-transition-group@^1.1.3:
+react-transition-group@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
   dependencies:
@@ -7026,6 +7107,10 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
+screenfull@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/screenfull/-/screenfull-3.3.2.tgz#a6adf3b3f5556da812725385880600f5b39fbf25"
+
 section-iterator@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/section-iterator/-/section-iterator-2.0.0.tgz#bf444d7afeeb94ad43c39ad2fb26151627ccba2a"
@@ -7158,7 +7243,7 @@ shallow-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.0.0.tgz#508d1838b3de590ab8757b011b25e430900945f7"
 
-shallowequal@^1.0.2:
+shallowequal@^1.0.1, shallowequal@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
 
