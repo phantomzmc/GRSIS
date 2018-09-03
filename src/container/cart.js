@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Table } from 'reactstrap';
-import { Image } from 'semantic-ui-react';
+import { Table, Button } from 'reactstrap';
+import { Image, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import '../css/cart.css'
 
@@ -9,7 +9,10 @@ class CartImages extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            image: this.props.cartImage.image
+            // image: this.props.cartImage.image
+            image: [{
+                ImageURL: "http://stocks.shutterrunning.com/photos/BB-01/POK%200031.jpg"
+            }]
         }
     }
     componentDidMount() {
@@ -23,7 +26,7 @@ class CartImages extends Component {
                 <Table>
                     <thead className="table-head">
                         <tr>
-                            <th>ลำดับ</th>
+                            <th></th>
                             <th>ภาพ</th>
                             <th>รายละเอียด</th>
                             <th>จำนวน</th>
@@ -36,13 +39,23 @@ class CartImages extends Component {
                             image.map((dynamicData, i = 1) =>
                                 <tr>
                                     {/* <th scope="row"></th> */}
-                                    <td>{i}</td>
-                                    <td className="image-in-cart">
-                                        <Image src={dynamicData.ImageURL} width="150" />
+                                    <td>
+                                        <Button color="danger">
+                                            <Icon name="cancel" />
+                                        </Button>
                                     </td>
-                                    <td>Digital File .JPG</td>
+                                    <td className="image-in-cart">
+                                        <Image src={dynamicData.ImageURL} width="125" height="200" />
+                                    </td>
+                                    <td className="detail-in-cart">
+                                        <div>
+                                            <h5>Digital File .JPG</h5>
+                                            <p>Size : ไฟล์ต้นฉบับ <br /> Price : 100.00 ฿ </p>
+                                        </div>
+                                    </td>
                                     <td>1</td>
                                     <td>100.00 บาท</td>
+
                                 </tr>
                             )}
                     </tbody>

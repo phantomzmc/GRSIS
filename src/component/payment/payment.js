@@ -26,7 +26,7 @@ class PaymentLaout extends Component {
     render() {
         return (
             <div>
-                <h2>ยืนยันการสั่งซื้อ</h2>
+                <h2>ชำระเงิน</h2>
                 <Container>
                     <Row>
                         <Col xs="12" sm="12" md="12" className="nav-style">

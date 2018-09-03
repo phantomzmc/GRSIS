@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, ButtonGroup } from 'reactstrap';
 import Stepper from 'react-stepper-horizontal';
 
 import '../css/steper.css'
@@ -21,14 +21,14 @@ class StepControl extends Component {
             step: [
                 { title: 'Step 1 : รายการสั่งซื้อทั้งหมด' },
                 { title: 'Step 2 : กรอกรายละเอียด' },
-                { title: 'Step 3 : ยืนยันการสั่งซื้อ' },
+                { title: 'Step 3 : ชำระเงิน' },
                 { title: 'Step 4 : ชำระเงินเสร็จสิ้น' }
             ],
             currentStep: 0,
             isOpenCart: true,
             isOpenForm: false,
             isOpenPayment: false,
-            isOpenInvoice : false
+            isOpenInvoice: false
         }
         this.onClickNext = this.onClickNext.bind(this);
         this.onClickPrev = this.onClickPrev.bind(this)
@@ -60,10 +60,10 @@ class StepControl extends Component {
                 isOpenPayment: true
             })
         }
-        else if (currentStep == 2){
+        else if (currentStep == 2) {
             this.setState({
-                isOpenPayment : false,
-                isOpenInvoice : true
+                isOpenPayment: false,
+                isOpenInvoice: true
             })
         }
     }
@@ -92,11 +92,16 @@ class StepControl extends Component {
                                     {this.state.isOpenInvoice && <Invoice />}
                                 </div>
                                 <div className="btn-groud">
-                                    {!this.state.isOpenCart &&
-                                        <Button color="danger" size="lg" onClick={this.onClickPrev} className="btn-prev"> ย้อนหลัง </Button>
-                                    }
-                                    <Button color="success" size="lg" onClick={this.onClickNext} className="btn-next"> ถัดไป </Button>
+                                    <ButtonGroup>
+                                        {!this.state.isOpenCart &&
+                                            <Button color="danger" size="lg" onClick={this.onClickPrev} className="btn-prev"> ย้อนหลัง </Button>
+                                        }
+                                        {this.state.isOpenCart &&
+                                            <Button color="danger" size="lg"> ยกเลิกรายการทั้งหมด </Button>
+                                        }
+                                        <Button color="success" size="lg" onClick={this.onClickNext} className="btn-next"> ไปชำระค่าบริการ </Button>
 
+                                    </ButtonGroup>
                                 </div>
                             </div>
                         </Col>
