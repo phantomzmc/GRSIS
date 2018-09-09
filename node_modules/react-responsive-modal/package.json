@@ -1,0 +1,106 @@
+{
+  "name": "react-responsive-modal",
+  "version": "3.3.0",
+  "description": "A simple responsive react modal",
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "jsnext:main": "lib/index.es.js",
+  "types": "types",
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "lint": "eslint 'src' 'docs/src' '__tests__'",
+    "test": "yarn test:coverage && yarn lint && yarn build && yarn dtslint && yarn size",
+    "test:only": "jest",
+    "test:coverage": "yarn test:only --coverage",
+    "size": "size-limit",
+    "prettier": "prettier --write \"**/*.{js,ts,tsx,css,scss,json,md}\"",
+    "dtslint": "dtslint types",
+    "generate-props": "node scripts/generateReactPropsTable.js src/modal.js && yarn prettier"
+  },
+  "files": [
+    "lib",
+    "types",
+    "src"
+  ],
+  "jest": {
+    "setupTestFrameworkScriptFile": "./__tests__/setupTests.js",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/docs/",
+      "<rootDir>/__tests__/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "identity-obj-proxy"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "keywords": [
+    "react",
+    "responsive",
+    "modal",
+    "flex"
+  ],
+  "repository": "git+https://github.com/pradel/react-responsive-modal.git",
+  "author": "Léo Pradel",
+  "bugs": {
+    "url": "https://github.com/pradel/react-responsive-modal/issues"
+  },
+  "homepage": "https://github.com/pradel/react-responsive-modal#readme",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "no-scroll": "^2.1.1",
+    "prop-types": "^15.6.2",
+    "react-lifecycles-compat": "^3.0.4",
+    "react-minimalist-portal": "^2.3.1",
+    "react-transition-group": "^2.4.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "16.4.12",
+    "@types/react-dom": "16.0.7",
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-eslint": "8.2.6",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "codecov": "3.0.4",
+    "dtslint": "0.3.0",
+    "enzyme": "3.5.0",
+    "enzyme-adapter-react-16": "1.2.0",
+    "eslint": "5.4.0",
+    "eslint-config-airbnb": "17.0.0",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-jsx-a11y": "6.1.1",
+    "eslint-plugin-jsx-import": "0.0.1",
+    "eslint-plugin-react": "7.10.0",
+    "identity-obj-proxy": "3.0.0",
+    "jest": "23.4.2",
+    "jest-enzyme": "6.0.2",
+    "prettier": "1.14.0",
+    "react": "16.4.1",
+    "react-docgen": "2.21.0",
+    "react-dom": "16.4.1",
+    "rollup": "0.63.5",
+    "rollup-plugin-babel": "3.0.7",
+    "rollup-plugin-peer-deps-external": "2.2.0",
+    "rollup-plugin-postcss": "1.6.2",
+    "size-limit": "0.19.0"
+  },
+  "size-limit": [
+    {
+      "path": "lib/index.js",
+      "limit": "7 KB"
+    }
+  ],
+  "license": "MIT"
+}

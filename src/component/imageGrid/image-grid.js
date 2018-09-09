@@ -2,9 +2,11 @@ import React from 'react';
 import Image from "react-image";
 // import Gallery from '../../lib/Gallery';
 import Gallery from 'react-photo-gallery';
-import { render } from "react-dom";
+// import Modal from "react-responsive-modal";
+import Modal from 'react-modal';
+
 import Lightbox from 'lightbox-react';
-// import Lightbox from 'react-images';
+import ReactLoading from 'react-loading';
 import { Container, Col, Row, Table } from "reactstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
@@ -38,7 +40,8 @@ class ImageLayout extends React.Component {
             pageNo: 1,
             imagesFull: [],
             showimage: false,
-            index: 0
+            index: 0,
+            isLoad: true
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -96,7 +99,7 @@ class ImageLayout extends React.Component {
             // responseType: 'json'
         })
             .then((response) => {
-                this.setState({ images: response.data, showimage: true });
+                this.setState({ images: response.data, showimage: true, isLoad: false });
                 console.log(this.state.images)
                 this.state.images.map((item, index) => {
                     var tem = { src: item.ImageURL }
@@ -109,6 +112,7 @@ class ImageLayout extends React.Component {
                 //     images.splice(index, 1, tem)
                 // })
             }).catch((error) => {
+                this.setState({ isLoad: true, showimage: false })
                 console.log(error)
                 this.props.history.push("./")
             });
@@ -179,14 +183,20 @@ class ImageLayout extends React.Component {
         let { photoIndex, isOpen, isOpenImage, index } = this.state
         return (
             <div>
-                {this.state.showimage &&
-                    // <Row>
-                    <Container>
+                <Container>
+                    {
+                        this.state.isLoad &&
+                        <div className="container-isload">
+                            <ReactLoading type="bubbles" color="#000" height={'15%'} width={'15%'} />
+                        </div>
+                    }
+                    {this.state.showimage &&
+                        // <Row>
                         <Row>
                             {
-                                images.map((dynamicData, i = 1) =>
+                                images.map((dynamicData, i = 0) =>
                                     <Col xs={12} md={4} sm={3}>
-                                        <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })}>
+                                        <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
                                             <ImageWorker
                                                 src={dynamicData.src}
                                                 style={{ width: "100%", height: "50%" }}
@@ -197,15 +207,16 @@ class ImageLayout extends React.Component {
                                 )}
 
                         </Row>
-                    </Container>
 
-                    // <Gallery
-                    //     photos={images}
-                    //     onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
-                }
+                        // <Gallery
+                        //     photos={images}
+                        //     onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
+                    }
+                </Container>
+
                 <div>
 
-                    {isOpen &&
+                    {/* {isOpen &&
                         <Lightbox
                             mainSrc={
                                 <div className="ligthbox-style">
@@ -230,7 +241,37 @@ class ImageLayout extends React.Component {
                                 photoIndex: (photoIndex + 1) % images.length,
                             })}
                         />
-                    }
+                    } */}
+                    <Modal
+                        isOpen={this.state.isOpen}
+                        onRequestClose={this.closeModal}
+                        className="customStyles"
+                    >
+                        {isOpenImage &&
+                            <div className="ligthbox-style">
+                                <LigthBoxImage
+                                    detail={this.state.images}
+                                    image={images[photoIndex].src}
+                                    nextPage={this.onPressNextPage}
+                                />
+                            </div>
+                        }
+                    </Modal>
+                    {/* <Modal
+                        open={this.state.isOpen}
+                        onClose={() => this.setState({ isOpen: false })}
+                        center
+                        classNames="modal-custom">
+                        {isOpenImage &&
+                            <div className="ligthbox-style">
+                                <LigthBoxImage
+                                    detail={this.state.images}
+                                    image={images[photoIndex].src}
+                                    nextPage={this.onPressNextPage}
+                                />
+                            </div>
+                        }
+                    </Modal> */}
                 </div>
 
                 <div className="pagenation">

@@ -23,25 +23,23 @@ class FormRegister extends Component {
                             <h2>กรุณากรอกรายละเอียด</h2>
                             <Form className="form-register">
                                 <FormGroup row>
-                                    <Label for="exampleEmail" sm={2}>Email : </Label>
+                                    <Label for="username" sm={2} md={2} xs={12}>ชื่อ (จำเป็น)</Label>
+                                    <Col sm={4} md={4} xs={10}>
+                                        <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" />
+                                    </Col>
+                                    <Label for="lastname" sm={2} md={2} xs={12}>นามสกุล (จำเป็น)</Label>
+                                    <Col sm={4} md={4} xs={10}>
+                                        <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup row>
+                                    <Label for="exampleEmail" sm={2}>Email (จำเป็น)</Label>
                                     <Col sm={10}>
                                         <Input type="email" name="email" id="exampleEmail" placeholder="Ex.Abc@gmail.com" />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
-                                    <Label for="username" sm={2}>ชื่อ : </Label>
-                                    <Col sm={10}>
-                                        <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    <Label for="lastname" sm={2}>นามสกุล : </Label>
-                                    <Col sm={10}>
-                                        <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    <Label for="tel" sm={2}>โทรศัพท์ : </Label>
+                                    <Label for="tel" sm={2}>โทรศัพท์ (จำเป็น)</Label>
                                     <Col sm={10}>
                                         <Input type="text" name="tel" id="tel" placeholder="Ex.090-3198XXX" />
                                     </Col>
@@ -96,9 +94,9 @@ class FormRegister extends Component {
                                     // </div>
                                     <div>
                                         <FormGroup row>
-                                            <Label for="address" sm={2}>ที่อยู่ : </Label>
+                                            <Label for="address" sm={2}>ที่อยู่การจัดส่ง : </Label>
                                             <Col sm={10} xs={12}>
-                                                <Input type="textarea" name="text" id="exampleText" rows="4"/>
+                                                <Input type="textarea" name="text" id="exampleText" rows="4" />
                                             </Col>
                                         </FormGroup>
                                     </div>
@@ -106,7 +104,7 @@ class FormRegister extends Component {
                                 <FormGroup row>
                                     <Label for="tel" sm={2}>หมายเหตุ : </Label>
                                     <Col sm={10}>
-                                        <Input type="text" name="tel" id="tel" placeholder="Ex.090-3198XXX" />
+                                        <Input type="text" name="tel" id="tel" placeholder="อยากได้อะไรบอกพี่ตุ้มได้นะจ๊ะ" />
                                     </Col>
                                 </FormGroup>
                             </Form>

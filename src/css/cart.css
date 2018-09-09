@@ -2,27 +2,38 @@
     background-color: #101010;
     border-color: #101010;
 }
-th{
+
+th {
     color: white;
     text-align: center;
 }
-td{
+
+td {
     text-align: center;
 }
-td h4{
+
+td h4 {
     text-align: right;
     color: azure;
     margin-right: 10%;
 }
-tfoot{
+
+tfoot {
     background-color: #101010;
 }
-.image-in-cart{
+
+.image-in-cart {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-content: center;
 }
-.detail-in-cart {
-    
+
+.quantity {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
 }
+
+.detail-in-cart {}

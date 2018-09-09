@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
 import { Image, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import dataCart from '../data/dataCart';
+import dataOrderList from '../data/dataOrderList'
 import '../css/cart.css'
 
 
@@ -10,19 +12,23 @@ class CartImages extends Component {
         super(props)
         this.state = {
             // image: this.props.cartImage.image
-            image: [{
-                ImageURL: "http://stocks.shutterrunning.com/photos/BB-01/POK%200031.jpg"
-            }]
+            image: [
+                {
+                    ImageURL: "http://stocks.shutterrunning.com/photos/BB-01/POK%200031.jpg"
+                }
+            ],
+            quantity: 1
         }
     }
     componentDidMount() {
+        console.log(dataOrderList)
         console.log(this.state.image)
     }
     render() {
-        let { image } = this.state
+        let { quantity } = this.state
         return (
             <div>
-                <h1>รายการสั่งซื้อทั้งหมด</h1>
+                <h2>รายการสั่งซื้อทั้งหมด</h2>
                 <Table>
                     <thead className="table-head">
                         <tr>
@@ -36,7 +42,7 @@ class CartImages extends Component {
                     </thead>
                     <tbody>
                         {
-                            image.map((dynamicData, i = 1) =>
+                            dataCart.map((dynamicData, i = 1) =>
                                 <tr>
                                     {/* <th scope="row"></th> */}
                                     <td>
@@ -49,12 +55,18 @@ class CartImages extends Component {
                                     </td>
                                     <td className="detail-in-cart">
                                         <div>
-                                            <h5>Digital File .JPG</h5>
-                                            <p>Size : ไฟล์ต้นฉบับ <br /> Price : 100.00 ฿ </p>
+                                            <h5>{dynamicData.Detail}</h5>
+                                            <p>Size : {dynamicData.Size}<br /> Price : {dynamicData.PriceDisplay} </p>
                                         </div>
                                     </td>
-                                    <td>1</td>
-                                    <td>100.00 บาท</td>
+                                    <td>
+                                        <div className="quantity">
+                                            <Button onClick={() => this.setState({ quantity: quantity + 1 })}> + </Button>
+                                            {this.state.quantity}
+                                            <Button onClick={() => this.setState({ quantity: quantity - 1 })}> - </Button>
+                                        </div>
+                                    </td>
+                                    <td>{dynamicData.PriceDisplay}</td>
 
                                 </tr>
                             )}
