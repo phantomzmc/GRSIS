@@ -7,6 +7,7 @@ export default
             uspGetTambonSuggestions : url + "Main.uspGetTambonSuggestions",
             uspGetProvinceSuggestions : url + "Main.uspGetProvinceSuggestions",
             uspGetAmphoeSuggestions : url + "Main.uspGetAmphoeSuggestions",
-            uspGetImageLists_ : url + "Main.uspGetImageLists_"
+            uspGetImageLists_ : url + "Main.uspGetImageLists_",
+            uspGetPropertyBuyImageLists : url + "Main.uspGetPropertyBuyImageLists"
         }
     ]

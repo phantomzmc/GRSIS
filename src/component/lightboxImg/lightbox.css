@@ -35,3 +35,8 @@
 .icon-full {
 
 }
+.close-click {
+    display: flex;
+    position : absolute;
+    right: 50px;
+}

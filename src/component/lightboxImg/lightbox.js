@@ -48,6 +48,9 @@ class LigthBoxImage extends Component {
                         <Row >
                             <Col xs="12" sm="12" md="12">
                                 <Card className="card-items">
+                                    <div className="close-click">
+                                        <h3>close</h3>
+                                    </div>
                                     {/* <CardTitle className="cards-title"><h3 style={{ color: '#fff' }}>รายละเอียด</h3></CardTitle> */}
                                     <div className="content">
                                         <Col xs="12" sm="6" md="6">
@@ -78,8 +81,8 @@ class LigthBoxImage extends Component {
                         this.state.isOpen &&
                         <Lightbox
                             mainSrc={this.state.img}
-                            onCloseRequest={() => this.setState({ isOpen: false, isOpen1 : true })}
-                            
+                            onCloseRequest={() => this.setState({ isOpen: false, isOpen1: true })}
+
                         />
 
                     }
