@@ -35,8 +35,12 @@
 .icon-full {
 
 }
+#icon-close {
+    font-size: 30px;
+}
 .close-click {
     display: flex;
     position : absolute;
     right: 50px;
+    top : 20px;
 }

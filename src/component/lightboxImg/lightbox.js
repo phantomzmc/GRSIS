@@ -42,17 +42,20 @@ class LigthBoxImage extends Component {
     render() {
         return (
             <div className="row-style">
-                <Container>
-                    {
-                        this.state.isOpen1 &&
-                        <Row >
-                            <Col xs="12" sm="12" md="12">
-                                <Card className="card-items">
-                                    <div className="close-click">
-                                        <h3>close</h3>
-                                    </div>
-                                    {/* <CardTitle className="cards-title"><h3 style={{ color: '#fff' }}>รายละเอียด</h3></CardTitle> */}
-                                    <div className="content">
+                <Row>
+                    <div className="close-click">
+                        <Icon name="close" id="icon-close" onClick={() => this.setState({ isOpen1: !this.state.isOpen1 })} />
+                    </div>
+                </Row>
+                {
+                    this.state.isOpen1 &&
+                    <Row >
+                        <Col xs="12" sm="12" md="12">
+                            <Card className="card-items">
+
+                                {/* <CardTitle className="cards-title"><h3 style={{ color: '#fff' }}>รายละเอียด</h3></CardTitle> */}
+                                <div>
+                                    <Row>
                                         <Col xs="12" sm="6" md="6">
                                             <div className="img-ligth">
                                                 <div className="click-full">
@@ -71,22 +74,22 @@ class LigthBoxImage extends Component {
                                                 <Button color="success" size="lg" block onClick={this.handleClick}>สั่งซื้อรายการนี้</Button>
                                             </CardBody>
                                         </Col>
-                                    </div>
-                                </Card>
-                            </Col>
-                        </Row>
-                    }
+                                    </Row>
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+                }
 
-                    {
-                        this.state.isOpen &&
-                        <Lightbox
-                            mainSrc={this.state.img}
-                            onCloseRequest={() => this.setState({ isOpen: false, isOpen1: true })}
+                {
+                    this.state.isOpen &&
+                    <Lightbox
+                        mainSrc={this.state.img}
+                        onCloseRequest={() => this.setState({ isOpen: false, isOpen1: true })}
 
-                        />
+                    />
 
-                    }
-                </Container>
+                }
 
             </div>
         )

@@ -249,11 +249,18 @@ class ImageLayout extends React.Component {
                     >
                         {isOpenImage &&
                             <div className="ligthbox-style">
-                                <LigthBoxImage
-                                    detail={this.state.images}
-                                    image={images[photoIndex].src}
-                                    nextPage={this.onPressNextPage}
-                                />
+                                <Container>
+                                    <Row>
+                                        <Col xs="12" md="12" sm="12">
+                                            <LigthBoxImage
+                                                detail={this.state.images}
+                                                image={images[photoIndex].src}
+                                                nextPage={this.onPressNextPage}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </Container>
+
                             </div>
                         }
                     </Modal>
