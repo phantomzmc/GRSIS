@@ -1,15 +1,55 @@
 .ligthbox-style {
     display: flex;
-    flex-direction: row;
+    flex: 1;
+    margin-top: 50px;
     justify-content: center;
     align-items: center;
-    margin-top : 50px;
+    /* position: relative; */
 }
+.ligthbox-style2 {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    background-color: black;
+}
+.carousel-item {
+    
+    justify-content: center;
+    align-items: center;
+}
+#contai-carousel {
+    display: flex;
+    align-items: center;
+    width: 65%;
+    background-color: red;
 
+}   
+#contai-tabs {
+    width: 35%;
+    flex: 1;
+    align-content: flex-end;
+    background-color: white;
+}
 .container-isload {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#contai-timer { 
+    display: flex;
+    position: absolute;
+    background-color: grey;
+    top: 10px;
+    left: 30px;
+    border-radius: 5px;
+    opacity: 0.9;
+    padding: 5px;
+}
+#timer {
+    color: white;
+}
+#contai-img{
+    margin-bottom: 5px;
 }
 
 .modal-custom {

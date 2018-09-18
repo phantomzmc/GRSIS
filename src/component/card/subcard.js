@@ -7,9 +7,7 @@ class SubCrad extends Component {
         imgPhoGra2: {}
     }
     componentDidMount() {
-        console.log(this.props.photographer)
-
-
+        // console.log(this.props.photographer)
     }
 
     render() {

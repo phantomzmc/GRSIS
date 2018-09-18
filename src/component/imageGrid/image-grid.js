@@ -1,13 +1,9 @@
 import React from 'react';
-import Image from "react-image";
-// import Gallery from '../../lib/Gallery';
-import Gallery from 'react-photo-gallery';
-// import Modal from "react-responsive-modal";
-import Modal from 'react-modal';
 
+import { Modal } from 'semantic-ui-react'
 import Lightbox from 'lightbox-react';
 import ReactLoading from 'react-loading';
-import { Container, Col, Row, Table } from "reactstrap";
+import { Container, Col, Row, Card, CardBody, Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption } from "reactstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { withRouter } from 'react-router-dom'
@@ -16,6 +12,7 @@ import axios from 'axios'
 import images from './dataimage'
 import LigthBoxImage from "../lightboxImg/lightbox";
 import Pagenation from '../pagenation/pagenation'
+import TabsLightBox from '../lightboxImg/tabs/tabs'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 import './image-grid.css'
@@ -41,7 +38,8 @@ class ImageLayout extends React.Component {
             imagesFull: [],
             showimage: false,
             index: 0,
-            isLoad: true
+            isLoad: true,
+            activeIndex: 0
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -99,18 +97,19 @@ class ImageLayout extends React.Component {
             // responseType: 'json'
         })
             .then((response) => {
-                this.setState({ images: response.data, showimage: true, isLoad: false });
+                this.setState({ images: response.data });
                 console.log(this.state.images)
                 this.state.images.map((item, index) => {
-                    var tem = { src: item.ImageURL }
-                    console.log(tem)
+                    var tem = {
+                        src: item.ImageURL,
+                        timer: item.ImageTakenTime
+                    }
                     images.splice(index, 1, tem)
+                    setTimeout(() => {
+                        this.setState({ showimage: true, isLoad: false })
+                    }, 100)
                 })
-                // this.state.images.map((item, index) => {
-                //     var tem = item.ImageURL
-                //     console.log(tem)
-                //     images.splice(index, 1, tem)
-                // })
+                
             }).catch((error) => {
                 this.setState({ isLoad: true, showimage: false })
                 console.log(error)
@@ -163,21 +162,8 @@ class ImageLayout extends React.Component {
 
         }, 100)
     }
-    handleClickPrev = () => {
-        this.setState({ index: this.state.index - 1 });
-    };
+    
 
-    handleClickNext = () => {
-        this.setState({ index: this.state.index + 1 });
-    };
-
-    handleOpen = () => {
-        this.setState({ open: true });
-    };
-
-    handleClose = () => {
-        this.setState({ open: false });
-    };
 
     render() {
         let { photoIndex, isOpen, isOpenImage, index } = this.state
@@ -191,42 +177,36 @@ class ImageLayout extends React.Component {
                         </div>
                     }
                     {this.state.showimage &&
-                        // <Row>
                         <Row>
                             {
                                 images.map((dynamicData, i = 0) =>
-                                    <Col xs={12} md={4} sm={3}>
+                                    <Col xs={12} md={4} sm={4}>
                                         <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
-                                            <ImageWorker
-                                                src={dynamicData.src}
-                                                style={{ width: "100%", height: "50%" }}
-                                                containerClass="container-style"
-                                            />
+                                            <div id="contai-timer">
+                                                <span id="timer">{dynamicData.timer}</span>
+                                            </div>
+                                            <div id="contai-img">
+                                                <ImageWorker
+                                                    src={dynamicData.src}
+                                                    style={{ width: "100%", height: "50%", margin: 5 }}
+                                                />
+                                            </div>
                                         </div>
                                     </Col>
                                 )}
-
                         </Row>
-
-                        // <Gallery
-                        //     photos={images}
-                        //     onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage })} />
                     }
                 </Container>
-
                 <div>
-
-                    {/* {isOpen &&
+                    {isOpen &&
                         <Lightbox
                             mainSrc={
                                 <div className="ligthbox-style">
-                                    {isOpenImage &&
-                                        <LigthBoxImage
-                                            detail={this.state.images[photoIndex]}
-                                            image={images[photoIndex].src}
-                                            nextPage={this.onPressNextPage}
-                                        />
-                                    }
+                                    <LigthBoxImage
+                                        detail={this.state.images[photoIndex]}
+                                        image={images[photoIndex].src}
+                                        nextPage={this.onPressNextPage}
+                                    />
                                 </div>
 
                             }
@@ -241,46 +221,8 @@ class ImageLayout extends React.Component {
                                 photoIndex: (photoIndex + 1) % images.length,
                             })}
                         />
-                    } */}
-                    <Modal
-                        isOpen={this.state.isOpen}
-                        onRequestClose={this.closeModal}
-                        className="customStyles"
-                    >
-                        {isOpenImage &&
-                            <div className="ligthbox-style">
-                                <Container>
-                                    <Row>
-                                        <Col xs="12" md="12" sm="12">
-                                            <LigthBoxImage
-                                                detail={this.state.images}
-                                                image={images[photoIndex].src}
-                                                nextPage={this.onPressNextPage}
-                                            />
-                                        </Col>
-                                    </Row>
-                                </Container>
-
-                            </div>
-                        }
-                    </Modal>
-                    {/* <Modal
-                        open={this.state.isOpen}
-                        onClose={() => this.setState({ isOpen: false })}
-                        center
-                        classNames="modal-custom">
-                        {isOpenImage &&
-                            <div className="ligthbox-style">
-                                <LigthBoxImage
-                                    detail={this.state.images}
-                                    image={images[photoIndex].src}
-                                    nextPage={this.onPressNextPage}
-                                />
-                            </div>
-                        }
-                    </Modal> */}
+                    }
                 </div>
-
                 <div className="pagenation">
                     <Pagenation
                         numPage={(page) => this.onChangePage(page)} />

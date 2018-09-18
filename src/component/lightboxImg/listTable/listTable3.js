@@ -1,11 +1,15 @@
 import React from 'react';
 import { Table, Button, Input } from 'reactstrap';
+import orderlist from '../../../json/orderlist' //json orderlist
+import orderlistFull from '../../../json/orderlistFull'
 
 class ListTable3 extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dataSouce: ""
+            dataSouce: "",
+            quantity: 0,
+            buyTyoeID: 0
         }
     }
 
@@ -20,6 +24,29 @@ class ListTable3 extends React.Component {
             console.log(this.state.dataSouce)
         }
     }
+    handleChange(e){
+        this.setState({ quantity : e.target.value})
+    }
+
+    handleClick() {
+        console.log(this.props.details)
+        let dataOrder = {
+            ImageID: this.props.details.ImageID,
+            PropertyBuyImageID: this.state.buyTyoeID,
+            Quantity: this.state.quantity
+        }
+        let dataOrderFull = {
+            ImageID: this.props.details.ImageID,
+            ImageURL: this.props.details.ImageURL,
+            PropertyBuyImageID: this.state.buyTyoeID,
+            Quantity: this.state.quantity
+        }
+        orderlist.push(dataOrder)
+        orderlistFull.push(dataOrderFull)
+        console.log(orderlist)
+        this.props.nextPage()
+    }
+
     render() {
         return (
             <div xs="12" sm="12" md="12">
@@ -29,31 +56,34 @@ class ListTable3 extends React.Component {
                     <Table hover>
                         <thead>
                             <tr>
-                                <td>จำนวน</td>
-                                <td>รายละเอียด</td>
-                                <td>ขนาด</td>
-                                <td>ราคา</td>
+                                <td><p>จำนวน</p></td>
+                                <td><p>รายละเอียด</p></td>
+                                <td><p>ขนาด</p></td>
+                                <td><p>ราคา</p></td>
                             </tr>
                         </thead>
                         <tbody>
                             {this.state.dataSouce.map((item, index) =>
                                 <tr>
                                     <td>
-                                        <Input type="select" name="select" id="exampleSelect">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <Input type="select" name="select" id="exampleSelect"
+                                            onChangeCapture={() => this.setState({ buyTyoeID: item.PropertyBuyImageID })}
+                                            onChange={this.handleChange.bind(this)}
+                                        >
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
                                         </Input>
                                     </td>
-                                    <td>{item.Detail}</td>
+                                    <td><p>{item.Detail}</p></td>
                                     <td>
                                         {/* <Button outline color="primary">S</Button> */}
-                                        {item.Size}
+                                        <p>{item.Size}</p>
                                     </td>
-                                    <td>{item.PriceDisplay}</td>
+                                    <td><p>{item.PriceDisplay}</p></td>
                                 </tr>
                             )
                             }
@@ -61,7 +91,9 @@ class ListTable3 extends React.Component {
                         </tbody>
                     </Table>
                 }
-
+                <Button block color="success" onClick={() => this.handleClick()}>
+                    <p>สั่งซื้อภาพนี้</p>
+                </Button>
             </div>
         );
     }

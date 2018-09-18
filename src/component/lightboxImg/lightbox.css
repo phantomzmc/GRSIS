@@ -20,16 +20,27 @@
     background-color: darkorange;
 }
 .row-style {
+    width: 1200px;
+}
+.img-view {
+    flex-direction: row;
+    flex: 1;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+    text-align: center;
 }
 .img-ligth {
     margin: 20px;
-    justify-content: center;
+    height: 700px;
+}
+.tab-ligth {
+    margin: 20px;
+    height: 700px;
 }
 .click-full {
-    top: 35px;
-    left: 50px;
+    justify-content: flex-end;
+    flex: 0;
+    display: flex;
     position: absolute;
 }
 .icon-full {

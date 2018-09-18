@@ -59,14 +59,14 @@ class TabsLightBox extends React.Component {
     }
     render() {
         return (
-            <div xs="12" sm="12" md="12" lg="12">
+            <div xs="12" sm="12" md="12" lg="12" className="contai-tab">
                 <Nav tabs>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '1' })}
                             onClick={() => { this.toggle('1'); }}
                         >
-                            ไฟล์ภาพ
+                            <p>ไฟล์ภาพ</p>
             </NavLink>
                     </NavItem>
                     <NavItem>
@@ -74,7 +74,7 @@ class TabsLightBox extends React.Component {
                             className={classnames({ active: this.state.activeTab === '2' })}
                             onClick={() => { this.toggle('2'); }}
                         >
-                            ภาพอย่างเดียว
+                            <p>ภาพอย่างเดียว</p>
             </NavLink>
                     </NavItem>
                     <NavItem>
@@ -82,7 +82,7 @@ class TabsLightBox extends React.Component {
                             className={classnames({ active: this.state.activeTab === '3' })}
                             onClick={() => { this.toggle('3'); }}
                         >
-                            ภาพพร้อมกรอบ
+                            <p>ภาพพร้อมกรอบ</p>
             </NavLink>
                     </NavItem>
                 </Nav>
@@ -91,7 +91,9 @@ class TabsLightBox extends React.Component {
                         <Row>
                             <Col sm="12">
                                 <ListTable1
+                                    details={this.props.detail}
                                     propertyImg={this.state.dataSource}
+                                    nextPage={() => this.props.nextPages()}
                                 />
                             </Col>
                         </Row>
@@ -100,7 +102,10 @@ class TabsLightBox extends React.Component {
                         <Row>
                             <Col sm="12">
                                 <ListTable2
+                                    details={this.props.detail}
                                     propertyImg={this.state.dataSource}
+                                    nextPage={() => this.props.nextPages()}
+
                                 />
                                 <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                                     <label style={{ fontFamily: "kanit" }}>*** หมายเหตุ : ราคาต่อหนึ่งภาพพร้อมกรอบ รวมค่าจัดส่งแล้ว</label>
@@ -112,7 +117,9 @@ class TabsLightBox extends React.Component {
                         <Row>
                             <Col sm="12">
                                 <ListTable3
+                                    details={this.props.detail}
                                     propertyImg={this.state.dataSource}
+                                    nextPage={() => this.props.nextPages()}
 
                                 />
                                 <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>

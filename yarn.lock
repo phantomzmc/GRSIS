@@ -1596,6 +1596,13 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
+clarity-react-responsive-grid-layout@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/clarity-react-responsive-grid-layout/-/clarity-react-responsive-grid-layout-2.0.9.tgz#e057cf6b22d716b64bb34ecf1259cff59d346105"
+  dependencies:
+    react "^15.5.4"
+    react-dom "^15.5.4"
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -6278,7 +6285,7 @@ react-dom-factories@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
 
-react-dom@^15.1.0, react-dom@^15.3.2:
+react-dom@^15.1.0, react-dom@^15.3.2, react-dom@^15.5.4:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
   dependencies:
@@ -6779,7 +6786,7 @@ react-youtube@^7.6.0:
     prop-types "^15.5.3"
     youtube-player "^5.4.0"
 
-react@^15.1.0, react@^15.3.2:
+react@^15.1.0, react@^15.3.2, react@^15.5.4:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
   dependencies:
@@ -6815,6 +6822,10 @@ react@^16.3.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+reactjs-popup@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/reactjs-popup/-/reactjs-popup-1.2.0.tgz#93acb988f8dacf3ba139085df457b03d23e8e926"
 
 reactstrap@^5.0.0-beta.3:
   version "5.0.0"
