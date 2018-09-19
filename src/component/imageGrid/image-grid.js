@@ -3,7 +3,7 @@ import React from 'react';
 import { Modal } from 'semantic-ui-react'
 import Lightbox from 'lightbox-react';
 import ReactLoading from 'react-loading';
-import { Container, Col, Row, Card, CardBody, Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption } from "reactstrap";
+import { Container, Col, Row, Card, CardBody, Button } from "reactstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { withRouter } from 'react-router-dom'

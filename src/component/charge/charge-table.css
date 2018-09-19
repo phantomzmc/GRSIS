@@ -1,27 +1,19 @@
-.table-head {
-    background-color: darkorange;
-    border-color: darkorange;
-    font-family: "kanit";
+
+.contai-view {
+    width: 500px;
 }
-th{
+#contai-list-head {
+    background-color: darkorange;
+    font-family: "kanit";
     color: white;
     text-align: center;
 }
-td{
+#contai-list {
     text-align: center;
+    margin-top: 20px;
 }
-td h4{
-    text-align: right;
-    color: azure;
-    margin-right: 10%;
-}
-tfoot{
-    background-color: darkgray;
-}
-.image-in-cart{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    height: 150px;
+#not-item {
+    margin: 20px;
+    text-align: center;
+    font-family: 'kanit';
 }
