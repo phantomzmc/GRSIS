@@ -23,10 +23,15 @@ tfoot {
 }
 
 .image-in-cart {
-    display: flex;
-    flex-direction: row;
+    margin: 30px;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+    display: flex;
+    flex: 1
+}
+.img-buy {
+    width: 200px;
+    height: 200px;
 }
 
 .quantity {
@@ -34,6 +39,11 @@ tfoot {
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
+}
+.icon-del {
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .detail-in-cart {}

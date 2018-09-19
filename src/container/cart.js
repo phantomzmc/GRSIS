@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
-import { Image, Icon } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import dataCart from '../data/dataCart';
 import dataOrderList from '../data/dataOrderList'
+import dataPrice from '../data/dataPrice'
+import ImageResponsive from 'react-image-responsive';
+
 import '../css/cart.css'
 
 
@@ -11,18 +14,18 @@ class CartImages extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // image: this.props.cartImage.image
-            image: [
-                {
-                    ImageURL: "http://stocks.shutterrunning.com/photos/BB-01/POK%200031.jpg"
-                }
-            ],
-            quantity: 1
+            totalPrice : 0.00
         }
     }
     componentDidMount() {
-        console.log(dataOrderList)
+        this.sumPriceBuy()
+        console.log(dataPrice)
         console.log(this.state.image)
+    }
+    sumPriceBuy() {
+        const add = (a, b) => a + b;
+        const sum = dataPrice.reduce(add)
+        this.setState({ totalPrice: parseFloat(sum).toFixed(2) })
     }
     render() {
         let { quantity } = this.state
@@ -42,16 +45,20 @@ class CartImages extends Component {
                     </thead>
                     <tbody>
                         {
-                            dataCart.map((dynamicData, i = 1) =>
+                            dataCart.map((dynamicData, i = 0) =>
                                 <tr>
                                     {/* <th scope="row"></th> */}
                                     <td>
-                                        <Button color="danger">
-                                            <Icon name="cancel" />
-                                        </Button>
+                                        <div className="icon-del">
+                                            <Button color="danger">
+                                                <Icon name="cancel" />
+                                            </Button>
+                                        </div>
                                     </td>
-                                    <td className="image-in-cart">
-                                        <Image src={dynamicData.ImageURL} width="125" height="200" />
+                                    <td>
+                                        <div className="image-in-cart">
+                                            <Image src={dynamicData.ImageURL} className="img-buy" />
+                                        </div>
                                     </td>
                                     <td className="detail-in-cart">
                                         <div>
@@ -61,12 +68,12 @@ class CartImages extends Component {
                                     </td>
                                     <td>
                                         <div className="quantity">
-                                            <Button onClick={() => this.setState({ quantity: quantity + 1 })}> + </Button>
-                                            {this.state.quantity}
-                                            <Button onClick={() => this.setState({ quantity: quantity - 1 })}> - </Button>
+                                            <Button onClick={() => this.setState({ quantity: dynamicData.Quantity + 1 })}> + </Button>
+                                            {dynamicData.Quantity}
+                                            <Button onClick={() => this.setState({ quantity: dynamicData.Quantity - 1 })}> - </Button>
                                         </div>
                                     </td>
-                                    <td>{dynamicData.PriceDisplay}</td>
+                                    <td>{dynamicData.Price} บาท</td>
 
                                 </tr>
                             )}
@@ -74,7 +81,7 @@ class CartImages extends Component {
                     <tfoot>
                         <tr>
                             <td colSpan="6" >
-                                <h4>ยอดชำระทั้งหมด 100.00 บาท</h4>
+                                <h4>ยอดชำระทั้งหมด {this.state.totalPrice} บาท</h4>
                             </td>
                         </tr>
                     </tfoot>

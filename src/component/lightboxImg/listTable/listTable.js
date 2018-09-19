@@ -1,8 +1,9 @@
 import React from 'react';
 import { Table, Button, Input } from 'reactstrap';
-
 import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
+import dataCart from '../../../data/dataCart'
+import dataPrice from '../../../data/dataPrice'
 import './listTable.css'
 
 class ListTable1 extends React.Component {
@@ -29,6 +30,16 @@ class ListTable1 extends React.Component {
         this.setState({
             quantity: e.target.value
         })
+        setTimeout(() => {
+            this.getPrice()
+        }, 200)
+    }
+    getPrice() {
+        let { quantity, price } = this.state
+        const sumPrice = parseFloat(price * quantity)
+        dataPrice.push(sumPrice)
+        this.setState({ price: sumPrice })
+        console.log("price" + sumPrice)
     }
     handleClick() {
         const { index } = this.state
@@ -41,12 +52,17 @@ class ListTable1 extends React.Component {
         let dataOrderFull = {
             ImageID: this.props.details.ImageID,
             ImageURL: this.props.details.ImageURL,
-            PropertyBuyImageID: this.state.dataSouce[index].PropertyBuyImageID,
-            Quantity: this.state.quantity
+            PropertyBuyImageID: this.state.buyTyoeID,
+            Quantity: this.state.quantity,
+            Detail: this.state.detail,
+            Price: this.state.price,
+            PriceDisplay: this.state.priceDisplay,
+            Size: this.state.size
         }
+
         orderlist.push(dataOrder)
         orderlistFull.push(dataOrderFull)
-        console.log(orderlist)
+        dataCart.push(dataOrderFull)
         this.props.nextPage()
     }
     render() {
@@ -70,7 +86,17 @@ class ListTable1 extends React.Component {
                                 this.state.dataSouce.map((item, index) =>
                                     <tr>
                                         <td>
-                                            <Input type="select" name="select" id="exampleSelect" onChange={this.handleChange.bind(this)} value={this.state.quantity}>
+                                            <Input type="select" name="select" id="exampleSelect"
+                                                onChangeCapture={() => this.setState({
+                                                    buyTyoeID: item.PropertyBuyImageID,
+                                                    detail: item.Detail,
+                                                    price: item.Price,
+                                                    priceDisplay: item.PriceDisplay,
+                                                    size: item.Size
+
+                                                })}
+                                                onChange={this.handleChange.bind(this)}
+                                            >
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>

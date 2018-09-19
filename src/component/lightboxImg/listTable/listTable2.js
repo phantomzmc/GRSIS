@@ -3,6 +3,8 @@ import { Table, Button, Input } from 'reactstrap';
 
 import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
+import dataCart from '../../../data/dataCart'
+import dataPrice from '../../../data/dataPrice'
 
 class ListTable2 extends React.Component {
     constructor(props) {
@@ -10,7 +12,11 @@ class ListTable2 extends React.Component {
         this.state = {
             dataSouce: "",
             quantity: 0,
-            buyTyoeID: 0
+            buyTyoeID: 0,
+            detail: "",
+            price: 0,
+            priceDisplay: "",
+            size: ""
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -26,10 +32,21 @@ class ListTable2 extends React.Component {
             console.log(this.state.dataSouce)
         }
     }
-    handleChange(e){
-        this.setState({ quantity : e.target.value})
+    handleChange(e) {
+        this.setState({
+            quantity: e.target.value
+        })
+        setTimeout(() => {
+            this.getPrice()
+        }, 200)
     }
-
+    getPrice() {
+        let { quantity, price } = this.state
+        const sumPrice = parseFloat(price * quantity)
+        dataPrice.push(sumPrice)
+        this.setState({ price: sumPrice })
+        console.log("price" + sumPrice)
+    }
     handleClick() {
         console.log(this.props.details)
         let dataOrder = {
@@ -41,11 +58,15 @@ class ListTable2 extends React.Component {
             ImageID: this.props.details.ImageID,
             ImageURL: this.props.details.ImageURL,
             PropertyBuyImageID: this.state.buyTyoeID,
-            Quantity: this.state.quantity
+            Quantity: this.state.quantity,
+            Detail: this.state.detail,
+            Price: this.state.price,
+            PriceDisplay: this.state.priceDisplay,
+            Size: this.state.size
         }
         orderlist.push(dataOrder)
         orderlistFull.push(dataOrderFull)
-        console.log(orderlist)
+        dataCart.push(dataOrderFull)
         this.props.nextPage()
     }
 
@@ -70,7 +91,14 @@ class ListTable2 extends React.Component {
                                 <tr>
                                     <td>
                                         <Input type="select" name="select" id="exampleSelect"
-                                            onChangeCapture={() => this.setState({ buyTyoeID: item.PropertyBuyImageID })}
+                                            onChangeCapture={() => this.setState({
+                                                buyTyoeID: item.PropertyBuyImageID,
+                                                detail: item.Detail,
+                                                price: item.Price,
+                                                priceDisplay: item.PriceDisplay,
+                                                size: item.Size
+
+                                            })}
                                             onChange={this.handleChange.bind(this)}
                                         >
                                             <option value="0">0</option>
