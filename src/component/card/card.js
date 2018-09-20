@@ -56,6 +56,7 @@ class CardEvents extends Component {
             ]
         })
         axios.post(uri, data, {
+            mode : 'no-cors',
             headers: {
                 "X-DreamFactory-API-Key": api_key,
                 "X-DreamFactory-Session-Token": this.props.token.token

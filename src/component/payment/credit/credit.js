@@ -3,6 +3,7 @@ import FormCredit from '../../form/form-credit'
 import './credit.css'
 
 class CreditPayment extends Component {
+    
     render() {
         return (
             <div>

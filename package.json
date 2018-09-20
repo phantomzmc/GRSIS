@@ -6,6 +6,7 @@
   "dependencies": {
     "autoresponsive-react": "^1.1.31",
     "axios": "^0.18.0",
+    "base-64": "^0.1.0",
     "bootstrap": "^4.1.0",
     "bulma-start": "^0.0.2",
     "clarity-react-responsive-grid-layout": "^2.0.9",
@@ -14,6 +15,7 @@
     "gh-pages": "^1.2.0",
     "lightbox-react": "^0.1.5",
     "material-design-icons": "^3.0.1",
+    "omise": "^0.5.4",
     "react": "^16.3.2",
     "react-autosuggest": "^9.3.4",
     "react-bootstrap": "^0.32.3",
