@@ -15,17 +15,18 @@ class ListTable1 extends React.Component {
             index: 0
         }
     }
-    componentWillUpdate(nextProps) {
-        if (nextProps.propertyImg != this.props.propertyImg) {
-            console.log(nextProps.propertyImg)
-            setTimeout(() => {
-                this.setState({ dataSouce: nextProps.propertyImg })
-                console.log(this.state.dataSouce)
-            }, 100)
-            this.setState({ dataSouce: nextProps.propertyImg })
-            console.log(this.state.dataSouce)
-        }
-    }
+    
+    // componentWillUpdate(nextProps) {
+    //     if (nextProps.propertyImg != this.props.propertyImg) {
+    //         console.log(nextProps.propertyImg)
+    //         setTimeout(() => {
+    //             this.setState({ dataSouce: nextProps.propertyImg })
+    //             console.log(this.state.dataSouce)
+    //         }, 100)
+    //         this.setState({ dataSouce: nextProps.propertyImg })
+    //         console.log(this.state.dataSouce)
+    //     }
+    // }
     handleChange(e) {
         this.setState({
             quantity: e.target.value
@@ -46,7 +47,7 @@ class ListTable1 extends React.Component {
         console.log(this.props.details)
         let dataOrder = {
             ImageID: this.props.details.ImageID,
-            PropertyBuyImageID: this.state.dataSouce[index].PropertyBuyImageID,
+            PropertyBuyImageID:this.state.buyTyoeID,
             Quantity: this.state.quantity
         }
         let dataOrderFull = {
@@ -69,7 +70,7 @@ class ListTable1 extends React.Component {
         const { index } = this.state
         return (
             <div xs="12" sm="12" md="12">
-                {this.state.dataSouce == "" ?
+                {this.props.propertyImg == "" ?
                     <div></div>
                     :
                     <Table hover>
@@ -83,7 +84,7 @@ class ListTable1 extends React.Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.dataSouce.map((item, index) =>
+                                this.props.propertyImg.map((item, index) =>
                                     <tr>
                                         <td>
                                             <Input type="select" name="select" id="exampleSelect"

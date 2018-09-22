@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 
+
 const cart = {
     image: [],
     counter: 0
@@ -51,9 +52,14 @@ const order = (state = { orderlist : [], orderlistFull : []}, action) => {
             state.orderlistFull = action.payload
             break;
         }
+        case "setTotalPrice" : {
+            state.totalPrice = action.payload
+            break; 
+        }
     }
     return state
 }
+
 
 
 const myLogger = store => next => action => {

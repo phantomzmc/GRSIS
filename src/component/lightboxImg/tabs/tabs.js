@@ -15,7 +15,8 @@ class TabsLightBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: '1'
+            activeTab: '1',
+            dataSource : ""
         };
         this.toggle = this.toggle.bind(this);
     }
@@ -43,8 +44,8 @@ class TabsLightBox extends React.Component {
         })
             .then((response) => {
                 this.setState({ dataSource: response.data });
-
                 console.log(this.state.dataSource)
+                console.log(response.data)
             }).catch((error) => {
                 console.error(error)
             });

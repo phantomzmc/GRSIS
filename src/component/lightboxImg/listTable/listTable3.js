@@ -14,18 +14,18 @@ class ListTable3 extends React.Component {
             buyTyoeID: 0
         }
     }
-
-    componentWillUpdate(nextProps) {
-        if (nextProps.propertyImg != this.props.propertyImg) {
-            console.log(nextProps.propertyImg)
-            setTimeout(() => {
-                this.setState({ dataSouce: nextProps.propertyImg })
-                console.log(this.state.dataSouce)
-            }, 100)
-            this.setState({ dataSouce: nextProps.propertyImg })
-            console.log(this.state.dataSouce)
-        }
-    }
+    
+    // componentWillUpdate(nextProps) {
+    //     if (nextProps.propertyImg != this.props.propertyImg) {
+    //         console.log(nextProps.propertyImg)
+    //         setTimeout(() => {
+    //             this.setState({ dataSouce: nextProps.propertyImg })
+    //             console.log(this.state.dataSouce)
+    //         }, 100)
+    //         this.setState({ dataSouce: nextProps.propertyImg })
+    //         console.log(this.state.dataSouce)
+    //     }
+    // }
     handleChange(e) {
         this.setState({
             quantity: e.target.value
@@ -67,7 +67,7 @@ class ListTable3 extends React.Component {
     render() {
         return (
             <div xs="12" sm="12" md="12">
-                {this.state.dataSouce == "" ?
+                {this.props.propertyImg == "" ?
                     <div></div>
                     :
                     <Table hover>
@@ -80,7 +80,7 @@ class ListTable3 extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.dataSouce.map((item, index) =>
+                            {this.props.propertyImg.map((item, index) =>
                                 <tr>
                                     <td>
                                         <Input type="select" name="select" id="exampleSelect"

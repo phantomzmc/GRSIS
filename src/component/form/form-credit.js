@@ -99,12 +99,12 @@ class FormRegister extends Component {
                                     <Label for="lastname" sm={2}>วันหมดอายุ : </Label>
                                     <Col sm={5}>
                                         <Input
-                                            placeholder="Ex.May 2018"
+                                            placeholder="Ex.เดือนที่หมดอายุ"
                                             innerRef={(input) => this.getExpMonth = input} />
                                     </Col>
                                     <Col sm={5}>
                                         <Input
-                                            placeholder="Ex.May 2018"
+                                            placeholder="Ex.ปีที่หมดอายุ"
                                             innerRef={(input) => this.getExpYear = input} />
                                     </Col>
                                 </FormGroup>
@@ -116,7 +116,7 @@ class FormRegister extends Component {
                                             innerRef={(input) => this.getCVC = input} />
                                     </Col>
                                 </FormGroup>
-                                <Button block type="submit">ok</Button>
+                                {/* <Button block type="submit">ok</Button> */}
                             </Form>
                         </Col>
                         

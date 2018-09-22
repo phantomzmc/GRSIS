@@ -8,6 +8,7 @@ import ReactLoading from 'react-loading';
 import { BrowserRouter, Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { reactLocalStorage } from 'reactjs-localstorage';
 import './card.css'
 import Pagenation from '../pagenation/pagenation'
 import SubCard from './subcard'
@@ -56,7 +57,7 @@ class CardEvents extends Component {
             ]
         })
         axios.post(uri, data, {
-            mode : 'no-cors',
+            mode: 'no-cors',
             headers: {
                 "X-DreamFactory-API-Key": api_key,
                 "X-DreamFactory-Session-Token": this.props.token.token
@@ -66,8 +67,8 @@ class CardEvents extends Component {
             .then((response) => {
                 this.setState({ dataSource: response.data });
                 setTimeout(() => {
-                    this.setState({ isLoad: false, isEvent: true})
-                },1000)
+                    this.setState({ isLoad: false, isEvent: true })
+                }, 1000)
                 console.log(this.state.dataSource)
             }).catch((error) => {
                 console.error(error)
@@ -79,13 +80,16 @@ class CardEvents extends Component {
     }
     saveEvent(item) {
         this.props.setEvent(item)
+        reactLocalStorage.setObject('event',item);
         this.gotoShowimage()
     }
     gotoShowimage() {
         this.props.history.push("/showimage")
+        reactLocalStorage.getObject('item');
+        console.log(reactLocalStorage.getObject('item'))
     }
     onChangePage = (pageNum) => {
-        this.setState({ pageNo: pageNum ,isEvent : false ,isLoad : true });
+        this.setState({ pageNo: pageNum, isEvent: false, isLoad: true });
         console.log("pageNum" + pageNum)
         this.getEvent()
     }

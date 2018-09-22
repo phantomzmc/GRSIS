@@ -34,7 +34,7 @@ class StepControl extends Component {
         this.onClickPrev = this.onClickPrev.bind(this)
     }
     onClickNext() {
-        const { steps, currentStep } = this.state;
+        const { step, currentStep } = this.state;
         this.setState({
             currentStep: currentStep + 1,
             isOpenCart: false
@@ -42,7 +42,7 @@ class StepControl extends Component {
         this.controlPage()
     }
     onClickPrev() {
-        const { steps, currentStep } = this.state;
+        const { step, currentStep } = this.state;
         this.setState({
             currentStep: currentStep - 1,
             isOpenCart: false
@@ -51,6 +51,7 @@ class StepControl extends Component {
     }
     controlPage() {
         let { currentStep } = this.state
+        console.log(currentStep)
         if (currentStep == 0) {
             this.setState({ isOpenForm: true })
         }

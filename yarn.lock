@@ -6872,6 +6872,10 @@ react@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+reactjs-localstorage@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/reactjs-localstorage/-/reactjs-localstorage-0.0.7.tgz#c01453b1bd22304cff285a771e12351708f40281"
+
 reactjs-popup@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/reactjs-popup/-/reactjs-popup-1.2.0.tgz#93acb988f8dacf3ba139085df457b03d23e8e926"
@@ -6974,6 +6978,10 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+redux-persist@^5.10.0:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.10.0.tgz#5d8d802c5571e55924efc1c3a9b23575283be62b"
 
 redux@^4.0.0:
   version "4.0.0"
@@ -7370,6 +7378,12 @@ serviceworker-cache-polyfill@^4.0.0:
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
+
+set-default-browser@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/set-default-browser/-/set-default-browser-1.0.1.tgz#cc0e7841a78b7916042b7c61101246deff1ee165"
+  dependencies:
+    meow "^3.7.0"
 
 set-immediate-shim@^1.0.1:
   version "1.0.1"
