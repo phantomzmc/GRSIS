@@ -30,9 +30,15 @@ class CartImages extends Component {
     // }
     sumPriceBuy() {
         console.log(dataPrice)
-        const add = (a, b) => a + b;
-        const sum = dataPrice.reduce(add)
-        this.setState({ totalPrice: parseFloat(sum).toFixed(2) })
+        if (dataPrice == "") {
+            dataPrice.push(parseFloat(0.0).toFixed(1))
+        }
+        else {
+            const add = (a, b) => a + b;
+            const sum = dataPrice.reduce(add)
+            this.setState({ totalPrice: parseFloat(sum).toFixed(2) })
+            this.props.setTotalPrice(parseInt(sum))
+        }
     }
     deleteItem(index) {
         this.sumPriceBuy()
@@ -75,7 +81,7 @@ class CartImages extends Component {
             <div>
                 <h2>รายการสั่งซื้อทั้งหมด</h2>
                 {this.state.listview &&
-                    <Table>
+                    <Table responsive>
                         <thead className="table-head">
                             <tr>
                                 <th></th>
@@ -148,5 +154,14 @@ const mapStateToProps = state => {
         cartImage: state.cartImage
     }
 }
+const mapDispatchToProps = dispatch => {
+    return {
+        setTotalPrice: (totalPrice) => {
+            dispatch({
+                type: "setTotalPrice",
+                payload: totalPrice
+            })
+        },    }
+}
 
-export default connect(mapStateToProps)(CartImages)
+export default connect(mapStateToProps,mapDispatchToProps)(CartImages)

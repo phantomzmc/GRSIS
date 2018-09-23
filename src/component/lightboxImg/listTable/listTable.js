@@ -58,6 +58,7 @@ class ListTable1 extends React.Component {
             Detail: this.state.detail,
             Price: this.state.price,
             PriceDisplay: this.state.priceDisplay,
+            FormatBuyImageID : this.state.FormatBuyImageID,
             Size: this.state.size
         }
 
@@ -93,6 +94,7 @@ class ListTable1 extends React.Component {
                                                     detail: item.Detail,
                                                     price: item.Price,
                                                     priceDisplay: item.PriceDisplay,
+                                                    FormatBuyImageID : item.FormatBuyImageID,
                                                     size: item.Size
 
                                                 })}

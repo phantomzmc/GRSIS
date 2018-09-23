@@ -21,7 +21,7 @@ class LigthBoxImage extends Component {
         };
     }
     componentDidMount(){
-        console.log(this.state.img)
+        console.log(this.props.keyImage)
         console.log(this.state.imgDetail)
     }
     render() {
@@ -38,7 +38,7 @@ class LigthBoxImage extends Component {
                                             ดูภาพขนาดใหญ่
                                         </Button>
                                     </div>
-                                    <span>test</span>
+                                    <span>{this.props.keyImage} / 35</span>
 
                                 </CardTitle>
                                 <CardSubtitle>

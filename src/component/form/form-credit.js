@@ -78,7 +78,7 @@ class FormRegister extends Component {
                 <Container>
                     <Row>
                         <Col xs={12} sm={12}>
-                            <Form onSubmit={this.handleSubmit}>
+                            <Form onSubmit={this.handleSubmit.bind(this)}>
                                 <FormGroup row>
                                     <Label for="exampleEmail" sm={2}>ชื่อบนบัตร : </Label>
                                     <Col sm={10}>

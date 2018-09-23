@@ -2,7 +2,7 @@ export default [
     {
         ImageURL : "http://stocks.shutterrunning.com/photos/BB-01/POK%200031.jpg",
         ImageID : "",
-        FormatBuyImageID : "1",
+        FormatBuyImageID : "2",
         PropertyBuyImageID : "2",
         Detail: "ภาพพร้อมกรอบตั้ง",
         Quantity : "1",

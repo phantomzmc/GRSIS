@@ -179,7 +179,7 @@ class ImageLayout extends React.Component {
                     {this.state.showimage &&
                         <Row>
                             {
-                                images.map((dynamicData, i = 0) =>
+                                images.map((dynamicData, i = 1) =>
                                     <Col xs={12} md={4} sm={4}>
                                         <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
                                             <div id="contai-timer">
@@ -205,6 +205,7 @@ class ImageLayout extends React.Component {
                                     <LigthBoxImage
                                         detail={this.state.images[photoIndex]}
                                         image={images[photoIndex].src}
+                                        keyImage={this.state.photoIndex}
                                         nextPage={this.onPressNextPage}
                                     />
                                 </div>

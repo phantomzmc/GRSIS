@@ -135,10 +135,10 @@ class CardEvents extends Component {
                                             </Card>
                                         </CardDeck>
                                     </Col>
-
                                 )
                             }
                         </Row>
+                        
                     }
                 </Container>
                 <div className="pagenation">

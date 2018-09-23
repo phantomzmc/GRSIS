@@ -11,16 +11,18 @@ class ListTable2 extends React.Component {
         super(props)
         this.state = {
             dataSouce: "",
-            quantity: 0,
-            buyTyoeID: 0,
-            detail: "",
-            price: 0,
-            priceDisplay: "",
-            size: ""
+            order: {
+                quantity: 0,
+                buyTyoeID: 0,
+                detail: "",
+                price: 0,
+                priceDisplay: "",
+                size: ""
+            }
         }
         this.handleClick = this.handleClick.bind(this)
     }
-    
+
     // componentWillUpdate(nextProps) {
     //     if (nextProps.propertyImg != this.props.propertyImg) {
     //         console.log(nextProps.propertyImg)
@@ -48,7 +50,7 @@ class ListTable2 extends React.Component {
         console.log("price" + sumPrice)
     }
     handleClick() {
-        console.log(this.props.details)
+        console.log(orderlist)
         let dataOrder = {
             ImageID: this.props.details.ImageID,
             PropertyBuyImageID: this.state.buyTyoeID,
@@ -62,12 +64,18 @@ class ListTable2 extends React.Component {
             Detail: this.state.detail,
             Price: this.state.price,
             PriceDisplay: this.state.priceDisplay,
+            FormatBuyImageID : this.state.FormatBuyImageID,
             Size: this.state.size
         }
         orderlist.push(dataOrder)
         orderlistFull.push(dataOrderFull)
         dataCart.push(dataOrderFull)
         this.props.nextPage()
+    }
+    handleArray(item, index) {
+        orderlist.ImageID = this.props.details.ImageID
+        orderlist.PropertyBuyImageID = item.PropertyBuyImageID
+        orderlist.Quantity = this.state.quantity
     }
 
     render() {
@@ -87,7 +95,7 @@ class ListTable2 extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.propertyImg.map((item) =>
+                            {this.props.propertyImg.map((item, index) =>
                                 <tr>
                                     <td>
                                         <Input type="select" name="select" id="exampleSelect"
@@ -96,9 +104,10 @@ class ListTable2 extends React.Component {
                                                 detail: item.Detail,
                                                 price: item.Price,
                                                 priceDisplay: item.PriceDisplay,
+                                                FormatBuyImageID : item.FormatBuyImageID,
                                                 size: item.Size
-
                                             })}
+                                            // onChangeCapture={() => this.handleArray(item, index)}
                                             onChange={this.handleChange.bind(this)}
                                         >
                                             <option value="0">0</option>
