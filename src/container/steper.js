@@ -28,16 +28,22 @@ class StepControl extends Component {
             isOpenCart: true,
             isOpenForm: false,
             isOpenPayment: false,
-            isOpenInvoice: false
+            isOpenInvoice: false,
+            showButton: true
         }
         this.onClickNext = this.onClickNext.bind(this);
         this.onClickPrev = this.onClickPrev.bind(this)
+    }
+    e_showButton(dataAddress) {
+        console.log(dataAddress)
+        this.setState({ showButton: true })
     }
     onClickNext() {
         const { step, currentStep } = this.state;
         this.setState({
             currentStep: currentStep + 1,
-            isOpenCart: false
+            isOpenCart: false,
+            showButton: false
         });
         this.controlPage()
     }
@@ -45,7 +51,8 @@ class StepControl extends Component {
         const { step, currentStep } = this.state;
         this.setState({
             currentStep: currentStep - 1,
-            isOpenCart: false
+            isOpenCart: false,
+            showButton: false
         });
         this.controlPage()
     }
@@ -88,21 +95,20 @@ class StepControl extends Component {
                                 </div>
                                 <div className="cart-images">
                                     {this.state.isOpenCart && <CartImages />}
-                                    {this.state.isOpenForm && <FormRegister />}
-                                    {this.state.isOpenPayment && <PaymentLayout />}
+                                    {this.state.isOpenForm && <FormRegister onNextPage={this.e_showButton.bind(this)} />}
+                                    {this.state.isOpenPayment && <PaymentLayout onNextPage={this.e_showButton.bind(this)} />}
                                     {this.state.isOpenInvoice && <Invoice />}
                                 </div>
                                 <div className="btn-groud">
-                                    <ButtonGroup>
                                         {!this.state.isOpenCart &&
-                                            <Button color="danger" size="lg" onClick={this.onClickPrev} className="btn-prev"> ย้อนหลัง </Button>
+                                            <Button color="danger" size="lg" onClick={this.onClickPrev} className="btn-prev"> ย้อนกลับ </Button>
                                         }
                                         {this.state.isOpenCart &&
-                                            <Button color="danger" size="lg"> ยกเลิกรายการทั้งหมด </Button>
+                                            <Button color="danger" size="lg" className="btn-prev"> ยกเลิกรายการทั้งหมด </Button>
                                         }
-                                        <Button color="success" size="lg" onClick={this.onClickNext} className="btn-next"> ไปชำระค่าบริการ </Button>
-
-                                    </ButtonGroup>
+                                        {this.state.showButton &&
+                                            <Button color="success" size="lg" onClick={this.onClickNext} className="btn-next"> ไปชำระค่าบริการ </Button>
+                                        }
                                 </div>
                             </div>
                         </Col>

@@ -21,6 +21,8 @@
     "react-bootstrap": "^0.32.3",
     "react-bootstrap-dialog": "^0.10.0",
     "react-confirm-alert": "^2.0.5",
+    "react-credit-card-primitives": "^1.5.1",
+    "react-credit-cards": "^0.7.0",
     "react-dom": "^16.3.2",
     "react-google-photo": "^0.1.0",
     "react-grid-gallery": "^0.5.1",

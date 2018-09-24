@@ -2,14 +2,15 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding-bottom: 5%;
 }
 .credit-card{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 450px;
     height: 250px;
     background-color: skyblue;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 10px;
 }
 .credit-detail{
@@ -18,11 +19,34 @@
     justify-content: space-evenly;
 }
 .credit-detail2{
-    padding: 2.5%;
+    padding: 5%;
+}
+.credit-detail3{
+    display: flex;
+    flex-direction: row;
 }
 .title { 
     padding-top: 5%;
+    padding-bottom: 5%;
 }
 .text-card {
     color : white;
+}
+.head-credit{
+    text-align: left;
+    margin-top: 5%;
+    margin-left: 10%;
+}
+#logo {
+  margin-top: 5%;  
+  width: 100px;
+  height: 100px;
+}
+.priceDisplay{
+    background-color: palegoldenrod;
+    width: 200px;
+    height: 25px;
+    position: absolute;
+    right: 200px;
+    top : 100px;
 }

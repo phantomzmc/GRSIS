@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './form.css'
+import { connect } from 'react-redux'
 import dataCart from '../../data/dataCart'
-
 import SugestTambon from './sugestion/sug_tambon'
 import SugestAmphoe from './sugestion/sug_amphoe'
 import SugestProvince from './sugestion/sug_province'
@@ -11,9 +11,9 @@ class FormRegister extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            formAddress: false
+            formAddress: false,
+            submitBtn: true,
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentWillMount() {
         this.checkFormAddress()
@@ -28,19 +28,37 @@ class FormRegister extends Component {
         }
 
     }
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({
-            name : this.getName.value,
-            lastname : this.getLastname.value,
-            email : this.getEmail.value,
-            tel : this.getTel.value,
-            address : this.getAddress.value,
-            street : this.getStreet.value,
-            passcode : this.getPasscode.value,
-            country : this.getCountry.value,
-            help : this.getWarn.value
-        })
+        this.setState({ submitBtn: false })
+        this.checkDataAddress()
+    }
+    checkDataAddress() {
+        if (this.state.formAddress !== true) {
+            const dataAddress = {
+                name: this.getName.value,
+                lastname: this.getLastname.value,
+                email: this.getEmail.value,
+                tel: this.getTel.value,
+            }
+            this.props.setAddress(dataAddress)
+            this.props.onNextPage(dataAddress)
+        }
+        else if (this.state.formAddress === true) {
+            const dataAddress = {
+                name: this.getName.value,
+                lastname: this.getLastname.value,
+                email: this.getEmail.value,
+                tel: this.getTel.value,
+                address: this.getAddress.value,
+                street: this.getStreet.value,
+                passcode: this.getPasscode.value,
+                country: this.getCountry.value,
+                help: this.getWarn.value,
+            }
+            this.props.setAddress(dataAddress)
+            this.props.onNextPage(dataAddress)
+        }
     }
     render() {
         return (
@@ -55,13 +73,16 @@ class FormRegister extends Component {
                                     <Col sm={4} md={4} xs={12}>
                                         <Input
                                             type="text"
+                                            name="name"
                                             placeholder="Ex.ชื่อ............"
-                                            innerRef={(input) => this.getName = input} />
+                                            innerRef={(input) => this.getName = input}
+                                        />
                                     </Col>
                                     <Label for="lastname" sm={2} md={2} xs={12}>นามสกุล (จำเป็น)</Label>
                                     <Col sm={4} md={4} xs={12}>
                                         <Input
                                             type="text"
+                                            name="lastname"
                                             placeholder="Ex.นามสกุล..........."
                                             innerRef={(input) => this.getLastname = input} />
                                     </Col>
@@ -71,6 +92,7 @@ class FormRegister extends Component {
                                     <Col sm={10}>
                                         <Input
                                             type="email"
+                                            name="email"
                                             placeholder="Ex.Abc@gmail.com"
                                             innerRef={(input) => this.getEmail = input}
                                         />
@@ -81,6 +103,7 @@ class FormRegister extends Component {
                                     <Col sm={10}>
                                         <Input
                                             type="text"
+                                            name="tel"
                                             placeholder="Ex.090-3198XXX"
                                             innerRef={(input) => this.getTel = input}
                                         />
@@ -162,7 +185,12 @@ class FormRegister extends Component {
                                         {/* <Input type="text" name="tel" id="tel" placeholder="อยากได้อะไรบอกพี่ตุ้มได้นะจ๊ะ" /> */}
                                     </Col>
                                 </FormGroup>
-
+                                <div id="btn-submit">
+                                    {this.state.submitBtn == true ?
+                                        <Button block color="success" type="submit">ยืนยัน</Button> :
+                                        <Button block color="success" type="submit" disabled>ยืนยัน</Button>
+                                    }
+                                </div>
                             </Form>
                         </Col>
                     </Row>
@@ -172,4 +200,21 @@ class FormRegister extends Component {
     }
 }
 
-export default FormRegister;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setAddress: (dataAddress) => {
+            dispatch({
+                type: "setAddress",
+                payload: dataAddress
+            })
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormRegister);

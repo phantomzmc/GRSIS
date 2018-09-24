@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import Omise from '../../config/omisePayment'
+import Cards from 'react-credit-cards';
 // import './Form.css'
 
 const test_pkey = 'pkey_test_5ctl7h1r2lazhxd1ovk'
@@ -15,14 +16,15 @@ class FormRegister extends Component {
             name: "",
             cardNumber: "",
             expMonth: "",
-            expYear : "",
-            passCVC: ""
+            expYear: "",
+            passCVC: "",
+            submitBtn: true,
         }
     }
     componentDidMount() {
     }
     async genTokenCredit() {
-        let { name , cardNumber ,expMonth ,expYear ,passCVC} = this.state
+        let { name, cardNumber, expMonth, expYear, passCVC } = this.state
         const data = await Omise.createToken({
             'card': {
                 'name': name,
@@ -59,14 +61,29 @@ class FormRegister extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
-            name : this.getName.value,
-            cardNumber : this.getCardNumber.value,
-            expMonth : this.getExpMonth.value,
-            expYear : this.getExpYear.value,
-            passCVC : this.getCVC.value
+            name: this.getName.value,
+            cardNumber: this.getCardNumber.value,
+            expMonth: this.getExpMonth.value,
+            expYear: this.getExpYear.value,
+            passCVC: this.getCVC.value,
+            submitBtn: false
         })
-        setTimeout(()=>{
+        setTimeout(() => {
             this.genTokenCredit()
+        })
+        this.props.onNextPage()
+        this.setCreditCrad()
+    }
+    setCreditCrad(){
+        const dataCredit = {
+            name: this.getName.value,
+            cardNumber: this.getCardNumber.value,
+            expMonth: this.getExpMonth.value,
+            expYear: this.getExpYear.value,
+            passCVC: this.getCVC.value,
+        }
+        setTimeout(()=> {
+            this.props.onsetCreditCard(dataCredit)
         })
     }
 
@@ -78,11 +95,13 @@ class FormRegister extends Component {
                 <Container>
                     <Row>
                         <Col xs={12} sm={12}>
-                            <Form onSubmit={this.handleSubmit.bind(this)}>
+                            <Form onSubmit={this.handleSubmit}>
                                 <FormGroup row>
                                     <Label for="exampleEmail" sm={2}>ชื่อบนบัตร : </Label>
                                     <Col sm={10}>
                                         <Input
+                                            type="text"
+                                            name="name"
                                             placeholder="Ex.Thunnathorn"
                                             innerRef={(input) => this.getName = input} />
                                     </Col>
@@ -116,10 +135,17 @@ class FormRegister extends Component {
                                             innerRef={(input) => this.getCVC = input} />
                                     </Col>
                                 </FormGroup>
-                                {/* <Button block type="submit">ok</Button> */}
+                                <div id="btn-submit">
+                                    {this.state.submitBtn == true ?
+                                        <Button block color="primary" type="submit">ตรวจสอบบัตรเครดิต / เดรบิต</Button> :
+                                        <Button block color="success" type="submit">ชำระเงิน : บาท</Button>
+                                    }
+
+                                </div>
+
                             </Form>
                         </Col>
-                        
+
                     </Row>
                 </Container>
             </div >

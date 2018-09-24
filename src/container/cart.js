@@ -13,7 +13,7 @@ class CartImages extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            totalPrice: 0.00,
+            totalPrice: this.props.order.totalPrice,
             listview: true
         }
     }
@@ -151,7 +151,8 @@ class CartImages extends Component {
 
 const mapStateToProps = state => {
     return {
-        cartImage: state.cartImage
+        cartImage: state.cartImage,
+        order : state.order
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -161,7 +162,8 @@ const mapDispatchToProps = dispatch => {
                 type: "setTotalPrice",
                 payload: totalPrice
             })
-        },    }
+        }
+    }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(CartImages)
+export default connect(mapStateToProps, mapDispatchToProps)(CartImages)

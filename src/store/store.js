@@ -42,7 +42,7 @@ const cartImage = (state = cart, action) => {
     }
     return state
 };
-const order = (state = { orderlist : [], orderlistFull : []}, action) => {
+const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0 }, action) => {
     switch (action.type) {
         case "addOrderList": {
             state.orderlist = action.payload;
@@ -52,13 +52,22 @@ const order = (state = { orderlist : [], orderlistFull : []}, action) => {
             state.orderlistFull = action.payload
             break;
         }
-        case "setTotalPrice" : {
+        case "setTotalPrice": {
             state.totalPrice = action.payload
-            break; 
+            break;
         }
     }
     return state
 }
+const address = (state = {}, action) => {
+    switch (action.type) {
+        case "setAddress": {
+            state.address = action.payload
+            break;
+        }
+    }
+    return state
+};
 
 
 
@@ -72,7 +81,8 @@ const store = createStore(
         event,
         cartImage,
         token,
-        order
+        order,
+        address
     }),
     {},
     applyMiddleware(myLogger)

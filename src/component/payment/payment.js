@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Container } from "reactstrap";
-import { Icon  } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 import classnames from 'classnames';
 
 import CreditPayment from './credit/credit'
@@ -53,7 +53,9 @@ class PaymentLaout extends Component {
                     <TabPane tabId="1">
                         <Row>
                             <Col sm="12">
-                                <CreditPayment />
+                                <CreditPayment
+                                    onNextPages={this.props.onNextPage}
+                                />
                             </Col>
                         </Row>
                     </TabPane>
