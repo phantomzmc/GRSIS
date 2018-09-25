@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
 import Omise from '../../config/omisePayment'
 import Cards from 'react-credit-cards';
 // import './Form.css'
@@ -13,11 +13,16 @@ class FormRegister extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
-            cardNumber: "",
-            expMonth: "",
-            expYear: "",
-            passCVC: "",
+            name: "name",
+            cardNumber: "number",
+            expMonth: "month",
+            expYear: "year",
+            passCVC: "cvc",
+            errorName: false,
+            errorCardNumber: false,
+            errorExpMonth: false,
+            errorExpYear: false,
+            errorCVC: false,
             submitBtn: true,
         }
     }
@@ -71,10 +76,9 @@ class FormRegister extends Component {
         setTimeout(() => {
             this.genTokenCredit()
         })
-        this.props.onNextPage()
-        this.setCreditCrad()
+        this.checkForm()
     }
-    setCreditCrad(){
+    setCreditCrad() {
         const dataCredit = {
             name: this.getName.value,
             cardNumber: this.getCardNumber.value,
@@ -82,9 +86,30 @@ class FormRegister extends Component {
             expYear: this.getExpYear.value,
             passCVC: this.getCVC.value,
         }
-        setTimeout(()=> {
+        setTimeout(() => {
             this.props.onsetCreditCard(dataCredit)
         })
+    }
+    checkForm(){
+        if (this.getName.value == null || "") {
+            this.setState({ errorName: true })
+        }
+        else if ((this.getCardNumber.value == null || "") && (this.getCardNumber.value.length == 16)) {
+            this.setState({ errorCardNumber: true })
+        }
+        else if (this.getExpMonth.value == null || "") {
+            this.setState({ errorExpMonth: true })
+        }
+        else if (this.getExpYear.value == null || "") {
+            this.setState({ errorExpYear: true })
+        }
+        else if (this.getCVC.value == null || "") {
+            this.setState({ errorCVC: true })
+        }
+        else {
+            this.props.onNextPage()
+            this.setCreditCrad()
+        }
     }
 
 
@@ -98,42 +123,97 @@ class FormRegister extends Component {
                             <Form onSubmit={this.handleSubmit}>
                                 <FormGroup row>
                                     <Label for="exampleEmail" sm={2}>ชื่อบนบัตร : </Label>
-                                    <Col sm={10}>
-                                        <Input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Ex.Thunnathorn"
-                                            innerRef={(input) => this.getName = input} />
-                                    </Col>
+                                    {this.state.errorName == false ?
+                                        <Col sm={10}>
+                                            <Input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Ex.Thunnathorn"
+                                                innerRef={(input) => this.getName = input} />
+                                        </Col> :
+                                        <Col sm={10}>
+                                            <Input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Ex.Thunnathorn"
+                                                innerRef={(input) => this.getName = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกชื่อหน้าบัตรเครดิต</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="username" sm={2}>Card Number : </Label>
-                                    <Col sm={10}>
-                                        <Input
-                                            placeholder="Ex.5555 9999 0000 9999"
-                                            innerRef={(input) => this.getCardNumber = input} />
-                                    </Col>
+                                    {this.state.errorCardNumber == false ?
+                                        <Col sm={10}>
+                                            <Input
+                                                placeholder="Ex.5555 9999 0000 9999"
+                                                innerRef={(input) => this.getCardNumber = input} />
+                                        </Col>
+                                        :
+                                        <Col sm={10}>
+                                            <Input
+                                                placeholder="Ex.5555 9999 0000 9999"
+                                                innerRef={(input) => this.getCardNumber = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกชื่อหน้าบัตรเครดิต</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="lastname" sm={2}>วันหมดอายุ : </Label>
-                                    <Col sm={5}>
-                                        <Input
-                                            placeholder="Ex.เดือนที่หมดอายุ"
-                                            innerRef={(input) => this.getExpMonth = input} />
-                                    </Col>
-                                    <Col sm={5}>
-                                        <Input
-                                            placeholder="Ex.ปีที่หมดอายุ"
-                                            innerRef={(input) => this.getExpYear = input} />
-                                    </Col>
+                                    {this.state.errorExpMonth == false ?
+                                        <Col sm={5}>
+                                            <Input
+                                                placeholder="Ex.เดือนที่หมดอายุ"
+                                                innerRef={(input) => this.getExpMonth = input} />
+                                        </Col>
+                                        :
+                                        <Col sm={5}>
+                                            <Input
+                                                placeholder="Ex.เดือนที่หมดอายุ"
+                                                innerRef={(input) => this.getExpMonth = input}
+                                                invalid />
+                                            <FormFeedback>กรุณากรอกชื่อหน้าบัตรเครดิต</FormFeedback>
+                                        </Col>
+                                    }
+                                    {this.state.errorExpYear == false ?
+                                        <Col sm={5}>
+                                            <Input
+                                                placeholder="Ex.ปีที่หมดอายุ"
+                                                innerRef={(input) => this.getExpYear = input} />
+                                        </Col>
+                                        :
+                                        <Col sm={5}>
+                                            <Input
+                                                placeholder="Ex.ปีที่หมดอายุ"
+                                                innerRef={(input) => this.getExpYear = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกชื่อหน้าบัตรเครดิต</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="tel" sm={2}>รหัสความปลอดภัย : </Label>
-                                    <Col sm={10}>
-                                        <Input
-                                            placeholder="Ex.XXX"
-                                            innerRef={(input) => this.getCVC = input} />
-                                    </Col>
+                                    {this.state.errorCVC == false ?
+                                        <Col sm={10}>
+                                            <Input
+                                                placeholder="Ex.XXX"
+                                                innerRef={(input) => this.getCVC = input} />
+                                        </Col>
+                                        :
+                                        <Col sm={10}>
+                                            <Input
+                                                placeholder="Ex.XXX"
+                                                innerRef={(input) => this.getCVC = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกชื่อหน้าบัตรเครดิต</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 <div id="btn-submit">
                                     {this.state.submitBtn == true ?

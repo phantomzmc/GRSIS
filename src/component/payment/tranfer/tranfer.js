@@ -8,14 +8,17 @@ class TranferPayment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pictures: []
+            pictures: [],
+            image : "https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
         };
         this.onDrop = this.onDrop.bind(this);
     }
     onDrop(picture) {
         this.setState({
             pictures: this.state.pictures.concat(picture),
+            image : this.state.pictures.concat(picture)[0].name
         });
+        console.log(this.state.pictures.concat(picture)[0].name)
     }
     render() {
         return (
@@ -34,7 +37,7 @@ class TranferPayment extends Component {
                         <tr>
                             <td>
                                 <div>
-                                    <Image src="https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png" width="100" className="image-logo" />
+                                    <Image src={this.state.image} width="100" className="image-logo" />
                                 </div>
                             </td>
                             <td>

@@ -55,6 +55,7 @@ class Home extends Component {
                   title={this.state.titleSearch}
                   text1={this.state.text1}
                   text2={this.state.text2}
+                  pages={true}
                 />
               </div>
             </Col>

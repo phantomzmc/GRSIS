@@ -72,17 +72,22 @@ class ImageLayout extends React.Component {
         return true
     }
     feedImage(eventid) {
-        const token = this.props.token.token
+        console.log(this.props.searchTime)
         const uri = req[0].uspGetImageLists_
         const api_key = apikey[0].apikey
         let data = ({
             params: [
                 { name: "EventID", value: eventid },
                 { name: "PhotoGrapherID", value: this.props.event.photoGraID },
-                { name: "BibNumber", value: "" },
-                { name: "Time", value: "" },
+                { name: "BibNumber", value: this.props.searchBib },
+                { name: "Time", value: "08:00" },
                 { name: "PageNo", value: this.state.pageNo },
-                { name: "RowPerPage", value: "36" }
+                {
+                    name: "RowPerPage", value:
+                        this.props.searchBib == "" || this.props.searchTime == "" ?
+                            "36" :
+                            "100"
+                }
             ]
         })
 
@@ -109,7 +114,7 @@ class ImageLayout extends React.Component {
                         this.setState({ showimage: true, isLoad: false })
                     }, 100)
                 })
-                
+
             }).catch((error) => {
                 this.setState({ isLoad: true, showimage: false })
                 console.log(error)
@@ -162,7 +167,7 @@ class ImageLayout extends React.Component {
 
         }, 100)
     }
-    
+
 
 
     render() {
@@ -180,7 +185,7 @@ class ImageLayout extends React.Component {
                         <Row>
                             {
                                 images.map((dynamicData, i = 1) =>
-                                    <Col xs={12} md={4} sm={4}>
+                                    <Col xs={12} md={3} sm={4} lg={3}>
                                         <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
                                             <div id="contai-timer">
                                                 <span id="timer">{dynamicData.timer}</span>

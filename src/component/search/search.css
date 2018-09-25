@@ -17,10 +17,19 @@
     align-content: center;
     justify-content: center;
 }
+.input-text {
+    align-content: center;
+    text-align: center;
+}
 
 .btn-goevent {
     margin-top: 5%;
     margin-bottom: 5%;
+}
+.btn-gobib {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 10px;
 }
 
 .hr-style1 {
@@ -87,4 +96,15 @@
     margin: 0;
     padding: 0;
     list-style-type: disc;
+}
+#contai-time {
+    flex-direction: row;
+}
+#in-time{
+    color: #ffffff;
+    size: 24px;
+    margin: 10px;
+}
+#formtime { 
+    /* margin-top: 5%; */
 }

@@ -17,6 +17,9 @@ class ShowImageEvent extends Component {
         super(props)
         this.state = {
             titleSearch: "BIB Number",
+            bib: "",
+            time : "",
+            imagegrid : true
         }
     }
     sendIdPhotogra(id) {
@@ -24,6 +27,16 @@ class ShowImageEvent extends Component {
         console.log(id)
         this.setState({ photograid: id, showimage: false })
         this.props.setPhotoGraID(id)
+    }
+    setValueBib(value,type) {
+        if(type == 1){
+            this.setState({ bib: value, imagegrid: true })
+            console.log(value)
+        }
+        else if(type == 2){
+            this.setState({ time: value, imagegrid: true })
+            console.log(value)
+        }
     }
     render() {
         return (
@@ -41,6 +54,8 @@ class ShowImageEvent extends Component {
                                     title={this.state.titleSearch}
                                     text1="Search "
                                     text2=" BIB Number"
+                                    pages={false}
+                                    getValueBib={this.setValueBib.bind(this)}
                                 />
                             </div>
                         </Col>
@@ -56,10 +71,14 @@ class ShowImageEvent extends Component {
                                     />
                                 </div>
                                 <div className="event-card">
-                                    <ImageGrid
-                                        photograID={this.state.photograid}
-                                        showimage={this.state.showimage}
-                                    />
+                                    {this.state.imagegrid &&
+                                        <ImageGrid
+                                            photograID={this.state.photograid}
+                                            showimage={this.state.showimage}
+                                            searchBib={this.state.bib}
+                                            searchTime={this.state.time}
+                                        />
+                                    }
                                 </div>
                                 {/* <div>
                                     <Pagenation />

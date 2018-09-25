@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Input, Button, Form, FormGroup, Label } from 'reactstrap';
 import axios from "axios";
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest';
@@ -35,7 +35,8 @@ class SearchEvent extends Component {
             selectedOption: "",
             dataSource: [],
             value: '',
-            suggestions: []
+            suggestions: [],
+            typeSearch: 0
         }
     }
 
@@ -82,6 +83,28 @@ class SearchEvent extends Component {
             suggestions: []
         });
     };
+    handleChange(e) {
+        this.setState({
+            typeSearch: e.target.value
+        })
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({ bib: this.getSearch.value })
+        const type = 1
+        const search = this.getSearch.value
+        console.log(search)
+        this.props.getValueBib(search,type)
+    }
+    handleSubmitTime = (e) => {
+        e.preventDefault();
+        const type = 2
+        const time = this.getTime.value
+        const min = this.getMin.value
+        const timeSearch = time + ":" + min
+        console.log(timeSearch)
+        this.props.getValueBib(timeSearch,type)
+    }
     render() {
         const { value, suggestions } = this.state;
         const inputProps = {
@@ -91,28 +114,92 @@ class SearchEvent extends Component {
             onChange: this.onChange
         };
         return (
-            <div className="seach-haeder">
-                <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
-                <hr className="hr-style1" />
-                <hr className="hr-style2" />
-                <div className="input-seach">
-                    {/* <InputGroup size="lg">
+            this.props.pages == true ?
+                <div className="seach-haeder">
+                    <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
+                    <hr className="hr-style1" />
+                    <hr className="hr-style2" />
+                    <div className="input-seach">
+                        {/* <InputGroup size="lg">
                         <InputGroupAddon addonType="prepend">{this.state.titleInput}</InputGroupAddon>
 
                     </InputGroup> */}
-                    <Autosuggest
-                        suggestions={suggestions}
-                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                        getSuggestionValue={getSuggestionValue}
-                        renderSuggestion={renderSuggestion}
-                        inputProps={inputProps}
-                    />
+                        <Autosuggest
+                            suggestions={suggestions}
+                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                            getSuggestionValue={getSuggestionValue}
+                            renderSuggestion={renderSuggestion}
+                            inputProps={inputProps}
+                        />
+                    </div>
+                    <div className="btn-goevent">
+                        <Button outline color="warning" size="lg" onClick={() => this.segesEvent()}> Go to Event </Button>{' '}
+                    </div>
                 </div>
-                <div className="btn-goevent">
-                    <Button outline color="warning" size="lg" onClick={() => this.segesEvent()}> Go to Event </Button>{' '}
+                :
+                <div className="seach-haeder">
+                    <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
+                    <hr className="hr-style1" />
+                    <hr className="hr-style2" />
+                    <div className="input-seach">
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Input type="select" bsSize="lg" onChange={this.handleChange.bind(this)}>
+                                    <option value="0">เลือกกลุ่มการค้นหา</option>
+                                    <option value="1">BiB Number</option>
+                                    <option value="2">เวลา ชั่วโมง : นาที</option>
+                                </Input>
+                            </FormGroup>
+                        </Form>
+                    </div>
+                    <div className="input-seach">
+                        {this.state.typeSearch == 1 ?
+                            <div id="formtime">
+                                <Form inline onSubmit={this.handleSubmit}>
+                                    <FormGroup>
+                                        <Input
+                                            bsSize="lg"
+                                            placeholder="Ex.A1234"
+                                            innerRef={(input) => this.getSearch = input}
+                                        />
+                                    </FormGroup>
+                                    <div className="btn-gobib">
+                                        <Button outline color="warning" size="lg" type="submit"> Search BiB </Button>
+                                    </div>
+                                </Form>
+                            </div>
+                            :
+                            <div></div>
+                        }
+                        {this.state.typeSearch == 2 ?
+                            <div id="formtime">
+                                <Form inline onSubmit={this.handleSubmitTime}>
+                                    <FormGroup>
+                                        <Input
+                                            bsSize="lg"
+                                            placeholder=" ชั่วโมง Ex.06"
+                                            innerRef={(input) => this.getTime = input}
+                                        />
+                                        <div id="in-time">
+                                        <Label >  :  </Label>
+                                        </div>
+                                        <Input
+                                            bsSize="lg"
+                                            placeholder=" นาที Ex. 45"
+                                            innerRef={(input) => this.getMin = input}
+                                        />
+                                    </FormGroup>
+                                    <div className="btn-gobib">
+                                        <Button outline color="warning" size="lg" type="submit"> Search Time </Button>
+                                    </div>
+                                </Form>
+                            </div>
+                            :
+                            <div></div>
+                        }
+                    </div>
                 </div>
-            </div>
         )
     }
 }
@@ -122,4 +209,14 @@ const mapStateToProps = state => {
         event: state.event
     }
 }
-export default connect(mapStateToProps)(SearchEvent)
+const mapDispatchToProps = dispatch => {
+    return {
+        setBibCode: (bib) => {
+            dispatch({
+                type: "setBibCode",
+                payload: bib
+            })
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SearchEvent)
