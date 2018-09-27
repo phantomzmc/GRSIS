@@ -31,7 +31,7 @@ class ImageLayout extends React.Component {
             photoIndex: 0,
             isOpen: false,
             isOpenImage: false,
-            eventid: "214",
+            eventid: this.props.event.event.EventID,
             data: [],
             counter: 0,
             pageNo: 1,
@@ -48,11 +48,11 @@ class ImageLayout extends React.Component {
         this.setState({
             eventid: this.props.event.event.EventID
         })
-        this.feedImage(this.props.event.event.EventID)
 
     }
     componentDidMount() {
-        console.log(this.props.event.photoGraID)
+        this.feedImage(this.props.event.event.EventID)
+        // console.log(this.props.event.photoGraID)
     }
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.event.photoGraID)

@@ -105,6 +105,10 @@
     size: 24px;
     margin: 10px;
 }
-#formtime { 
-    /* margin-top: 5%; */
+#typeInput{ 
+    background-color: black;
+    color:  white;
+}
+#typeInput>option{ 
+    padding: 5%;
 }

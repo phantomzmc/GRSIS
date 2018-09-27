@@ -11,6 +11,8 @@ import Home from '../src/container/home';
 import ShowImageEvent from '../src/container/showImage';
 import StepControl from '../src/container/steper';
 import Invoice from '../src/container/invoice-bill'
+
+import SuggestEvent from '../src/component/form/sugestion/sug_amphoe'
 import store from './store/store'
 
 WebFont.load({
@@ -27,6 +29,8 @@ ReactDOM.render(
                 <Route path="/showimage" component={ShowImageEvent} />
                 <Route path="/stepcontrol" component={StepControl} />
                 <Route path="/invoice" component={Invoice} />
+                <Route path="/test" component={SuggestEvent} />
+
             </div>
         </BrowserRouter>
     </Provider>

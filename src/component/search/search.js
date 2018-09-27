@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { InputGroup, InputGroupAddon, Input, Button, Form, FormGroup, Label } from 'reactstrap';
+import { Col, Row, InputGroup, InputGroupAddon, Input, Button, Form, FormGroup, Label } from 'reactstrap';
 import axios from "axios";
 import { connect } from 'react-redux'
-import Autosuggest from 'react-autosuggest';
-import theme from "react-autosuggest/dist/theme";
+import { BrowserRouter, Link, withRouter } from 'react-router-dom'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 import './search.css'
-import { relative } from 'path';
+import SuggestEvent from '../form/sugestion/sug_event'
+
 const languages = [];
 const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
@@ -44,8 +44,8 @@ class SearchEvent extends Component {
         this.setState({ titleInput: this.props.title, text1: this.props.text1, text2: this.props.text2 })
 
     }
-    segesEvent = () => {
-        let uri = req[0].uspGetEventSuggestion
+    segesEvent() {
+        let uri = req[0].uspGetEvent
         let api_key = apikey[0].apikey
         let data = ({
             params: [
@@ -62,27 +62,20 @@ class SearchEvent extends Component {
             .then((response) => {
                 this.setState({ suggestions: response.data });
                 console.log(this.state.suggestions)
+                this.setEventSugest(response.data[0])
             }).catch((error) => {
                 console.error(error)
             });
     }
-    onChange = (event, { newValue }) => {
-        this.setState({
-            value: newValue
-        });
-        this.segesEvent()
-    };
-    onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-            suggestions: getSuggestions(value)
-        });
-    };
+    setSugestEvent(event) {
+        this.setState({ value: event })
 
-    onSuggestionsClearRequested = () => {
-        this.setState({
-            suggestions: []
-        });
-    };
+    }
+    setEventSugest(eventSugest) {
+        this.props.setEvent(eventSugest)
+        this.props.history.push("/showimage")
+    }
+
     handleChange(e) {
         this.setState({
             typeSearch: e.target.value
@@ -94,7 +87,7 @@ class SearchEvent extends Component {
         const type = 1
         const search = this.getSearch.value
         console.log(search)
-        this.props.getValueBib(search,type)
+        this.props.getValueBib(search, type)
     }
     handleSubmitTime = (e) => {
         e.preventDefault();
@@ -103,7 +96,7 @@ class SearchEvent extends Component {
         const min = this.getMin.value
         const timeSearch = time + ":" + min
         console.log(timeSearch)
-        this.props.getValueBib(timeSearch,type)
+        this.props.getValueBib(timeSearch, type)
     }
     render() {
         const { value, suggestions } = this.state;
@@ -120,19 +113,16 @@ class SearchEvent extends Component {
                     <hr className="hr-style1" />
                     <hr className="hr-style2" />
                     <div className="input-seach">
-                        {/* <InputGroup size="lg">
-                        <InputGroupAddon addonType="prepend">{this.state.titleInput}</InputGroupAddon>
+                        <Row>
+                            <Col xs={12} sm={12} md={12}>
+                                <SuggestEvent
+                                    getEventID={this.setSugestEvent.bind(this)}
+                                />
+                            </Col>
+                        </Row>
 
-                    </InputGroup> */}
-                        <Autosuggest
-                            suggestions={suggestions}
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                            getSuggestionValue={getSuggestionValue}
-                            renderSuggestion={renderSuggestion}
-                            inputProps={inputProps}
-                        />
                     </div>
+
                     <div className="btn-goevent">
                         <Button outline color="warning" size="lg" onClick={() => this.segesEvent()}> Go to Event </Button>{' '}
                     </div>
@@ -145,7 +135,7 @@ class SearchEvent extends Component {
                     <div className="input-seach">
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
-                                <Input type="select" bsSize="lg" onChange={this.handleChange.bind(this)}>
+                                <Input type="select" bsSize="lg" onChange={this.handleChange.bind(this)} id="typeInput">
                                     <option value="0">เลือกกลุ่มการค้นหา</option>
                                     <option value="1">BiB Number</option>
                                     <option value="2">เวลา ชั่วโมง : นาที</option>
@@ -159,6 +149,7 @@ class SearchEvent extends Component {
                                 <Form inline onSubmit={this.handleSubmit}>
                                     <FormGroup>
                                         <Input
+                                            id="typeInput"
                                             bsSize="lg"
                                             placeholder="Ex.A1234"
                                             innerRef={(input) => this.getSearch = input}
@@ -177,14 +168,16 @@ class SearchEvent extends Component {
                                 <Form inline onSubmit={this.handleSubmitTime}>
                                     <FormGroup>
                                         <Input
+                                            id="typeInput"
                                             bsSize="lg"
                                             placeholder=" ชั่วโมง Ex.06"
                                             innerRef={(input) => this.getTime = input}
                                         />
                                         <div id="in-time">
-                                        <Label >  :  </Label>
+                                            <Label >  :  </Label>
                                         </div>
                                         <Input
+                                            id="typeInput"
                                             bsSize="lg"
                                             placeholder=" นาที Ex. 45"
                                             innerRef={(input) => this.getMin = input}
@@ -216,7 +209,13 @@ const mapDispatchToProps = dispatch => {
                 type: "setBibCode",
                 payload: bib
             })
+        },
+        setEvent: (id) => {
+            dispatch({
+                type: "setEvent",
+                payload: id
+            })
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SearchEvent)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchEvent))

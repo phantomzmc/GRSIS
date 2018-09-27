@@ -35,7 +35,7 @@ class CardEvents extends Component {
             this.getEvent()
         }, 1000)
     }
-    componentWillReceiveProps = (nextState) => {
+    componentWillReceiveProps = (nextState, nextProps) => {
         if (nextState.pageNo != this.state.pageNo) {
             this.setState({
                 pageNo: this.state.pageNo
@@ -43,8 +43,13 @@ class CardEvents extends Component {
             this.getEvent()
             console.log("upgrade")
         }
+        
     }
-
+    componentDidUpdate(nextProps) {
+        if (this.props.event !== nextProps.event) {
+            console.log("event update")
+        }
+    }
     getEvent() {
         let uri = req[0].uspGetEventLists
         let api_key = apikey[0].apikey
@@ -80,7 +85,7 @@ class CardEvents extends Component {
     }
     saveEvent(item) {
         this.props.setEvent(item)
-        reactLocalStorage.setObject('event',item);
+        reactLocalStorage.setObject('event', item);
         this.gotoShowimage()
     }
     gotoShowimage() {
@@ -138,7 +143,7 @@ class CardEvents extends Component {
                                 )
                             }
                         </Row>
-                        
+
                     }
                 </Container>
                 <div className="pagenation">
@@ -154,7 +159,8 @@ class CardEvents extends Component {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.token,
+        event: state.event
     }
 }
 const mapDispatchToProps = dispatch => {

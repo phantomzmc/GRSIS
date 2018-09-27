@@ -21,6 +21,7 @@ class SugestTambon extends Component {
             searchTerm: '',
             isItems: false,
             amphoe: "",
+            test: ["1", "2", "test"]
 
         }
         this.searchUpdated = this.searchUpdated.bind(this)
@@ -40,7 +41,7 @@ class SugestTambon extends Component {
         const uri = req[0].uspGetAmphoeSuggestions
         const api_key = apikey[0].apikey
         // const token = this.props.token.token
-        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjcsInVzZXJfaWQiOjcsImVtYWlsIjoiZ3JzQGd1dXJ1bi5jb20iLCJmb3JldmVyIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvYXBpLnNodXR0ZXJydW5uaW5nMjAxNC5jb21cL2FwaVwvdjJcL3VzZXJcL3Nlc3Npb24iLCJpYXQiOjE1MzQyMTI1MDgsImV4cCI6MTUzNDIxNjEwOCwibmJmIjoxNTM0MjEyNTA4LCJqdGkiOiI0ODExNWFiNmRiOGFhNTdhYmY2YTQ4MTY4Mzk2MTk5YSJ9.WBiaueVNnkAH0z34fCGruynSiTK7IlPnJNMwEIUxMr0"
+        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjcsInVzZXJfaWQiOjcsImVtYWlsIjoiZ3JzQGd1dXJ1bi5jb20iLCJmb3JldmVyIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvYXBpLnNodXR0ZXJydW5uaW5nMjAxNC5jb21cL2FwaVwvdjJcL3VzZXJcL3Nlc3Npb24iLCJpYXQiOjE1Mzc5ODQyOTAsImV4cCI6MTUzNzk4Nzg5MCwibmJmIjoxNTM3OTg0MjkwLCJqdGkiOiI5ZGRjOTg3NzdmYmFkODczNTk1Zjg4NzhmNWNiMGIzZiJ9.FrolJSa9scFpZE1mFwg0wAwCe9KOueGEU8uvKrz7m2c"
 
         let data = ({
             params: [
@@ -58,7 +59,7 @@ class SugestTambon extends Component {
             responseType: 'json'
         })
             .then((response) => {
-                this.setState({ emails: response.data });
+                this.setState({ emails: response.data, isItems: true });
                 console.log(this.state.emails)
             }).catch((error) => {
                 console.error(error)
@@ -69,6 +70,7 @@ class SugestTambon extends Component {
         this.setState({ amphoe: email.Value, isItems: false })
     }
     searchUpdated(term) {
+        console.log(term)
         this.setState({ searchTerm: term, isItems: true })
     }
     render() {
@@ -86,21 +88,23 @@ class SugestTambon extends Component {
                 </Form>
                 {this.state.isItems &&
                     <div>
-                        {filteredEmails.map(email => {
+                        {filteredEmails.map((email) => {
                             return (
                                 <div className="list" key={email.Value}>
                                     <li
                                         className="list-items"
                                         style={{ listStyleType: "none" }}
                                         onClick={() => this.setValue(email)}>
-                                        {email.Value}
+                                        <p>{email.Value}</p>
                                     </li>
                                 </div>
                             )
                         })
                         }
                     </div>
+
                 }
+
             </div>
         )
     }
