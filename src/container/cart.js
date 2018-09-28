@@ -79,7 +79,7 @@ class CartImages extends Component {
         let { quantity } = this.state
         return (
             <div>
-                <h2>รายการสั่งซื้อทั้งหมด</h2>
+                <h2 style={{ fontFamily : 'kanit'}}>รายการสั่งซื้อทั้งหมด</h2>
                 {this.state.listview &&
                     <Table responsive>
                         <thead className="table-head">

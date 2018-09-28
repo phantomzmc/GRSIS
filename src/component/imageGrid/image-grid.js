@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { Modal } from 'semantic-ui-react'
 import Lightbox from 'lightbox-react';
 import ReactLoading from 'react-loading';
 import { Container, Col, Row, Card, CardBody, Button } from "reactstrap";
@@ -15,6 +13,7 @@ import Pagenation from '../pagenation/pagenation'
 import TabsLightBox from '../lightboxImg/tabs/tabs'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
+import Modal from "react-responsive-modal";
 import './image-grid.css'
 import ImageWorker from 'react-worker-image';
 import StackGrid from "react-stack-grid";
@@ -202,7 +201,34 @@ class ImageLayout extends React.Component {
                         </Row>
                     }
                 </Container>
-                <div>
+                {isOpen &&
+                    <Lightbox
+                        mainSrc={
+
+                            <div className="ligthbox-style">
+                                <LigthBoxImage
+                                    detail={this.state.images[photoIndex]}
+                                    image={images[photoIndex].src}
+                                    keyImage={this.state.photoIndex}
+                                    nextPage={this.onPressNextPage}
+                                />
+                            </div>
+
+                        }
+                        nextSrc={images[(photoIndex + 1) % images.length]}
+                        prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+                        onMovePrevRequest={() => this.setState({
+                            photoIndex: (photoIndex + images.length - 1) % images.length,
+                        })}
+                        onMoveNextRequest={() => this.setState({
+                            photoIndex: (photoIndex + 1) % images.length,
+                        })}
+                    />
+                }
+                {/* <div>
+
                     {isOpen &&
                         <Lightbox
                             mainSrc={
@@ -228,7 +254,7 @@ class ImageLayout extends React.Component {
                             })}
                         />
                     }
-                </div>
+                </div> */}
                 <div className="pagenation">
                     <Pagenation
                         numPage={(page) => this.onChangePage(page)} />

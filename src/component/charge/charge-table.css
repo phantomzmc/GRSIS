@@ -1,6 +1,8 @@
 
 .contai-view {
-    width: 500px;
+    width: 100%;
+    padding: 5%;
+    background-color: white;
 }
 #contai-list-head {
     background-color: darkorange;
@@ -16,4 +18,12 @@
     margin: 20px;
     text-align: center;
     font-family: 'kanit';
+}
+#cart-image {
+    margin: 100px;
+    justify-content: center;
+    align-items: center;
+}
+#table-cart { 
+    width: 500px;
 }

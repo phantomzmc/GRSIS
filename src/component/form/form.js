@@ -6,6 +6,7 @@ import dataCart from '../../data/dataCart'
 import SugestTambon from './sugestion/sug_tambon'
 import SugestAmphoe from './sugestion/sug_amphoe'
 import SugestProvince from './sugestion/sug_province'
+import SugestCountry from './sugestion/sug_country'
 
 class FormRegister extends Component {
     constructor(props) {
@@ -13,6 +14,10 @@ class FormRegister extends Component {
         this.state = {
             formAddress: false,
             submitBtn: true,
+            tumpon: "",
+            amphoe: "",
+            province: "",
+            country : ""
         }
     }
     componentWillMount() {
@@ -33,6 +38,7 @@ class FormRegister extends Component {
         this.setState({ submitBtn: false })
         this.checkDataAddress()
     }
+
     checkDataAddress() {
         if (this.state.formAddress !== true) {
             const dataAddress = {
@@ -52,8 +58,11 @@ class FormRegister extends Component {
                 tel: this.getTel.value,
                 address: this.getAddress.value,
                 street: this.getStreet.value,
+                tumpon: this.state.tumpon,
+                amphoe: this.state.amphoe,
+                province: this.state.province,
                 passcode: this.getPasscode.value,
-                country: this.getCountry.value,
+                country: this.state.country,
                 help: this.getWarn.value,
             }
             this.props.setAddress(dataAddress)
@@ -129,21 +138,27 @@ class FormRegister extends Component {
                                             </Col>
                                         </FormGroup>
                                         <FormGroup row>
-                                            <Label for="tel" sm={2}>ตำบล : </Label>
+                                            <Label for="tel" sm={2}>แขวง/ตำบล : </Label>
                                             <Col sm={4}>
-                                                <SugestTambon />
+                                                <SugestTambon
+                                                    setTambon={(value) => this.setState({ tumbon: value })}
+                                                />
                                                 {/* <Input type="text" name="tel" id="tel" placeholder="Ex.090-3198XXX" /> */}
                                             </Col>
-                                            <Label for="username" sm={2}>อำเภอ :  </Label>
+                                            <Label for="username" sm={2}>เขต/อำเภอ :  </Label>
                                             <Col sm={4}>
-                                                <SugestAmphoe />
+                                                <SugestAmphoe
+                                                    setAmphone={(value) => this.setState({ amphoe: value })}
+                                                />
                                                 {/* <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" /> */}
                                             </Col>
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="lastname" sm={2}>จังหวัด : </Label>
                                             <Col sm={4}>
-                                                <SugestProvince />
+                                                <SugestProvince
+                                                    setProvince={(value) => this.setState({ province: value })}
+                                                />
                                                 {/* <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." /> */}
                                             </Col>
                                             <Label for="tel" sm={2}>รหัสไปรษณีย์ : </Label>
@@ -157,11 +172,10 @@ class FormRegister extends Component {
                                         <FormGroup row>
                                             <Label for="username" sm={2}>ประเทศ :  </Label>
                                             <Col sm={10}>
-                                                <Input
-                                                    type="text"
-                                                    placeholder="Ex.ประเทศ ไทย"
-                                                    innerRef={(input) => this.getCountry = input}
-                                                />                                            </Col>
+                                                <SugestCountry 
+                                                    setCountry={(value)=> this.setState({ country : value})}
+                                                />                                          
+                                             </Col>
                                         </FormGroup>
 
                                     </div>

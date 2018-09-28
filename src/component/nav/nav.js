@@ -1,10 +1,12 @@
 import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Popover, PopoverHeader, PopoverBody, Col, Row } from 'reactstrap';
 import { Icon, Popup } from "semantic-ui-react";
 import { connect } from "react-redux";
+import Modal from "react-responsive-modal";
 import NotificationBadge from 'react-notification-badge';
-import CartImage from '../../component/charge/charge-table'
+import Cart from '../../container/cart'
 import { Effect } from 'react-notification-badge';
+import dataCart from '../../data/dataCart'
 import './nav.css'
 
 class NavBar extends React.Component {
@@ -13,7 +15,8 @@ class NavBar extends React.Component {
     this.state = {
       collapsed: true,
       open: false,
-      count: 1
+      count: 1,
+      layoutCart: false
     };
     this.toggleNavbar = this.toggleNavbar.bind(this);
   }
@@ -41,10 +44,10 @@ class NavBar extends React.Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/components/">หน้าแรก</NavLink>
+                <NavLink href="/">หน้าแรก</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/components/">รายการวิ่ง</NavLink>
+                <NavLink href="/">รายการวิ่ง</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="http://guurun.com/">โปรแกรมวิ่ง</NavLink>
@@ -60,16 +63,25 @@ class NavBar extends React.Component {
             <NavItem style={{ padding: "10px" }}>
               <div>
                 <NotificationBadge count={this.state.count} effect={Effect.SCALE} frameLength={120.0} />
+                <Icon name='shopping cart' size='big' inverted color='white' onClick={() => this.setState({ layoutCart: !this.state.layoutCart })} />
               </div>
-              <Popup
+              {/* <Popup
                 trigger={<Icon name='shopping cart' size='big' inverted color='white' />}
                 content={<CartImage />}
                 basic
-              />
+              /> */}
 
             </NavItem>
           </Nav>
         </Navbar>
+        <Row>
+          <Col xs={12} sm={12} md={12}>
+            <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center>
+              <Cart />
+            </Modal>
+          </Col>
+        </Row>
+
       </div >
     );
   }

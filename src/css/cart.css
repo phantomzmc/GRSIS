@@ -5,17 +5,21 @@
 
 th {
     color: white;
+    font-family: 'kanit';
     text-align: center;
 }
 
 td {
     text-align: center;
+    font-family: 'kanit';
 }
 
 td h4 {
     text-align: right;
     color: azure;
     margin-right: 10%;
+    font-family: 'kanit';
+
 }
 
 tfoot {

@@ -20,7 +20,7 @@
     background-color: darkorange;
 }
 .row-style {
-    width: 1200px;
+    width: 1000px;
 }
 .img-view {
     flex-direction: row;
@@ -31,7 +31,7 @@
 }
 .img-ligth {
     margin: 20px;
-    height: 700px;
+    height: 100%;
 }
 .tab-ligth {
     margin: 20px;

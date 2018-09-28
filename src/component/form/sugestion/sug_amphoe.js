@@ -41,7 +41,7 @@ class SugestTambon extends Component {
         const uri = req[0].uspGetAmphoeSuggestions
         const api_key = apikey[0].apikey
         // const token = this.props.token.token
-        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjcsInVzZXJfaWQiOjcsImVtYWlsIjoiZ3JzQGd1dXJ1bi5jb20iLCJmb3JldmVyIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvYXBpLnNodXR0ZXJydW5uaW5nMjAxNC5jb21cL2FwaVwvdjJcL3VzZXJcL3Nlc3Npb24iLCJpYXQiOjE1Mzc5ODQyOTAsImV4cCI6MTUzNzk4Nzg5MCwibmJmIjoxNTM3OTg0MjkwLCJqdGkiOiI5ZGRjOTg3NzdmYmFkODczNTk1Zjg4NzhmNWNiMGIzZiJ9.FrolJSa9scFpZE1mFwg0wAwCe9KOueGEU8uvKrz7m2c"
+        const token = this.props.token.token
 
         let data = ({
             params: [
@@ -68,10 +68,17 @@ class SugestTambon extends Component {
     }
     setValue(email) {
         this.setState({ amphoe: email.Value, isItems: false })
+        this.props.setAmphone(email.Value)
     }
     searchUpdated(term) {
         console.log(term)
-        this.setState({ searchTerm: term, isItems: true })
+        if(this.state.amphoe == ""){
+            this.setState({ searchTerm: term, isItems: true })
+        }
+        else if(this.state.amphoe != ""){
+            this.setState({ isItems: false })
+
+        }
     }
     render() {
         const { emails } = this.state
@@ -81,21 +88,21 @@ class SugestTambon extends Component {
             <div>
                 <Form>
                     <SearchInput
-                        placeholder={this.state.amphoe}
+                        placeholder="Ex.เมืองเชียงใหม่"
                         value={this.state.amphoe}
-                        className="search-input"
+                        className="search-input2"
                         onChange={(term) => { this.searchUpdated(term) }} />
                 </Form>
                 {this.state.isItems &&
                     <div>
                         {filteredEmails.map((email) => {
                             return (
-                                <div className="list" key={email.Value}>
+                                <div className="list2" key={email.Value}>
                                     <li
                                         className="list-items"
                                         style={{ listStyleType: "none" }}
                                         onClick={() => this.setValue(email)}>
-                                        <p>{email.Value}</p>
+                                        <p style={{ color : "#000",fontSize : 14}}>{email.Value}</p>
                                     </li>
                                 </div>
                             )

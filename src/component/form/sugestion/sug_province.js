@@ -67,6 +67,7 @@ class SugestTambon extends Component {
     }
     setValue(email) {
         this.setState({ province: email.Value, isItems: false })
+        this.props.setProvince(email.Value)
     }
     searchUpdated(term) {
         this.setState({ searchTerm: term, isItems: true })
@@ -79,21 +80,21 @@ class SugestTambon extends Component {
             <div>
                 <Form>
                     <SearchInput
-                        placeholder={this.state.province}
+                        placeholder="Ex.เชียงใหม่"
                         value={this.state.province}
-                        className="search-input"
+                        className="search-input2"
                         onChange={(term) => { this.searchUpdated(term) }} />
                 </Form>
                 {this.state.isItems &&
                     <div>
                         {filteredEmails.map(email => {
                             return (
-                                <div className="list" key={email.Value}>
+                                <div className="list2" key={email.Value}>
                                     <li
                                         className="list-items"
                                         style={{ listStyleType: "none" }}
                                         onClick={() => this.setValue(email)}>
-                                        {email.Value}
+                                        <p style={{ color : "#000",fontSize : 14}}>{email.Value}</p>
                                     </li>
                                 </div>
                             )

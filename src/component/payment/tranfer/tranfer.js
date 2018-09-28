@@ -1,24 +1,54 @@
 import React, { Component } from 'react'
 import ImageUploader from 'react-images-upload';
 import { Image } from 'semantic-ui-react';
+import axios from 'axios'
 import './tranfer.css'
 
+// let url_imgprofile = "https://upload.i-bitz.co.th/upload/"
 
 class TranferPayment extends Component {
     constructor(props) {
         super(props);
         this.state = {
             pictures: [],
-            image : "https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
+            image: "https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
         };
         this.onDrop = this.onDrop.bind(this);
     }
     onDrop(picture) {
         this.setState({
             pictures: this.state.pictures.concat(picture),
-            image : this.state.pictures.concat(picture)[0].name
         });
-        console.log(this.state.pictures.concat(picture)[0].name)
+        console.log(this.state.pictures.concat(picture)[0])
+        this.upimageToServe(this.state.pictures.concat(picture)[0])
+    }
+    upimageToServe(response) {
+        var photo = {
+            uri: '',
+            type: response.type,
+            name: response.name,
+            size: response.size,
+        };
+        console.log(photo)
+        var form = new FormData();
+        form.append("imageLink", photo);
+
+        let uri = "https://upload.i-bitz.co.th/upload/"
+        let data = form
+        axios.post(uri, form, {
+            headers: {
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'multipart/form-data',
+                'Cache-Control': 'no-cache'
+            },
+            responseType: 'json'
+        })
+            .then((responseJson) => {
+                console.log(responseJson)
+            }).catch((error) => {
+                console.error(error)
+            });
     }
     render() {
         return (

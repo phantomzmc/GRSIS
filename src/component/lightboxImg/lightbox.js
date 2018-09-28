@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Row, Col } from "reactstrap";
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
 import './lightbox.css'
 import Lightbox from 'lightbox-react';
@@ -20,7 +20,7 @@ class LigthBoxImage extends Component {
             isOpen: false
         };
     }
-    componentDidMount(){
+    componentDidMount() {
         console.log(this.props.keyImage)
         console.log(this.state.imgDetail)
     }
@@ -29,7 +29,7 @@ class LigthBoxImage extends Component {
             <div className="row-style">
                 <Card>
                     <Row>
-                        <Col xs="12" md="6" sm="6">
+                        <Col md={12} sm={12} xs={12}>
                             <div className="img-ligth">
                                 <CardTitle>
                                     <div className="click-full">
@@ -39,20 +39,18 @@ class LigthBoxImage extends Component {
                                         </Button>
                                     </div>
                                     <span>{this.props.keyImage} / 35</span>
-
                                 </CardTitle>
                                 <CardSubtitle>
                                     <div className="img-view">
-                                        <ImageWorker src={this.state.img} style={{ width: "80%" }} />
+                                        <ImageWorker src={this.state.img} style={{ height: "300px" }} />
                                     </div>
                                 </CardSubtitle>
                             </div>
                         </Col>
-                        <Col xs="12" md="6" sm="6">
+                    </Row>
+                    <Row>
+                        <Col md={12} sm={12} xs={12}>
                             <div className="tab-ligth">
-                                <CardTitle>
-                                    <h3>รายละเอียด</h3>
-                                </CardTitle>
                                 <CardBody>
                                     <TabsLightBox
                                         detail={this.state.imgDetail}
@@ -61,7 +59,6 @@ class LigthBoxImage extends Component {
                                 </CardBody>
                             </div>
                         </Col>
-
                     </Row>
                 </Card>
                 {
