@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Container } from "reactstrap";
 import { Icon } from "semantic-ui-react";
 import classnames from 'classnames';
-
+import { connect } from 'react-redux'
 import CreditPayment from './credit/credit'
 import TranferPayment from './tranfer/tranfer'
 
@@ -22,6 +22,7 @@ class PaymentLaout extends Component {
                 activeTab: tab
             });
         }
+        this.props.setTypePayment(tab)
     }
     render() {
         return (
@@ -55,6 +56,7 @@ class PaymentLaout extends Component {
                             <Col sm="12">
                                 <CreditPayment
                                     onNextPages={this.props.onNextPage}
+                                    addOrder={this.props.onAddOreder}
                                 />
                             </Col>
                         </Row>
@@ -62,7 +64,9 @@ class PaymentLaout extends Component {
                     <TabPane tabId="2">
                         <Row>
                             <Col sm="12">
-                                <TranferPayment />
+                                <TranferPayment
+                                    addOrder={this.props.onAddOreder}
+                                />
                             </Col>
                         </Row>
                     </TabPane>
@@ -72,4 +76,21 @@ class PaymentLaout extends Component {
     }
 }
 
-export default PaymentLaout;
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setTypePayment: (type) => {
+            dispatch({
+                type: "setTypePayment",
+                payload: type
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PaymentLaout);

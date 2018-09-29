@@ -44,6 +44,7 @@ class FormRegister extends Component {
         console.log(data)
         // this.openModal()
         this.getCharges(data.id)
+        this.props.onAddOrder()
     }
     async getCharges(tokenId) {
         console.log(tokenId)

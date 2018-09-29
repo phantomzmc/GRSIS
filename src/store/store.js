@@ -56,6 +56,10 @@ const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0 }, ac
             state.totalPrice = action.payload
             break;
         }
+        case "invoiceOrder": {
+            state.invoice = action.payload
+            break;
+        }
     }
     return state
 }

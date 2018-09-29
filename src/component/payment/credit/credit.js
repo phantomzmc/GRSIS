@@ -61,10 +61,12 @@ class CreditPayment extends Component {
                 <FormCredit
                     onNextPage={this.props.onNextPages}
                     onsetCreditCard={this.setCreditCard.bind(this)}
+                    onAddOrder={this.props.addOrder}
                 />
             </div>
         )
     }
 }
+
 
 export default CreditPayment

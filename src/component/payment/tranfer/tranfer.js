@@ -46,6 +46,7 @@ class TranferPayment extends Component {
         })
             .then((responseJson) => {
                 console.log(responseJson)
+                this.props.onAddOrder
             }).catch((error) => {
                 console.error(error)
             });

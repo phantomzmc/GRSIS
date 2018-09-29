@@ -91,7 +91,7 @@ class FormRegister extends Component {
                                     <Col sm={4} md={4} xs={12}>
                                         <Input
                                             type="text"
-                                            name="lastname"
+                                            name="surname"
                                             placeholder="Ex.นามสกุล..........."
                                             innerRef={(input) => this.getLastname = input} />
                                     </Col>

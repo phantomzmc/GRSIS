@@ -39,43 +39,43 @@ class StepControl extends Component {
     }
     componentDidMount() {
         let data = {
-          email: "grs@guurun.com",
-          password: "1f5ZIAEbhLg2GF6"
+            email: "grs@guurun.com",
+            password: "1f5ZIAEbhLg2GF6"
         }
         axios.post("http://api.shutterrunning2014.com/api/v2/user/session", data, {
-          headers: {
-            "api_key": "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88",
-          },
-          responseType: 'json'
+            headers: {
+                "api_key": "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88",
+            },
+            responseType: 'json'
         })
-          .then((response) => {
-            this.setState({ isLoading: false, token: response.data.session_token });
-            console.log(this.state.token)
-            this.props.setToken(this.state.token)
-          }).catch((error) => {
-            console.error(error)
-          });
-      }
-    addOrder(){
+            .then((response) => {
+                this.setState({ isLoading: false, token: response.data.session_token });
+                console.log(this.state.token)
+                this.props.setToken(this.state.token)
+            }).catch((error) => {
+                console.error(error)
+            });
+    }
+    addOrder() {
         let uri = req[0].uspAddOrder
         let api_key = apikey[0].apikey
         let stored = this.props
         let data = ({
             params: [
                 { name: "PaymentType", value: "1" },
-                { name: "PaymentStatus", value: "1" },
+                { name: "PaymentStatus", value: stored.payment.type },
                 { name: "PaymentSlip", value: "1" },
                 { name: "Email", value: stored.address.email },
-                { name: "FirstName", value: stored.address.address.firstname  },
+                { name: "FirstName", value: stored.address.address.firstname },
                 { name: "LastName", value: stored.address.address.lastname },
                 { name: "Address", value: stored.address.address.address },
                 { name: "Soi", value: stored.address.address.street },
                 { name: "SubDistric", value: stored.address.address.tumpon },
                 { name: "Distric", value: stored.address.address.amphoe },
-                { name: "Province", value: stored.address.address.province},
+                { name: "Province", value: stored.address.address.province },
                 { name: "PostCode", value: stored.address.passcode },
                 { name: "Country", value: stored.address.address.country },
-                { name: "Phone", value: stored.address.address.tel},
+                { name: "Phone", value: stored.address.address.tel },
                 { name: "Notes", value: "" },
                 { name: "TransactionID", value: "" },
                 { name: "ChargesID", value: "" },
@@ -92,8 +92,9 @@ class StepControl extends Component {
             responseType: 'json'
         })
             .then((response) => {
-                this.setState({ dataSource: response.data });
-                console.log(this.state.dataSource)
+                this.setState({ dataSource: response.data[0] });
+                console.log(response.data)
+                this.props.invoiceOrder(this.state.dataSource)
             }).catch((error) => {
                 console.error(error)
             });
@@ -151,7 +152,6 @@ class StepControl extends Component {
                 isOpenPayment: true,
                 isOpenInvoice: false
             })
-            this.addOrder()
         }
         else if (currentStep === 3) {
             this.setState({
@@ -181,10 +181,23 @@ class StepControl extends Component {
                                     <Stepper steps={this.state.step} activeStep={this.state.currentStep} />
                                 </div>
                                 <div className="cart-images">
-                                    {this.state.isOpenCart && <CartImages />}
-                                    {this.state.isOpenForm && <FormRegister onNextPage={this.e_showButton.bind(this)} />}
-                                    {this.state.isOpenPayment && <PaymentLayout onNextPage={this.e_showButton.bind(this)} />}
-                                    {this.state.isOpenInvoice && <Invoice />}
+                                    {this.state.isOpenCart &&
+                                        <CartImages />
+                                    }
+                                    {this.state.isOpenForm &&
+                                        <FormRegister
+                                            onNextPage={this.e_showButton.bind(this)}
+                                        />
+                                    }
+                                    {this.state.isOpenPayment &&
+                                        <PaymentLayout
+                                            onNextPage={this.e_showButton.bind(this)}
+                                            onAddOreder={this.addOrder.bind(this)}
+                                        />
+                                    }
+                                    {this.state.isOpenInvoice &&
+                                        <Invoice />
+                                    }
                                 </div>
                                 <div className="btn-groud">
                                     {!this.state.isOpenCart &&
@@ -211,21 +224,28 @@ class StepControl extends Component {
 
 const mapStateToProps = state => {
     return {
-        event : state.event,
-        address : state.address,
-        order : state.order,
-        token : state.token
+        event: state.event,
+        address: state.address,
+        order: state.order,
+        token: state.token,
+        payment : state.payment
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         setToken: (token) => {
-          dispatch({
-            type: "setToken",
-            payload: token
-          })
+            dispatch({
+                type: "setToken",
+                payload: token
+            })
+        },
+        invoiceOrder: (invoice) => {
+            dispatch({
+                type: "invoiceOrder",
+                payload: invoice
+            })
         }
-      }
+    }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(StepControl);
+export default connect(mapStateToProps, mapDispatchToProps)(StepControl);
