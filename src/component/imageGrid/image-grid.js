@@ -13,7 +13,7 @@ import Pagenation from '../pagenation/pagenation'
 import TabsLightBox from '../lightboxImg/tabs/tabs'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
-import Modal from "react-responsive-modal";
+import { Icon } from "semantic-ui-react";
 import './image-grid.css'
 import ImageWorker from 'react-worker-image';
 import StackGrid from "react-stack-grid";
@@ -38,7 +38,8 @@ class ImageLayout extends React.Component {
             showimage: false,
             index: 0,
             isLoad: true,
-            activeIndex: 0
+            activeIndex: 0,
+            openTab: false
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -116,8 +117,10 @@ class ImageLayout extends React.Component {
 
             }).catch((error) => {
                 this.setState({ isLoad: true, showimage: false })
-                console.log(error)
-                this.props.history.push("./")
+                setTimeout(() => {
+                    this.feedImage(this.props.event.event.EventID)
+                }, 100)
+                // this.props.history.push("./")
             });
     }
     counterimage() {
@@ -131,7 +134,7 @@ class ImageLayout extends React.Component {
         this.setState({ isOpenImage: false })
         console.log("cart")
         setTimeout(() => {
-            this.setState({ isOpen: false })
+            this.setState({ isOpen: false, openTab: false })
             this.submit()
         }, 1000)
         data.push(images[photoIndex].ImageURL)
@@ -163,7 +166,6 @@ class ImageLayout extends React.Component {
         console.log("pageNum" + pageNum)
         setTimeout(() => {
             this.feedImage(this.props.event.event.EventID)
-
         }, 100)
     }
 
@@ -184,7 +186,7 @@ class ImageLayout extends React.Component {
                         <Row>
                             {
                                 images.map((dynamicData, i = 1) =>
-                                    <Col xs={12} md={3} sm={4} lg={3}>
+                                    <Col xs={12} md={4} sm={4} lg={4}>
                                         <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
                                             <div id="contai-timer">
                                                 <span id="timer">{dynamicData.timer}</span>
@@ -192,7 +194,7 @@ class ImageLayout extends React.Component {
                                             <div id="contai-img">
                                                 <ImageWorker
                                                     src={dynamicData.src}
-                                                    style={{ width: "100%", height: "50%", margin: 5 }}
+                                                    style={{ width: "100%", height: "50%", }}
                                                 />
                                             </div>
                                         </div>
@@ -203,18 +205,19 @@ class ImageLayout extends React.Component {
                 </Container>
                 {isOpen &&
                     <Lightbox
-                        mainSrc={
+                        // mainSrc={
+                        //     <div className="ligthbox-style">
+                        //         <LigthBoxImage
+                        //             detail={this.state.images[photoIndex]}
+                        //             image={images[photoIndex].src}
+                        //             keyImage={this.state.photoIndex}
+                        //             nextPage={this.onPressNextPage}
+                        //             onOpenTab={this.state.openTab}
+                        //         />
+                        //     </div>
 
-                            <div className="ligthbox-style">
-                                <LigthBoxImage
-                                    detail={this.state.images[photoIndex]}
-                                    image={images[photoIndex].src}
-                                    keyImage={this.state.photoIndex}
-                                    nextPage={this.onPressNextPage}
-                                />
-                            </div>
-
-                        }
+                        // }
+                        mainSrc={images[photoIndex].src}
                         nextSrc={images[(photoIndex + 1) % images.length]}
                         prevSrc={images[(photoIndex + images.length - 1) % images.length]}
 
@@ -225,36 +228,51 @@ class ImageLayout extends React.Component {
                         onMoveNextRequest={() => this.setState({
                             photoIndex: (photoIndex + 1) % images.length,
                         })}
+                        imageTitle={
+                            <span>{this.state.photoIndex} / 35</span>
+                        }
+                        imageCaption={
+                            <div id="btn-caption">
+                                <Row>
+                                    <Col xs={12} sm={3} md={3}>
+                                        <span>{this.props.event.event.EventName}</span>
+                                    </Col>
+                                    <Col xs={12} sm={3} md={3}>
+                                        {this.props.photograName === "" ?
+                                            <span></span> :
+                                            <span> รูปภาพโดย : {this.props.photograName} </span>
+                                        }
+                                    </Col>
+                                    <Col xs={12} sm={3} md={3}>
+                                        <span>{this.state.photoIndex} / 35</span>
+
+                                    </Col>
+                                    <Col xs={12} sm={3} md={3}>
+                                        <Button color="success" outline onClick={() => this.setState({ openTab: true })} id="btn-buy">
+                                            <Icon name="cart" className="icon-full" />
+                                            <span id="text-buy">สั่งซื้อภาพ</span>
+                                        </Button>
+                                    </Col>
+                                </Row>
+
+                            </div>
+                        }
                     />
                 }
-                {/* <div>
+                {this.state.openTab &&
+                    <Lightbox
+                        mainSrc={
+                            <div className="ligthboxTab-style">
+                                <TabsLightBox
+                                    detail={this.state.images[photoIndex]}
+                                    nextPages={this.onPressNextPage}
+                                />
+                            </div>
 
-                    {isOpen &&
-                        <Lightbox
-                            mainSrc={
-                                <div className="ligthbox-style">
-                                    <LigthBoxImage
-                                        detail={this.state.images[photoIndex]}
-                                        image={images[photoIndex].src}
-                                        keyImage={this.state.photoIndex}
-                                        nextPage={this.onPressNextPage}
-                                    />
-                                </div>
-
-                            }
-                            nextSrc={images[(photoIndex + 1) % images.length]}
-                            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-
-                            onCloseRequest={() => this.setState({ isOpen: false })}
-                            onMovePrevRequest={() => this.setState({
-                                photoIndex: (photoIndex + images.length - 1) % images.length,
-                            })}
-                            onMoveNextRequest={() => this.setState({
-                                photoIndex: (photoIndex + 1) % images.length,
-                            })}
-                        />
-                    }
-                </div> */}
+                        }
+                        onCloseRequest={() => this.setState({ openTab: false })}
+                    />
+                }
                 <div className="pagenation">
                     <Pagenation
                         numPage={(page) => this.onChangePage(page)} />

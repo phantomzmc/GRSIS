@@ -14,9 +14,11 @@ class TabsControl extends Component {
         };
     }
 
-    toggle(tab) {
-        var tab = tab
+    toggle(tabs) {
+        const tab = tabs.ID
+        const name = tabs.Name
         this.props.photograID(tab)
+        this.props.photograName(name)
         console.log(tab)
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -43,7 +45,7 @@ class TabsControl extends Component {
                                     <NavItem>
                                         <NavLink
                                             className={classnames({ active: this.state.activeTab === item.ID })}
-                                            onClick={() => { this.toggle(item.ID); }} >
+                                            onClick={() => { this.toggle(item); }} >
                                             <Icon name='angle right' size='small' inverted color='black' />{item.Name}
                                         </NavLink>
                                     </NavItem>

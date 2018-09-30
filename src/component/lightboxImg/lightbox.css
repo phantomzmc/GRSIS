@@ -20,7 +20,7 @@
     background-color: darkorange;
 }
 .row-style {
-    width: 1000px;
+    width: 600px;
 }
 .img-view {
     flex-direction: row;
@@ -29,13 +29,28 @@
     align-items: center;
     text-align: center;
 }
+#img-worker {
+    width: 325px;
+    max-width: auto;
+    height: auto;
+    max-height: 400px;
+}
 .img-ligth {
     margin: 20px;
     height: 100%;
 }
 .tab-ligth {
-    margin: 20px;
-    height: 700px;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 500px;
+    height: 100%;
+}
+#card-tab{
+    position: absolute;
+    display: flex;
+    flex: auto;
+    
 }
 .click-full {
     justify-content: flex-end;
@@ -54,4 +69,17 @@
     position : absolute;
     right: 50px;
     top : 20px;
+}
+.ligthboxTab-style {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.btn-buy {
+    margin: 20px;
+}
+#text-buy{
+    font-family: 'kanit';
+    margin-left: 10px;
 }

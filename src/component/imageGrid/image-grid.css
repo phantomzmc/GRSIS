@@ -40,7 +40,7 @@
     position: absolute;
     background-color: grey;
     top: 10px;
-    left: 30px;
+    left: 20px;
     border-radius: 5px;
     opacity: 0.9;
     padding: 5px;
@@ -65,4 +65,22 @@
     bottom: 'auto';
     margin-right: '-50%';
     transform: 'translate(-50%, -50%)';
+}
+#btn-caption {
+    display: flex;
+    flex: 1;
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    font-family: 'kanit';
+    /* margin : 20px; */
+}
+#btn-caption>span {
+    padding: 20px;
+}
+#btn-buy {
+    width: 280px;
+    max-width: 500px;
+    align-items: center; 
 }

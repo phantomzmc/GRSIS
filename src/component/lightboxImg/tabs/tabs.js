@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardBody, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -16,7 +16,7 @@ class TabsLightBox extends React.Component {
         super(props);
         this.state = {
             activeTab: '1',
-            dataSource : ""
+            dataSource: ""
         };
         this.toggle = this.toggle.bind(this);
     }
@@ -60,77 +60,81 @@ class TabsLightBox extends React.Component {
     }
     render() {
         return (
-            <div xs="12" sm="12" md="12" lg="12" className="contai-tab">
-                <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '1' })}
-                            onClick={() => { this.toggle('1'); }}
-                        >
-                            <p>ไฟล์ภาพ</p>
-            </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '2' })}
-                            onClick={() => { this.toggle('2'); }}
-                        >
-                            <p>ภาพอย่างเดียว</p>
-            </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '3' })}
-                            onClick={() => { this.toggle('3'); }}
-                        >
-                            <p>ภาพพร้อมกรอบ</p>
-            </NavLink>
-                    </NavItem>
-                </Nav>
-                <TabContent activeTab={this.state.activeTab}>
-                    <TabPane tabId="1">
-                        <Row>
-                            <Col sm="12">
-                                <ListTable1
-                                    details={this.props.detail}
-                                    propertyImg={this.state.dataSource}
-                                    nextPage={() => this.props.nextPages()}
-                                />
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <Row>
-                            <Col sm="12">
-                                <ListTable2
-                                    details={this.props.detail}
-                                    propertyImg={this.state.dataSource}
-                                    nextPage={() => this.props.nextPages()}
+            <Card className="tab-ligth">
+                <CardBody >
+                    <div className="contai-tab">
+                        <Nav tabs>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: this.state.activeTab === '1' })}
+                                    onClick={() => { this.toggle('1'); }}
+                                >
+                                    <p>ไฟล์ภาพ</p>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: this.state.activeTab === '2' })}
+                                    onClick={() => { this.toggle('2'); }}
+                                >
+                                    <p>ภาพอย่างเดียว</p>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: this.state.activeTab === '3' })}
+                                    onClick={() => { this.toggle('3'); }}
+                                >
+                                    <p>ภาพพร้อมกรอบ</p>
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                        <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="1">
+                                <Row>
+                                    <Col xs="12">
+                                        <ListTable1
+                                            details={this.props.detail}
+                                            propertyImg={this.state.dataSource}
+                                            nextPage={() => this.props.nextPages()}
+                                        />
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                            <TabPane tabId="2">
+                                <Row>
+                                    <Col xs="12">
+                                        <ListTable2
+                                            details={this.props.detail}
+                                            propertyImg={this.state.dataSource}
+                                            nextPage={() => this.props.nextPages()}
 
-                                />
-                                <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-                                    <label style={{ fontFamily: "kanit" }}>*** หมายเหตุ : ราคาต่อหนึ่งภาพพร้อมกรอบ รวมค่าจัดส่งแล้ว</label>
-                                </div>
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="3">
-                        <Row>
-                            <Col sm="12">
-                                <ListTable3
-                                    details={this.props.detail}
-                                    propertyImg={this.state.dataSource}
-                                    nextPage={() => this.props.nextPages()}
+                                        />
+                                        <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+                                            <label style={{ fontFamily: "kanit" }}>*** หมายเหตุ : ราคาต่อหนึ่งภาพพร้อมกรอบ รวมค่าจัดส่งแล้ว</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                            <TabPane tabId="3">
+                                <Row>
+                                    <Col xs="12">
+                                        <ListTable3
+                                            details={this.props.detail}
+                                            propertyImg={this.state.dataSource}
+                                            nextPage={() => this.props.nextPages()}
 
-                                />
-                                <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-                                    <label style={{ fontFamily: "kanit" }}>*** ภาพอย่างเดียว จะบวกเพิ่มค่าจัดส่ง 20 บาท/การสั่งซื้อ (เลือกมากกว่า 1 ภาพ ก็บวกเพิ่มแค่ 20 บาท)</label>
-                                </div>
-                            </Col>
-                        </Row>
-                    </TabPane>
-                </TabContent>
-            </div>
+                                        />
+                                        <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+                                            <label style={{ fontFamily: "kanit" }}>*** ภาพอย่างเดียว จะบวกเพิ่มค่าจัดส่ง 20 บาท/การสั่งซื้อ (เลือกมากกว่า 1 ภาพ ก็บวกเพิ่มแค่ 20 บาท)</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                        </TabContent>
+                    </div>
+                </CardBody>
+            </Card>
         );
     }
 }

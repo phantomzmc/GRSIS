@@ -72,6 +72,15 @@ const address = (state = {}, action) => {
     }
     return state
 };
+const payment = (state = {} ,action) => {
+    switch (action.type){
+        case "setTypePayment" : {
+            state.type  = action.payload
+            break;
+        }
+    }
+    return state
+}
 
 
 
@@ -86,7 +95,8 @@ const store = createStore(
         cartImage,
         token,
         order,
-        address
+        address,
+        payment
     }),
     {},
     applyMiddleware(myLogger)

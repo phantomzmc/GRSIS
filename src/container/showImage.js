@@ -19,7 +19,8 @@ class ShowImageEvent extends Component {
             titleSearch: "BIB Number",
             bib: "",
             time : "",
-            imagegrid : true
+            imagegrid : true,
+            photograname: ""
         }
     }
     sendIdPhotogra(id) {
@@ -27,6 +28,11 @@ class ShowImageEvent extends Component {
         console.log(id)
         this.setState({ photograid: id, showimage: false })
         this.props.setPhotoGraID(id)
+    }
+    sendNamePhotogra(name) {
+        var name = name
+        console.log(name)
+        this.setState({ photograname: name, showimage: false })
     }
     setValueBib(value,type) {
         if(type == 1){
@@ -68,12 +74,14 @@ class ShowImageEvent extends Component {
                                     <TabsControl
                                         namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
                                         photograID={this.sendIdPhotogra.bind(this)}
+                                        photograName={this.sendNamePhotogra.bind(this)}
                                     />
                                 </div>
                                 <div className="event-card">
                                     {this.state.imagegrid &&
                                         <ImageGrid
                                             photograID={this.state.photograid}
+                                            photograName={this.state.photograname}
                                             showimage={this.state.showimage}
                                             searchBib={this.state.bib}
                                             searchTime={this.state.time}

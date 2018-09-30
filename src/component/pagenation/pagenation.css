@@ -1,6 +1,6 @@
 .pagenation {
     flex: 1;
-    padding: 30px;
+    margin: 30px;
     position: relative;
 }
 
@@ -39,10 +39,11 @@
 }
 
 .textPage {
-    padding: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 .style-inputPage {
-    width: 100px;
+    width: 50px;
     display: flex;
     align-self: center;
     justify-content: center;

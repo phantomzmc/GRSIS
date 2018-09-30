@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Image } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react';
+import { Tooltip } from 'reactstrap';
+
 
 class SubCrad extends Component {
-    state = {
-        imgPhoGra: [],
-        imgPhoGra2: {}
-    }
-    componentDidMount() {
-        // console.log(this.props.photographer)
+    constructor(props) {
+        super(props)
+        this.state = {
+            imgPhoGra: [],
+            imgPhoGra2: {},
+        }
     }
 
     render() {
@@ -16,10 +18,7 @@ class SubCrad extends Component {
             <div>
                 {this.props.photographer.map((item) =>
                     <Image src={url + item.Pic} avatar />
-
-                )
-                }
-
+                )}
             </div>
 
         );

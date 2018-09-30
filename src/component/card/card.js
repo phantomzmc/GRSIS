@@ -28,7 +28,6 @@ class CardEvents extends Component {
             isEvent: false
         }
         this.gotoShowimage = this.gotoShowimage.bind(this)
-        // this.onChangePage = this.onChangePage.bind(this)
     }
     componentDidMount = () => {
         setTimeout(() => {
@@ -96,7 +95,10 @@ class CardEvents extends Component {
     onChangePage = (pageNum) => {
         this.setState({ pageNo: pageNum, isEvent: false, isLoad: true });
         console.log("pageNum" + pageNum)
-        this.getEvent()
+        setTimeout(()=>{
+            this.getEvent()
+
+        },100)
     }
 
     render() {

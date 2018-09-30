@@ -31,7 +31,7 @@ class CartImages extends Component {
     sumPriceBuy() {
         console.log(dataPrice)
         if (dataPrice == "") {
-            dataPrice.push(parseFloat(0.0).toFixed(1))
+            // dataPrice.push(parseFloat(0.0).toFixed(1))
         }
         else {
             const add = (a, b) => a + b;
@@ -79,7 +79,7 @@ class CartImages extends Component {
         let { quantity } = this.state
         return (
             <div>
-                <h2 style={{ fontFamily : 'kanit'}}>รายการสั่งซื้อทั้งหมด</h2>
+                <h3 style={{ fontFamily: 'kanit' }}>รายการสั่งซื้อทั้งหมด</h3>
                 {this.state.listview &&
                     <Table responsive>
                         <thead className="table-head">
@@ -129,7 +129,7 @@ class CartImages extends Component {
                                 :
                                 <tr>
                                     <td colSpan="6">
-                                        <h3>ยังไม่มีรายการสั่งซื้อ</h3>
+                                        <h3 style={{ padding: 20 }}>ยังไม่มีรายการสั่งซื้อ</h3>
                                     </td>
                                 </tr>
                             }
@@ -152,7 +152,7 @@ class CartImages extends Component {
 const mapStateToProps = state => {
     return {
         cartImage: state.cartImage,
-        order : state.order
+        order: state.order
     }
 }
 const mapDispatchToProps = dispatch => {
