@@ -76,8 +76,12 @@
     font-family: 'kanit';
     /* margin : 20px; */
 }
-#btn-caption>span {
-    padding: 20px;
+#contai-caption {
+    width: 300px;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+
 }
 #btn-buy {
     width: 280px;

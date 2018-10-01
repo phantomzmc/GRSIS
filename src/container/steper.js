@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Container, Row, Col, Button, ButtonGroup } from 'reactstrap';
+import { Container, Row, Col, ButtonGroup } from 'reactstrap';
+import { Button } from 'semantic-ui-react'
 import Stepper from 'react-stepper-horizontal';
 import '../css/steper.css'
 import Navbar from '../component/nav/nav'
@@ -201,13 +202,20 @@ class StepControl extends Component {
                                 </div>
                                 <div className="btn-groud">
                                     {!this.state.isOpenCart &&
-                                        <Button color="danger" size="lg" onClick={this.onClickPrev} className="btn-prev"> ย้อนกลับ </Button>
+                                        <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
+                                            <p>ย้อนกลับ</p>
+                                        </Button>
+                                        // <Button color="danger" size="lg" >  </Button>
                                     }
                                     {this.state.isOpenCart &&
-                                        <Button color="danger" size="lg" className="btn-prev"> ยกเลิกรายการทั้งหมด </Button>
+                                        <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
+                                            <p>ยกเลิกรายการทั้งหมด</p>
+                                        </Button>
                                     }
                                     {this.state.showButton &&
-                                        <Button color="success" size="lg" onClick={this.onClickNext} className="btn-next"> ไปชำระค่าบริการ </Button>
+                                        <Button inverted color='green' onClick={this.onClickNext} className="btn-next">
+                                            <p>ไปชำระค่าบริการ</p>
+                                        </Button>
                                     }
                                 </div>
                             </div>
@@ -228,7 +236,7 @@ const mapStateToProps = state => {
         address: state.address,
         order: state.order,
         token: state.token,
-        payment : state.payment
+        payment: state.payment
     }
 }
 const mapDispatchToProps = dispatch => {

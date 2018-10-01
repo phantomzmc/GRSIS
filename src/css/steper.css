@@ -92,8 +92,15 @@
 }
 .btn-next {
     width: 300px;
+    max-width: 300px;
+}
+.btn-next>p{
+    font-family: 'kanit';
 }
 .btn-prev {
     width: 300px;
-
+    width: 300px;
+}
+.btn-prev>p{
+    font-family: 'kanit';
 }

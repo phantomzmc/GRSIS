@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Button, Input } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
+import { Table } from 'semantic-ui-react'
 
 import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
@@ -85,49 +86,55 @@ class ListTable2 extends React.Component {
                 {this.props.propertyImg == "" ?
                     <div></div>
                     :
-                    <Table hover>
-                        <thead>
-                            <tr>
-                                <td><p>จำนวน</p></td>
-                                <td><p>รายละเอียด</p></td>
-                                <td><p>ขนาด</p></td>
-                                <td><p>ราคา</p></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.props.propertyImg.map((item, index) =>
-                                <tr>
-                                    <td>
-                                        <Input type="select" name="select" id="exampleSelect"
-                                            onChangeCapture={() => this.setState({
-                                                buyTyoeID: item.PropertyBuyImageID,
-                                                detail: item.Detail,
-                                                price: item.Price,
-                                                priceDisplay: item.PriceDisplay,
-                                                FormatBuyImageID : item.FormatBuyImageID,
-                                                size: item.Size
-                                            })}
-                                            // onChangeCapture={() => this.handleArray(item, index)}
-                                            onChange={this.handleChange.bind(this)}
-                                        >
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </Input>
-                                    </td>
-                                    <td><p>{item.Detail}</p></td>
-                                    <td>
-                                        {/* <Button outline color="primary">S</Button> */}
-                                        <p>{item.Size}</p>
-                                    </td>
-                                    <td><p>{item.PriceDisplay}</p></td>
-                                </tr>
-                            )
-                            }
-                        </tbody>
+                    <Table color="orange" key="orange">
+                        <Table.Header>
+                            <Table.Row textAlign='center' >
+                                <Table.HeaderCell>จำนวน</Table.HeaderCell>
+                                <Table.HeaderCell>รายละเอียด</Table.HeaderCell>
+                                <Table.HeaderCell>ขนาด</Table.HeaderCell>
+                                <Table.HeaderCell>ราคา</Table.HeaderCell>
+
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {
+                                this.props.propertyImg.map((item, index) =>
+
+                                    <Table.Row>
+                                        <Table.Cell textAlign='center'>
+                                            <Input type="select" name="select" id="exampleSelect"
+                                                onChangeCapture={() => this.setState({
+                                                    buyTyoeID: item.PropertyBuyImageID,
+                                                    detail: item.Detail,
+                                                    price: item.Price,
+                                                    priceDisplay: item.PriceDisplay,
+                                                    FormatBuyImageID: item.FormatBuyImageID,
+                                                    size: item.Size
+
+                                                })}
+                                                onChange={this.handleChange.bind(this)}
+                                            >
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </Input>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            <p>{item.Detail}</p>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            <p>{item.Size}</p>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            <p>{item.PriceDisplay}</p>
+                                        </Table.Cell>
+
+                                    </Table.Row>
+                                )}
+                        </Table.Body>
                     </Table>
                 }
                 <Button block color="success" onClick={() => this.handleClick()}>

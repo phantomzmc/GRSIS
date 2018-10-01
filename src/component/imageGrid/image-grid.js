@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from "react-redux";
 import axios from 'axios'
 import images from './dataimage'
-import LigthBoxImage from "../lightboxImg/lightbox";
+import Modal from "react-responsive-modal";
 import Pagenation from '../pagenation/pagenation'
 import TabsLightBox from '../lightboxImg/tabs/tabs'
 import req from '../../config/uri_req'
@@ -235,20 +235,27 @@ class ImageLayout extends React.Component {
                             <div id="btn-caption">
                                 <Row>
                                     <Col xs={12} sm={3} md={3}>
-                                        <span>{this.props.event.event.EventName}</span>
+                                        <div id="contai-caption">
+                                            <span> รายการ : {this.props.event.event.EventName}</span>
+                                        </div>
                                     </Col>
                                     <Col xs={12} sm={3} md={3}>
-                                        {this.props.photograName === "" ?
-                                            <span></span> :
-                                            <span> รูปภาพโดย : {this.props.photograName} </span>
-                                        }
-                                    </Col>
-                                    <Col xs={12} sm={3} md={3}>
-                                        <span>{this.state.photoIndex} / 35</span>
+                                        <div id="contai-caption">
+                                            {this.props.photograName === "" ?
+                                                <span> รูปภาพจากช่างภาพทั้งหมด </span> :
+                                                <span> รูปภาพโดย : {this.props.photograName} </span>
+                                            }
+                                        </div>
 
                                     </Col>
                                     <Col xs={12} sm={3} md={3}>
-                                        <Button color="success" outline onClick={() => this.setState({ openTab: true })} id="btn-buy">
+                                        <div id="contai-caption">
+                                            <span> รูปภาพที่ {this.state.photoIndex} จาก 35 รูป</span>
+                                        </div>
+
+                                    </Col>
+                                    <Col xs={12} sm={3} md={3}>
+                                        <Button color="success" outline onClick={() => this.setState({ openTab: true, isOpen: false })} id="btn-buy">
                                             <Icon name="cart" className="icon-full" />
                                             <span id="text-buy">สั่งซื้อภาพ</span>
                                         </Button>
@@ -259,7 +266,13 @@ class ImageLayout extends React.Component {
                         }
                     />
                 }
-                {this.state.openTab &&
+                <Modal open={this.state.openTab} onClose={() => this.setState({ openTab: false, isOpen: true })} center>
+                    <TabsLightBox
+                        detail={this.state.images[photoIndex]}
+                        nextPages={this.onPressNextPage}
+                    />
+                </Modal>
+                {/* {this.state.openTab &&
                     <Lightbox
                         mainSrc={
                             <div className="ligthboxTab-style">
@@ -272,7 +285,7 @@ class ImageLayout extends React.Component {
                         }
                         onCloseRequest={() => this.setState({ openTab: false })}
                     />
-                }
+                } */}
                 <div className="pagenation">
                     <Pagenation
                         numPage={(page) => this.onChangePage(page)} />

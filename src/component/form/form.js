@@ -17,21 +17,30 @@ class FormRegister extends Component {
             tumpon: "",
             amphoe: "",
             province: "",
-            country : ""
+            country: "",
+            totalPrice: this.props.order.totalPrice
         }
+        this.sumPricePost = this.sumPricePost.bind(this)
     }
     componentWillMount() {
         this.checkFormAddress()
     }
+    sumPricePost() {
+        const price = this.state.totalPrice
+        const pricepost = 60
+        const totalPrice = (price + pricepost)
+        this.props.setPricePost(parseFloat(pricepost).toFixed(2))
+        this.props.setTotalPrice(parseFloat(totalPrice).toFixed(2))
 
+    }
     checkFormAddress() {
         for (const index in dataCart) {
             // console.log(`dataCart.${index} = ${dataCart[index].FormatBuyImageID}`);
             if (dataCart[index].FormatBuyImageID == 2 || dataCart[index].FormatBuyImageID == 3) {
                 this.setState({ formAddress: true })
+                this.sumPricePost()
             }
         }
-
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -172,10 +181,10 @@ class FormRegister extends Component {
                                         <FormGroup row>
                                             <Label for="username" sm={2}>ประเทศ :  </Label>
                                             <Col sm={10}>
-                                                <SugestCountry 
-                                                    setCountry={(value)=> this.setState({ country : value})}
-                                                />                                          
-                                             </Col>
+                                                <SugestCountry
+                                                    setCountry={(value) => this.setState({ country: value })}
+                                                />
+                                            </Col>
                                         </FormGroup>
 
                                     </div>
@@ -216,7 +225,8 @@ class FormRegister extends Component {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.token,
+        order: state.order
     }
 }
 
@@ -226,6 +236,18 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: "setAddress",
                 payload: dataAddress
+            })
+        },
+        setPricePost: (pricepost) => {
+            dispatch({
+                type: "setPricePost",
+                payload: pricepost
+            })
+        },
+        setTotalPrice: (totalPrice) => {
+            dispatch({
+                type: "setTotalPrice",
+                payload: totalPrice
             })
         },
     }

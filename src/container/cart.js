@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Table, Button } from 'reactstrap';
-import { Icon, Image } from 'semantic-ui-react';
+import { Button } from 'reactstrap';
+import { Icon, Image, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import dataCart from '../data/dataCart';
 import dataOrderList from '../data/dataOrderList'
@@ -81,67 +81,63 @@ class CartImages extends Component {
             <div>
                 <h3 style={{ fontFamily: 'kanit' }}>รายการสั่งซื้อทั้งหมด</h3>
                 {this.state.listview &&
-                    <Table responsive>
-                        <thead className="table-head">
-                            <tr>
-                                <th></th>
-                                <th>ภาพ</th>
-                                <th>รายละเอียด</th>
-                                <th>จำนวน</th>
-                                <th>ทั้งหมด</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table color="orange" key="orange">
+                        <Table.Header>
+                            <Table.Row textAlign='center' >
+                                <Table.HeaderCell></Table.HeaderCell>
+                                <Table.HeaderCell>ภาพ</Table.HeaderCell>
+                                <Table.HeaderCell>รายละเอียด</Table.HeaderCell>
+                                <Table.HeaderCell>จำนวน</Table.HeaderCell>
+                                <Table.HeaderCell textAlign='right'>ทั้งหมด</Table.HeaderCell>
+                                <Table.HeaderCell></Table.HeaderCell>
+
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
                             {dataCart.length != 0 ?
                                 dataCart.map((dynamicData, i) =>
-                                    <tr>
-                                        {/* <th scope="row"></th> */}
-                                        <td>
+
+                                    <Table.Row>
+                                        <Table.Cell textAlign='center'>
                                             <div className="icon-del">
                                                 <Button color="danger" onClick={() => this.deleteItem(i)}>
                                                     <Icon name="cancel" />
                                                 </Button>
                                             </div>
-                                        </td>
-                                        <td>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
                                             <div className="image-in-cart">
                                                 <Image src={dynamicData.ImageURL} className="img-buy" />
                                             </div>
-                                        </td>
-                                        <td className="detail-in-cart">
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
                                             <div>
                                                 <h5>{dynamicData.Detail}</h5>
                                                 <p>Size : {dynamicData.Size}<br /> Price : {dynamicData.PriceDisplay} </p>
                                             </div>
-                                        </td>
-                                        <td>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
                                             <div className="quantity">
                                                 <Button onClick={() => this.addQuantityItem(i)}> + </Button>
                                                 {dynamicData.Quantity}
                                                 <Button onClick={() => this.disQuantityItem(i)}> - </Button>
                                             </div>
-                                        </td>
-                                        <td>{dynamicData.Price} บาท</td>
-
-                                    </tr>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='right'>
+                                            {dynamicData.Price} บาท
+                                    </Table.Cell>
+                                    </Table.Row>
                                 )
                                 :
-                                <tr>
-                                    <td colSpan="6">
+                                <Table.Row negative>
+                                    <Table.Cell textAlign='center' colSpan='6'>
                                         <h3 style={{ padding: 20 }}>ยังไม่มีรายการสั่งซื้อ</h3>
-                                    </td>
-                                </tr>
+                                    </Table.Cell>
+
+                                </Table.Row>
                             }
 
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan="6" >
-                                    <Summary total={this.state.totalPrice} />
-                                </td>
-                            </tr>
-                        </tfoot>
+                        </Table.Body>
                     </Table>
                 }
             </div >

@@ -56,6 +56,14 @@ const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0 }, ac
             state.totalPrice = action.payload
             break;
         }
+        case "setCreditCharge" : {
+            state.credit = action.payload
+            break;
+        }
+        case "setPricePost" : {
+            state.pricePost = action.payload
+            break;
+        }
         case "invoiceOrder": {
             state.invoice = action.payload
             break;

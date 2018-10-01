@@ -1,10 +1,10 @@
 .table-head {
-    background-color: #101010;
-    border-color: #101010;
+    /* background-color: #101010;
+    border-color: #101010; */
 }
 
 th {
-    color: white;
+    /* color: white; */
     font-family: 'kanit';
     text-align: center;
 }
@@ -23,19 +23,20 @@ td h4 {
 }
 
 tfoot {
-    background-color: #101010;
+    /* background-color: #101010; */
 }
 
 .image-in-cart {
-    margin: 30px;
+    margin: 10px;
     justify-content: center;
     align-items: center;
     display: flex;
     flex: 1
 }
 .img-buy {
-    width: 200px;
-    height: 200px;
+    width: auto;
+    height: 150px;
+    max-height: 150px;
 }
 
 .quantity {

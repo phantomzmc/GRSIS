@@ -60,8 +60,7 @@ class TabsLightBox extends React.Component {
     }
     render() {
         return (
-            <Card className="tab-ligth">
-                <CardBody >
+            
                     <div className="contai-tab">
                         <Nav tabs>
                             <NavItem>
@@ -133,8 +132,6 @@ class TabsLightBox extends React.Component {
                             </TabPane>
                         </TabContent>
                     </div>
-                </CardBody>
-            </Card>
         );
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Button, Input } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
+import { Table } from 'semantic-ui-react'
 import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
 import dataCart from '../../../data/dataCart'
@@ -15,7 +16,7 @@ class ListTable1 extends React.Component {
             index: 0
         }
     }
-    
+
     // componentWillUpdate(nextProps) {
     //     if (nextProps.propertyImg != this.props.propertyImg) {
     //         console.log(nextProps.propertyImg)
@@ -47,7 +48,7 @@ class ListTable1 extends React.Component {
         console.log(this.props.details)
         let dataOrder = {
             ImageID: this.props.details.ImageID,
-            PropertyBuyImageID:this.state.buyTyoeID,
+            PropertyBuyImageID: this.state.buyTyoeID,
             Quantity: this.state.quantity
         }
         let dataOrderFull = {
@@ -58,7 +59,7 @@ class ListTable1 extends React.Component {
             Detail: this.state.detail,
             Price: this.state.price,
             PriceDisplay: this.state.priceDisplay,
-            FormatBuyImageID : this.state.FormatBuyImageID,
+            FormatBuyImageID: this.state.FormatBuyImageID,
             Size: this.state.size
         }
 
@@ -74,27 +75,29 @@ class ListTable1 extends React.Component {
                 {this.props.propertyImg == "" ?
                     <div></div>
                     :
-                    <Table hover>
-                        <thead>
-                            <tr>
-                                <td><p>จำนวน</p></td>
-                                <td><p>รายละเอียด</p></td>
-                                <td><p>ขนาด</p></td>
-                                <td><p>ราคา</p></td>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table color="orange" key="orange">
+                        <Table.Header>
+                            <Table.Row textAlign='center' >
+                                <Table.HeaderCell>จำนวน</Table.HeaderCell>
+                                <Table.HeaderCell>รายละเอียด</Table.HeaderCell>
+                                <Table.HeaderCell>ขนาด</Table.HeaderCell>
+                                <Table.HeaderCell>ราคา</Table.HeaderCell>
+
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
                             {
                                 this.props.propertyImg.map((item, index) =>
-                                    <tr>
-                                        <td>
+
+                                    <Table.Row>
+                                        <Table.Cell textAlign='center'>
                                             <Input type="select" name="select" id="exampleSelect"
                                                 onChangeCapture={() => this.setState({
                                                     buyTyoeID: item.PropertyBuyImageID,
                                                     detail: item.Detail,
                                                     price: item.Price,
                                                     priceDisplay: item.PriceDisplay,
-                                                    FormatBuyImageID : item.FormatBuyImageID,
+                                                    FormatBuyImageID: item.FormatBuyImageID,
                                                     size: item.Size
 
                                                 })}
@@ -107,20 +110,21 @@ class ListTable1 extends React.Component {
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
                                             </Input>
-                                        </td>
-                                        <td><p>{item.Detail}</p></td>
-                                        <td>
-                                            {/* <Button outline color="primary">S</Button> */}
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            <p>{item.Detail}</p>
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
                                             <p>{item.Size}</p>
-                                        </td>
-                                        <td><p>{item.PriceDisplay}</p></td>
-                                    </tr>
-                                )
-                            }
+                                        </Table.Cell>
+                                        <Table.Cell textAlign='center'>
+                                            <p>{item.PriceDisplay}</p>
+                                        </Table.Cell>
 
-                        </tbody>
+                                    </Table.Row>
+                                )}
+                        </Table.Body>
                     </Table>
-
                 }
                 <Button block color="success" onClick={() => this.handleClick()}>
                     <p>สั่งซื้อภาพนี้</p>

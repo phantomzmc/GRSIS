@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Modal from "react-responsive-modal";
 import NotificationBadge from 'react-notification-badge';
 import Cart from '../../container/cart'
+import DetailPayment from '../payment/detailPayment/detailPayment'
 import { Effect } from 'react-notification-badge';
 import dataCart from '../../data/dataCart'
 import './nav.css'
