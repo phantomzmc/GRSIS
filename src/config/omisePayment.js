@@ -39,12 +39,13 @@ class ReactOmise {
     getHeaders() {
         let headers = {
             'Authorization': 'Basic ' + base64.encode(_publicKey + ":"),
+
             'Content-Type': 'application/json',
         };
         if (_apiVersion && _apiVersion !== "") {
             headers['Omise-Version'] = _apiVersion;
         }
-        console.log(headers)
+        // console.log(headers)
         return headers;
     }
     getHeaders2() {
@@ -55,7 +56,18 @@ class ReactOmise {
         if (_apiVersion && _apiVersion !== "") {
             headers['Omise-Version'] = _apiVersion;
         }
-        console.log(headers)
+        // console.log(headers)
+        return headers;
+    }
+    getHeaders3() {
+        let headers = {
+            'user': _secretKey,
+            'Content-Type': 'application/json',
+        };
+        if (_apiVersion && _apiVersion !== "") {
+            headers['Omise-Version'] = _apiVersion;
+        }
+        // console.log(headers)
         return headers;
     }
 
@@ -108,7 +120,6 @@ class ReactOmise {
             return fetch(apiEndpoint, {
                 method: 'POST',
                 cache: 'no-cache',
-                mode : 'no-cors',
                 headers: headers2,
                 body: JSON.stringify(data)
             }).then((response) => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Input } from 'reactstrap';
-import { Table } from 'semantic-ui-react'
+import { Input, Alert } from 'reactstrap';
+import { Table, Button } from 'semantic-ui-react'
 import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
 import dataCart from '../../../data/dataCart'
@@ -13,8 +13,13 @@ class ListTable1 extends React.Component {
         this.state = {
             dataSouce: "",
             quantity: 0,
-            index: 0
+            index: 0,
+            // status: 3
         }
+    }
+    componentWillMount() {
+        console.log(this.props.propertyImg[0])
+        console.log(this.props.postPrice)
     }
 
     // componentWillUpdate(nextProps) {
@@ -30,7 +35,7 @@ class ListTable1 extends React.Component {
     // }
     handleChange(e) {
         this.setState({
-            quantity: e.target.value
+            quantity: 1
         })
         setTimeout(() => {
             this.getPrice()
@@ -40,9 +45,12 @@ class ListTable1 extends React.Component {
         let { quantity, price } = this.state
         const sumPrice = parseFloat(price * quantity)
         dataPrice.push(sumPrice)
+        console.log(dataPrice)
         this.setState({ price: sumPrice })
         console.log("price" + sumPrice)
+        this.props.setPostPrice(this.props.postPrice)
     }
+    
     handleClick() {
         const { index } = this.state
         console.log(this.props.details)
@@ -82,51 +90,71 @@ class ListTable1 extends React.Component {
                                 <Table.HeaderCell>รายละเอียด</Table.HeaderCell>
                                 <Table.HeaderCell>ขนาด</Table.HeaderCell>
                                 <Table.HeaderCell>ราคา</Table.HeaderCell>
-
                             </Table.Row>
                         </Table.Header>
-                        <Table.Body>
-                            {
-                                this.props.propertyImg.map((item, index) =>
-
+                        {this.props.propertyImg[0].Price == -2 ?
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell colSpan="4">
+                                        <div className="choice-contai">
+                                            <Button color='orange' fluid>
+                                                <p>Download Free</p>
+                                            </Button>
+                                        </div>
+                                    </Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                            :
+                            this.props.propertyImg[0].Price == -1 ?
+                                <Table.Body>
                                     <Table.Row>
-                                        <Table.Cell textAlign='center'>
-                                            <Input type="select" name="select" id="exampleSelect"
-                                                onChangeCapture={() => this.setState({
-                                                    buyTyoeID: item.PropertyBuyImageID,
-                                                    detail: item.Detail,
-                                                    price: item.Price,
-                                                    priceDisplay: item.PriceDisplay,
-                                                    FormatBuyImageID: item.FormatBuyImageID,
-                                                    size: item.Size
-
-                                                })}
-                                                onChange={this.handleChange.bind(this)}
-                                            >
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </Input>
+                                        <Table.Cell colSpan="4">
+                                            <div className="choice-contai">
+                                                <Alert color="info">
+                                                    <p>Digital File งานนี้กรุณาติดต่อกับผู้จัดเท่านั้น</p>
+                                                </Alert>
+                                            </div>
                                         </Table.Cell>
-                                        <Table.Cell textAlign='center'>
-                                            <p>{item.Detail}</p>
-                                        </Table.Cell>
-                                        <Table.Cell textAlign='center'>
-                                            <p>{item.Size}</p>
-                                        </Table.Cell>
-                                        <Table.Cell textAlign='center'>
-                                            <p>{item.PriceDisplay}</p>
-                                        </Table.Cell>
-
                                     </Table.Row>
-                                )}
-                        </Table.Body>
+                                </Table.Body>
+                                :
+                                <Table.Body>
+                                    {
+                                        this.props.propertyImg.map((item, index) =>
+
+                                            <Table.Row>
+                                                <Table.Cell textAlign='center'>
+                                                    <Input type="checkbox" name="select" id="exampleSelect"
+                                                        onChangeCapture={() => this.setState({
+                                                            buyTyoeID: item.PropertyBuyImageID,
+                                                            detail: item.Detail,
+                                                            price: item.Price,
+                                                            priceDisplay: item.PriceDisplay,
+                                                            FormatBuyImageID: item.FormatBuyImageID,
+                                                            size: item.Size
+
+                                                        })}
+                                                        onChange={this.handleChange.bind(this)}
+                                                    />
+                                                </Table.Cell>
+                                                <Table.Cell textAlign='center'>
+                                                    <p>{item.Detail}</p>
+                                                </Table.Cell>
+                                                <Table.Cell textAlign='center'>
+                                                    <p>{item.Size}</p>
+                                                </Table.Cell>
+                                                <Table.Cell textAlign='center'>
+                                                    <p>{item.PriceDisplay}</p>
+                                                </Table.Cell>
+
+                                            </Table.Row>
+                                        )}
+                                </Table.Body>
+                        }
+
                     </Table>
                 }
-                <Button block color="success" onClick={() => this.handleClick()}>
+                <Button fluid color="green" onClick={() => this.handleClick()}>
                     <p>สั่งซื้อภาพนี้</p>
                 </Button>
             </div>

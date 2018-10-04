@@ -1,6 +1,5 @@
 .content {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     padding-bottom: 5%;
 }
@@ -49,4 +48,16 @@
     position: absolute;
     right: 200px;
     top : 100px;
+}
+.title-credit {
+    /* display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: center */
+}
+#btn-detailPay {
+    position: absolute;
+    text-align: right;
+    top: 5px;
+    right: 20px;;
 }

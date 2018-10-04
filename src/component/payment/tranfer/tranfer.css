@@ -1,4 +1,5 @@
 .container-tabel {
+    padding-top: 50px;
     border: 1px;
     border-color: black
 }
@@ -9,4 +10,16 @@
 
 .image-logo {
     margin: 20px;
+}
+#btn-detailPay {
+    position: absolute;
+    text-align: right;
+    top: 5px;
+    right: 20px;;
+}
+#btn-submit {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }

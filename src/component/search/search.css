@@ -1,5 +1,5 @@
 .seach-haeder {
-    margin-top: 30%;
+    margin-top: 20%;
     padding: 20px;
     opacity: 2;
 }
@@ -17,6 +17,7 @@
     align-content: center;
     justify-content: center;
 }
+
 .input-text {
     align-content: center;
     text-align: center;
@@ -26,6 +27,7 @@
     margin-top: 5%;
     margin-bottom: 5%;
 }
+
 .btn-gobib {
     margin-top: 5%;
     margin-bottom: 5%;
@@ -78,7 +80,7 @@
 .list-sugges-container--open {
     cursor: pointer;
     list-style-type: none;
-    padding: 20px 20px ;
+    padding: 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,18 +99,45 @@
     padding: 0;
     list-style-type: disc;
 }
+
 #contai-time {
     flex-direction: row;
 }
-#in-time{
+
+#in-time {
     color: #ffffff;
     size: 24px;
     margin: 10px;
 }
-#typeInput{ 
+
+#typeInput {
     background-color: black;
-    color:  white;
+    color: white;
 }
-#typeInput>option{ 
+
+#typeInput>option {
     padding: 5%;
+}
+
+.card-button {
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.cerd-title {
+    height: 50px;
+}
+
+.card-date {
+    font-style: bold;
+}
+
+#typeInputTime {
+    width: 150px;
+    height: 50px;
+    background-color: black;
+    color: white;
+    font-size: 18px;
+
 }

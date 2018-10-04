@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'reactstrap';
-import { Icon, Image, Table } from 'semantic-ui-react';
+// import { Button } from 'reactstrap';
+import { Icon, Image, Table,Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import dataCart from '../data/dataCart';
 import dataOrderList from '../data/dataOrderList'
@@ -100,9 +100,11 @@ class CartImages extends Component {
                                     <Table.Row>
                                         <Table.Cell textAlign='center'>
                                             <div className="icon-del">
-                                                <Button color="danger" onClick={() => this.deleteItem(i)}>
-                                                    <Icon name="cancel" />
-                                                </Button>
+                                                {this.props.statusBtn &&
+                                                    <Button size='tiny'color="red" onClick={() => this.deleteItem(i)} icon>
+                                                        <Icon name="cancel" />
+                                                    </Button>
+                                                }
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell textAlign='center'>
@@ -118,9 +120,13 @@ class CartImages extends Component {
                                         </Table.Cell>
                                         <Table.Cell textAlign='center'>
                                             <div className="quantity">
-                                                <Button onClick={() => this.addQuantityItem(i)}> + </Button>
-                                                {dynamicData.Quantity}
-                                                <Button onClick={() => this.disQuantityItem(i)}> - </Button>
+                                                {this.props.statusBtn &&
+                                                    <Button size='mini' color='black' onClick={() => this.addQuantityItem(i)} icon> + </Button>
+                                                }
+                                                <p>{dynamicData.Quantity}</p>
+                                                {this.props.statusBtn &&
+                                                    <Button size='mini' color='black' onClick={() => this.disQuantityItem(i)} icon> - </Button>
+                                                }
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell textAlign='right'>

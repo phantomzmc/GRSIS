@@ -1,6 +1,6 @@
-'use strict';
-
-var omise = require('omise')({
+"use strict";
+exports.__esModule = true;
+const omise = require("omise")({
     'publicKey': process.env.OMISE_PUBLIC_KEY,
     'secretKey': process.env.OMISE_SECRET_KEY,
 });
@@ -15,23 +15,32 @@ var cardDetails = {
         'expiration_year': 2017,
     },
 };
+class Omise2 {
+    genToken(){
+        omise.tokens.create(cardDetails).then(function (token) {
+            console.log(token);
+            return omise.customers.create({
+                'email': 'john.doe@example.com',
+                'description': 'John Doe (id: 30)',
+                'card': token.id,
+            });
+        }).then(function (customer) {
+            console.log(customer);
+            return omise.charges.create({
+                'amount': 10000,
+                'currency': 'thb',
+                'customer': customer.id,
+            });
+        }).then(function (charge) {
+            console.log(charge);
+        }).error(function (err) {
+            console.log(err);
+        }).done();
+    }
+}
+    
+const reactOmise = new Omise2();
 
-omise.tokens.create(cardDetails).then(function (token) {
-    console.log(token);
-    return omise.customers.create({
-        'email': 'john.doe@example.com',
-        'description': 'John Doe (id: 30)',
-        'card': token.id,
-    });
-}).then(function (customer) {
-    console.log(customer);
-    return omise.charges.create({
-        'amount': 10000,
-        'currency': 'thb',
-        'customer': customer.id,
-    });
-}).then(function (charge) {
-    console.log(charge);
-}).error(function (err) {
-    console.log(err);
-}).done();
+module.exports = {
+    genToken : reactOmise.genToken
+}

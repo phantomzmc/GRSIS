@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Dropdown, Popup } from 'semantic-ui-react'
 import axios from "axios";
 import SearchInput, { createFilter } from 'react-search-input'
 import { connect } from "react-redux";
@@ -21,27 +22,23 @@ class SugestEvent extends Component {
             searchTerm: '',
             isItems: false,
             event: "",
+            outputNull: false
 
         }
         this.searchUpdated = this.searchUpdated.bind(this)
     }
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.event && prevState.event) {
-            this.loadData = false
-
+        if (this.state.event != "") {
         }
-        else if (this.state.searchTerm && prevState.searchTerm) {
+        else if ((this.state.searchTerm && prevState.searchTerm) && (this.state.event == "")) {
             console.log("loadData")
             this.loadData()
         }
     }
-
     loadData() {
         const uri = req[0].uspGetEventSuggestion
         const api_key = apikey[0].apikey
-        // const token = this.props.token.token
         const token = this.props.token.token
-
         let data = ({
             params: [
                 {
@@ -58,15 +55,21 @@ class SugestEvent extends Component {
             responseType: 'json'
         })
             .then((response) => {
-                this.setState({ emails: response.data });
-                console.log(this.state.emails)
+                if (response.data == "") {
+                    this.setState({ outputNull: true })
+                }
+                else {
+                    this.setState({ emails: response.data, outputNull: false });
+                    console.log(this.state.emails)
+                }
             }).catch((error) => {
                 console.error(error)
                 // this.props.navigation.navigate('EventList')
             });
     }
+
     setValue(email) {
-        this.setState({ event: email.EventName, id: email.EventID, isItems: false })
+        this.setState({ event: email.EventName, id: email.EventID, isItems: false, emails: [] })
         this.props.getEventID(email.EventID)
         console.log(email)
     }
@@ -79,27 +82,52 @@ class SugestEvent extends Component {
 
         return (
             <div>
-                <Form>
-                    <SearchInput
-                        placeholder="ค้นหารายการวิ่ง"
-                        value={this.state.event}
-                        className="search-input"
-                        onChange={(term) => { this.searchUpdated(term) }} />
-                </Form>
+                <Popup
+                    trigger={
+                        <Form>
+                            <SearchInput
+                                placeholder="ค้นหารายการวิ่ง"
+                                value={this.state.event}
+                                className={this.state.outputNull == false ? "search-input" : "search-input-error"}
+                                onChange={(term) => { this.searchUpdated(term) }} />
+                        </Form>}
+                    header=
+                    {this.state.outputNull == false ?
+                        <p> *** เลือกรายการวิ่ง</p> :
+                        <p id="textError"> *** ไม่พบรายการที่ค้นหา</p>
+                    }
+                    content=
+                    {this.state.outputNull == false ?
+                        <p>ผู้ใช้สามารถเลือกรายการวิ่งได้จากรายการทางด้านล่าง</p> :
+                        <p id="textError">รายการที่ค้นหาไม่มีในระบบกรุณากรอกชื่อรายการให้ถูกต้อง</p>
+                    }
+                    on='focus'
+                    position='right center'
+                />
+
                 {this.state.isItems &&
                     <div>
-                        {filteredEmails.map(email => {
-                            return (
-                                <div className="list" key={email.EventName}>
-                                    <li
-                                        className="list-items"
-                                        style={{ listStyleType: "none" }}
-                                        onClick={() => this.setValue(email)}>
-                                        <span>{email.EventName}</span>
-                                    </li>
-                                </div>
-                            )
-                        })
+                        {/* {this.state.outputNull == false ? */}
+                            {filteredEmails.map(email => {
+                                return (
+                                    <div className="list" key={email.EventName}>
+                                        <li
+                                            className="list-items"
+                                            style={{ listStyleType: "none" }}
+                                            onClick={() => this.setValue(email)}>
+                                            <span>{email.EventName}</span>
+                                        </li>
+                                    </div>
+                                )
+                            })
+                            // :
+                            // <div className="list">
+                            //     <li
+                            //         className="list-items"
+                            //         style={{ listStyleType: "none" }}>
+                            //         <span id="textError">ไม่พบรายการที่ค้นหา</span>
+                            //     </li>
+                            // </div>
                         }
                     </div>
                 }
@@ -110,6 +138,11 @@ class SugestEvent extends Component {
 const mapStateToProps = state => {
     return {
         token: state.token
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+
     }
 }
 export default connect(mapStateToProps)(SugestEvent)

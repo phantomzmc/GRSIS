@@ -15,6 +15,9 @@ import SubCard from './subcard'
 import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 
+import ReactPlayer from 'react-player'
+
+
 class CardEvents extends Component {
     constructor(props) {
         super(props)
@@ -42,7 +45,7 @@ class CardEvents extends Component {
             this.getEvent()
             console.log("upgrade")
         }
-        
+
     }
     componentDidUpdate(nextProps) {
         if (this.props.event !== nextProps.event) {
@@ -57,7 +60,7 @@ class CardEvents extends Component {
                 { name: "Keyword", value: "" },
                 { name: "EventStatus", value: 1 },
                 { name: "PageNo", value: this.state.pageNo },
-                { name: "RowPerPage", value: 33 }
+                { name: "RowPerPage", value: 15 }
             ]
         })
         axios.post(uri, data, {
@@ -95,10 +98,10 @@ class CardEvents extends Component {
     onChangePage = (pageNum) => {
         this.setState({ pageNo: pageNum, isEvent: false, isLoad: true });
         console.log("pageNum" + pageNum)
-        setTimeout(()=>{
+        setTimeout(() => {
             this.getEvent()
 
-        },100)
+        }, 100)
     }
 
     render() {
@@ -113,6 +116,27 @@ class CardEvents extends Component {
                     }
                     {this.state.isEvent &&
                         <Row>
+                            {/* <Col xs="12" sm="6" md="4">
+                                <CardDeck className="card-item">
+                                    <Card>
+                                        <ReactPlayer url='https://www.youtube.com/watch?v=EJmGK1tby5Q' playing width="auto" height="210px" loop="true"/>
+                                        <CardBody top width="100%" alt="Card image cap">
+                                            <CardTitle className="cerd-title">Bir Billing Half Marathon 2018 teaser</CardTitle>
+                                            <CardSubtitle>
+                                                <label className="card-date">Date : 10 May 2018</label>
+                                            </CardSubtitle>
+                                            <div className="card-button">
+                                                <Button outline color="info" onClick={() => this.saveEvent()}>View Image</Button>
+                                            </div>
+                                        </CardBody>
+                                        <CardBody>
+                                            <CardSubtitle>
+                                                
+                                            </CardSubtitle>
+                                        </CardBody>
+                                    </Card>
+                                </CardDeck>
+                            </Col> */}
                             {
                                 this.state.dataSource.map((dynamicData, i) =>
                                     <Col xs="12" sm="6" md="4">

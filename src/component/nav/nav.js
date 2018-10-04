@@ -78,7 +78,9 @@ class NavBar extends React.Component {
         <Row>
           <Col xs={12} sm={12} md={12}>
             <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center>
-              <Cart />
+              <Cart 
+                statusBtn={true}
+              />
             </Modal>
           </Col>
         </Row>

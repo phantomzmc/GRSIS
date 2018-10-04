@@ -25,9 +25,6 @@ class VdoHeader extends Component {
                             className="video-iframe"
                             onReady={this._onReady}
                         />
-                        
-                        
-                        />
                     </div>
 
                 </div>

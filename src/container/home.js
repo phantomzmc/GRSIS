@@ -8,7 +8,7 @@ import Navbar from '../component/nav/nav'
 import VdoHeader from '../component/header/header'
 import SearchEvent from '../component/search/search'
 import CardEvents from '../component/card/card';
-import Pagenation from '../component/pagenation/pagenation'
+import Banner from '../component/banner/banner'
 import Footer from '../component/footer/footer'
 
 class Home extends Component {
@@ -59,17 +59,32 @@ class Home extends Component {
                 />
               </div>
             </Col>
+          </Row>
+        </Container>
+        <Row>
+          <Col xs="12" sm="12" md="12">
+            <div className="event-container">
+              <h2>Events <b>Running</b></h2>
+              <hr className="hr-style1" />
+              <hr className="hr-style2" />
+              <div className="event-card">
+                <CardEvents />
+              </div>
+            </div>
+          </Col>
+        </Row>
+        <Container>
+          <Row>
             <Col xs="12" sm="12" md="12">
-              <div className="event-container">
-                <h2>Events <b>Running</b></h2>
+              <div className="content-container2">
+                <h2 id="title-banner"> Banner <b>Sponsor</b> </h2>
                 <hr className="hr-style1" />
-                <hr className="hr-style2" />
+                <hr className="hr-style3" />
                 <div className="event-card">
-                  <CardEvents />
+                  <Banner />
                 </div>
               </div>
             </Col>
-
           </Row>
         </Container>
         <footer className="footer">

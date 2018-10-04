@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import '../css/home.css';
 import { connect } from 'react-redux'
 import Navbar from '../component/nav/nav'
-import VdoHeader from '../component/header/header'
+import VdoHeader from '../component/header/header2'
 import SearchEvent from '../component/search/search'
 import TabsControl from '../component/tabs/tabs'
 import ImageGrid from '../component/imageGrid/image-grid';
@@ -18,8 +18,8 @@ class ShowImageEvent extends Component {
         this.state = {
             titleSearch: "BIB Number",
             bib: "",
-            time : "",
-            imagegrid : true,
+            time: "",
+            imagegrid: true,
             photograname: ""
         }
     }
@@ -34,13 +34,13 @@ class ShowImageEvent extends Component {
         console.log(name)
         this.setState({ photograname: name, showimage: false })
     }
-    setValueBib(value,type) {
-        if(type == 1){
-            this.setState({ bib: value, imagegrid: true })
+    setValueBib(value, type) {
+        if (type == 1) {
+            this.setState({ bib: value, time: "", imagegrid: true })
             console.log(value)
         }
-        else if(type == 2){
-            this.setState({ time: value, imagegrid: true })
+        else if (type == 2) {
+            this.setState({ time: value, bib: "", imagegrid: true })
             console.log(value)
         }
     }
@@ -65,43 +65,46 @@ class ShowImageEvent extends Component {
                                 />
                             </div>
                         </Col>
-                        <Col xs="12" sm="12" md="12">
-                            <div className="event-container">
-                                <h2>รูปภาพ <b>รายการวิ่ง</b></h2>
-                                <hr className="hr-style1" />
-                                <hr className="hr-style2" />
-                                <div className="">
-                                    <TabsControl
-                                        namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
-                                        photograID={this.sendIdPhotogra.bind(this)}
-                                        photograName={this.sendNamePhotogra.bind(this)}
-                                    />
-                                </div>
-                                <div className="event-card">
-                                    {this.state.imagegrid &&
-                                        <ImageGrid
-                                            photograID={this.state.photograid}
-                                            photograName={this.state.photograname}
-                                            showimage={this.state.showimage}
-                                            searchBib={this.state.bib}
-                                            searchTime={this.state.time}
-                                        />
-                                    }
-                                </div>
-                                {/* <div>
-                                    <Pagenation />
-                                </div> */}
-                                {/* <div>
-                                    <LigthBoxImage />
-                                </div> */}
-                            </div>
-                        </Col>
                     </Row>
                 </Container>
+                <Row>
+                    <Col xs="12" sm="12" md="12">
+                        <div className="img-event-container">
+                            <h2>รูปภาพ <b>รายการวิ่ง</b></h2>
+                            <hr className="hr-style1" />
+                            <hr className="hr-style2" />
+                            <div className="">
+                                <TabsControl
+                                    namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
+                                    photograID={this.sendIdPhotogra.bind(this)}
+                                    photograName={this.sendNamePhotogra.bind(this)}
+                                />
+                            </div>
+                            <div id="show-image">
+                                {this.state.imagegrid &&
+                                    <ImageGrid
+                                        photograID={this.state.photograid}
+                                        photograName={this.state.photograname}
+                                        showimage={this.state.showimage}
+                                        searchBib={this.state.bib}
+                                        searchTime={this.state.time}
+                                    />
+                                }
+                            </div>
+                            {/* <div>
+                                    <Pagenation />
+                                </div> */}
+                            {/* <div>
+                                    <LigthBoxImage />
+                                </div> */}
+                        </div>
+                    </Col>
+                </Row>
+                {/* </Container> */}
                 <footer className="footer">
                     <Footer />
                 </footer>
-            </div>
+            </div >
         );
     }
 }

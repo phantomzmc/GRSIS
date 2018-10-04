@@ -88,3 +88,6 @@
     max-width: 500px;
     align-items: center; 
 }
+.no-suggest {
+    margin: 50px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Container, Button } from "reactstrap";
-import { Icon } from "semantic-ui-react";
+import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Container } from "reactstrap";
+import { Icon, Button, Segment } from "semantic-ui-react";
 import classnames from 'classnames';
 import { connect } from 'react-redux'
 import CreditPayment from './credit/credit'
@@ -21,7 +21,7 @@ class PaymentLaout extends Component {
         this.toggle = this.toggle.bind(this);
         this.creditSumPrice = this.creditSumPrice.bind(this)
     }
-    componentWillMount(){
+    componentWillMount() {
         this.creditSumPrice(this.state.activeTab)
     }
     toggle(tab) {
@@ -41,6 +41,7 @@ class PaymentLaout extends Component {
             console.log(parseFloat(creditPrice))
             console.log(creditCharge)
             this.props.setTotalPrice(parseFloat(creditPrice).toFixed(2))
+            this.props.setStatusPayment(2)
             this.props.setCreditCharge(parseFloat(creditCharge).toFixed(2))
 
         }
@@ -49,9 +50,12 @@ class PaymentLaout extends Component {
             const creditPrice = price
             console.log(parseFloat(creditPrice))
             this.props.setTotalPrice(parseFloat(creditPrice).toFixed(2))
+            this.props.setStatusPayment(1)
             this.props.setCreditCharge(parseFloat(0))
         }
-
+    }
+    getSlip(silp){
+        this.props.setSlip(silp)
     }
     render() {
         return (
@@ -62,66 +66,51 @@ class PaymentLaout extends Component {
                         <Container>
                             <Row>
                                 <Col xs="12" sm="12" md="12" className="nav-style">
-                                    <Nav tabs>
-                                        <NavItem>
-                                            <NavLink
-                                                className={classnames({ active: this.state.activeTab === '1' })}
-                                                onClick={() => { this.toggle('1'); }}>
-                                                <Icon name='credit card outline' size='large' inverted color='black' /> บัตรเครดิตเเละเดบิต
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                className={classnames({ active: this.state.activeTab === '2' })}
-                                                onClick={() => { this.toggle('2'); }} >
-                                                <Icon name='money bill alternate' size='large' inverted color='black' /> ชำระด้วยเงินสด
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                // className={classnames({ active: this.state.activeTab === this.state.activeTab })}
-                                                onClick={() => { this.setState({ layoutCart: true }) }} >
-                                                <Icon name='list ul' size='large' inverted color='black' /> รายละเอียดการชำระเงิน
-                                            </NavLink>
-                                        </NavItem>
-                                    </Nav>
-                                </Col>
-                                <Col xs={12} sm={12} md={12}>
-                                    <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center>
-                                        <DetailPayment />
-                                    </Modal>
+                                    <Button.Group attached='top' color="#f1f1f1">
+                                        <Button onClick={() => this.toggle('1')} active>
+                                            <Icon name='credit card outline' size='large' inverted color='black' />
+                                            <p id="captionType">บัตรเครดิตเเละเดบิต</p>
+                                        </Button>
+                                        <Button onClick={() => this.toggle('2')}>
+                                            <Icon name='money bill alternate' size='large' inverted color='black' />
+                                            <p id="captionType">ชำระด้วยเงินสด</p>
+                                        </Button>
+
+                                    </Button.Group>
+                                    <Segment attached>
+                                        {this.state.activeTab == "1" ?
+                                            <Row>
+                                                <Col sm="12" md="12" xs="12">
+                                                    <CreditPayment
+                                                        onNextPages={this.props.onNextPage}
+                                                        addOrder={this.props.onAddOreder}
+                                                        clickPrev={this.props.clickPrev.bind(this)}
+                                                        clickNext={this.props.clickNext.bind(this)}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            :
+                                            <Row>
+                                                <Col sm="12" md="12" xs="12">
+                                                    <TranferPayment
+                                                        onNextPages={this.props.onNextPage}
+                                                        addOrder={this.props.onAddOreder}
+                                                        clickPrev={this.props.clickPrev.bind(this)}
+                                                        clickNext={this.props.clickNext.bind(this)}
+                                                        setSlip={this.getSlip.bind(this)}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        }
+                                    </Segment>
                                 </Col>
                             </Row>
                         </Container>
-                        <TabContent activeTab={this.state.activeTab}>
-                            <TabPane tabId="1">
-                                <Row>
-                                    <Col sm="12" md="12" xs="12">
-                                        <CreditPayment
-                                            onNextPages={this.props.onNextPage}
-                                            addOrder={this.props.onAddOreder}
-                                        />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                            <TabPane tabId="2">
-                                <Row>
-                                    <Col sm="12" md="12" xs="12">
-                                        <TranferPayment
-                                            addOrder={this.props.onAddOreder}
-                                        />
-                                    </Col>
-                                </Row>
-                            </TabPane>
-                        </TabContent>
                     </Col>
-                    {/* <Col xs="12" sm="12" md="12">
-                        <h4>รายละเอียดการชำระเงิน</h4>
-                        <Cart />
-                    </Col> */}
+
                 </Row>
 
-            </div>
+            </div >
         );
     }
 }
@@ -151,7 +140,20 @@ const mapDispatchToProps = dispatch => {
                 type: "setCreditCharge",
                 payload: credit
             })
+        },
+        setStatusPayment: (status) => {
+            dispatch({
+                type: "setStatusPayment",
+                payload: status
+            })
+        },
+        setSlip: (slip) => {
+            dispatch({
+                type: "setSlip",
+                payload: slip
+            })
         }
+
     }
 }
 

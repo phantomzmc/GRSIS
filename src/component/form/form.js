@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button } from 'semantic-ui-react'
+
 import './form.css'
 import { connect } from 'react-redux'
 import dataCart from '../../data/dataCart'
@@ -18,18 +20,26 @@ class FormRegister extends Component {
             amphoe: "",
             province: "",
             country: "",
-            totalPrice: this.props.order.totalPrice
+            totalPrice: this.props.order.totalPrice,
+            postPrice : this.props.order.pricePost == undefined || null ? 0.0 : this.props.order.pricePost
         }
         this.sumPricePost = this.sumPricePost.bind(this)
     }
     componentWillMount() {
         this.checkFormAddress()
+        this.sumPricePost()
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.onStatusForm != this.props.onStatusForm) {
+            this.handleSubmit
+            console.log(nextProps.onStatusForm + "" + this.props.onStatusForm)
+        }
     }
     sumPricePost() {
         const price = this.state.totalPrice
-        const pricepost = 60
+        const pricepost = this.state.postPrice
         const totalPrice = (price + pricepost)
-        this.props.setPricePost(parseFloat(pricepost).toFixed(2))
+        // this.props.setPricePost(parseFloat(pricepost).toFixed(2))
         this.props.setTotalPrice(parseFloat(totalPrice).toFixed(2))
 
     }
@@ -38,7 +48,7 @@ class FormRegister extends Component {
             // console.log(`dataCart.${index} = ${dataCart[index].FormatBuyImageID}`);
             if (dataCart[index].FormatBuyImageID == 2 || dataCart[index].FormatBuyImageID == 3) {
                 this.setState({ formAddress: true })
-                this.sumPricePost()
+                // this.sumPricePost()
             }
         }
     }
@@ -209,10 +219,12 @@ class FormRegister extends Component {
                                     </Col>
                                 </FormGroup>
                                 <div id="btn-submit">
-                                    {this.state.submitBtn == true ?
-                                        <Button block color="success" type="submit">ยืนยัน</Button> :
-                                        <Button block color="success" type="submit" disabled>ยืนยัน</Button>
-                                    }
+                                    <Button inverted color='red' onClick={() => this.props.clickPrev()} className="btn-prev">
+                                        <p>ย้อนกลับ</p>
+                                    </Button>
+                                    <Button inverted color='green' onClick={() => this.props.clickNext()} className="btn-next" type="submit">
+                                        <p>ไปยังชำระค่าบริการ</p>
+                                    </Button>
                                 </div>
                             </Form>
                         </Col>

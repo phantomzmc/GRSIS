@@ -33,7 +33,8 @@ class StepControl extends Component {
             isOpenForm: false,
             isOpenPayment: false,
             isOpenInvoice: false,
-            showButton: true
+            showButton: true,
+            statusForm: false
         }
         this.onClickNext = this.onClickNext.bind(this);
         this.onClickPrev = this.onClickPrev.bind(this)
@@ -63,9 +64,9 @@ class StepControl extends Component {
         let stored = this.props
         let data = ({
             params: [
-                { name: "PaymentType", value: "1" },
+                { name: "PaymentType", value: stored.payment.statusPayment },
                 { name: "PaymentStatus", value: stored.payment.type },
-                { name: "PaymentSlip", value: "1" },
+                { name: "PaymentSlip", value: "" },
                 { name: "Email", value: stored.address.email },
                 { name: "FirstName", value: stored.address.address.firstname },
                 { name: "LastName", value: stored.address.address.lastname },
@@ -77,9 +78,9 @@ class StepControl extends Component {
                 { name: "PostCode", value: stored.address.passcode },
                 { name: "Country", value: stored.address.address.country },
                 { name: "Phone", value: stored.address.address.tel },
-                { name: "Notes", value: "" },
-                { name: "TransactionID", value: "" },
-                { name: "ChargesID", value: "" },
+                { name: "Notes", value: stored.address.address.help },
+                { name: "TransactionID", value: stored.payment.transaction },
+                { name: "ChargesID", value: stored.payment.changeid },
                 { name: "UsernameGRS", value: "" },
                 { name: "OrderLists", value: JSON.stringify(stored.order.orderlist) },
             ]
@@ -115,6 +116,7 @@ class StepControl extends Component {
             this.controlPage()
         }, 100)
     }
+    
     onClickPrev() {
         const { step, currentStep } = this.state;
         this.setState({
@@ -183,17 +185,24 @@ class StepControl extends Component {
                                 </div>
                                 <div className="cart-images">
                                     {this.state.isOpenCart &&
-                                        <CartImages />
+                                        <CartImages 
+                                            statusBtn={true}
+                                        />
                                     }
                                     {this.state.isOpenForm &&
                                         <FormRegister
                                             onNextPage={this.e_showButton.bind(this)}
+                                            clickNext={this.onClickNext.bind(this)}
+                                            clickPrev={this.onClickPrev.bind(this)}
                                         />
                                     }
                                     {this.state.isOpenPayment &&
                                         <PaymentLayout
                                             onNextPage={this.e_showButton.bind(this)}
                                             onAddOreder={this.addOrder.bind(this)}
+                                            clickNext={this.onClickNext.bind(this)}
+                                            clickPrev={this.onClickPrev.bind(this)}
+                                            
                                         />
                                     }
                                     {this.state.isOpenInvoice &&
@@ -201,22 +210,23 @@ class StepControl extends Component {
                                     }
                                 </div>
                                 <div className="btn-groud">
-                                    {!this.state.isOpenCart &&
+                                    {/* {!this.state.isOpenCart &&
                                         <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
                                             <p>ย้อนกลับ</p>
                                         </Button>
                                         // <Button color="danger" size="lg" >  </Button>
-                                    }
+                                    } */}
                                     {this.state.isOpenCart &&
                                         <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
                                             <p>ยกเลิกรายการทั้งหมด</p>
                                         </Button>
                                     }
-                                    {this.state.showButton &&
+                                    {this.state.isOpenCart &&
                                         <Button inverted color='green' onClick={this.onClickNext} className="btn-next">
                                             <p>ไปชำระค่าบริการ</p>
                                         </Button>
                                     }
+            
                                 </div>
                             </div>
                         </Col>

@@ -34,15 +34,32 @@
     opacity: 0.7;
     border-radius: 20px;
   }
+  .content-container2 {
+    margin-top: 100px;
+    background-color: black;
+    opacity: 0.9;
+    border-radius: 20px;
+  }
   .event-container {
     background-color: white;
     opacity: 1;
     border-radius: 20px;
-    margin-top: 5%;
+    margin-top: 100px;
+    padding-top: 5%;
+  }
+  .img-event-container {
+    background-color: white;
+    opacity: 1;
+    /* border-radius: 20px; */
+    margin-top: 50px;
     padding-top: 5%;
   }
   .event-card {
     padding: 5%;
+  }
+  #show-image {
+    padding: 5%;
+    background-color: white;
   }
   .hr-style1 {
     border : #fcac45 1px solid;
@@ -52,6 +69,14 @@
   .hr-style2 {
     border: 1px solid;
     width: 25%;
+  }
+  .hr-style3 {
+    border: #ffffff 1px solid;
+    width: 25%;
+  }
+  #title-banner {
+    color: white;
+    padding-top: 50px;
   }
   .footer {
     display: flex;

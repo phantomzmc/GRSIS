@@ -42,7 +42,7 @@ const cartImage = (state = cart, action) => {
     }
     return state
 };
-const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0 }, action) => {
+const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0, pricePost: 0.0 }, action) => {
     switch (action.type) {
         case "addOrderList": {
             state.orderlist = action.payload;
@@ -56,11 +56,11 @@ const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0 }, ac
             state.totalPrice = action.payload
             break;
         }
-        case "setCreditCharge" : {
+        case "setCreditCharge": {
             state.credit = action.payload
             break;
         }
-        case "setPricePost" : {
+        case "setPricePost": {
             state.pricePost = action.payload
             break;
         }
@@ -80,10 +80,26 @@ const address = (state = {}, action) => {
     }
     return state
 };
-const payment = (state = {} ,action) => {
-    switch (action.type){
-        case "setTypePayment" : {
-            state.type  = action.payload
+const payment = (state = { changeid: "", transaction: "", type: 1 }, action) => {
+    switch (action.type) {
+        case "setTypePayment": {
+            state.type = action.payload
+            break;
+        }
+        case "setStatusPayment": {
+            state.statusPayment = action.payload
+            break;
+        }
+        case "setChangeID": {
+            state.changeid = action.payload
+            break;
+        }
+        case "setTransaction": {
+            state.transaction = action.payload
+            break;
+        }
+        case "setSlip": {
+            state.slip = action.payload
             break;
         }
     }

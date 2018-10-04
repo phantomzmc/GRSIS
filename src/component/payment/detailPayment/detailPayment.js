@@ -36,7 +36,7 @@ class DetailPayment extends Component {
                         <Table.Row>
                             <Table.Cell>{dynamicData.Detail} {dynamicData.Size}</Table.Cell>
                             <Table.Cell> - </Table.Cell>
-                            <Table.Cell>{dynamicData.Price} บาท</Table.Cell>
+                            <Table.Cell textAlign='right'>{dynamicData.Price} บาท</Table.Cell>
                         </Table.Row>
                     )}
                         <Table.Row positive>

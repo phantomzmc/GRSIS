@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from "react-redux";
 import axios from 'axios'
 import images from './dataimage'
+import imgSugest from './dataImageSugest'
 import Modal from "react-responsive-modal";
 import Pagenation from '../pagenation/pagenation'
 import TabsLightBox from '../lightboxImg/tabs/tabs'
@@ -39,7 +40,8 @@ class ImageLayout extends React.Component {
             index: 0,
             isLoad: true,
             activeIndex: 0,
-            openTab: false
+            openTab: false,
+            noSugest: false
         };
         this.onPressNextPage = this.onPressNextPage.bind(this)
         this.onChangePage = this.onChangePage.bind(this)
@@ -55,13 +57,17 @@ class ImageLayout extends React.Component {
         // console.log(this.props.event.photoGraID)
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.event.photoGraID)
-        console.log(this.props.photograID)
+        console.log(nextProps.searchBib)
+        console.log(this.props.searchBib)
         if (this.props.photograID != nextProps.event.photoGraID) {
             this.setState({ showimage: false })
             setTimeout(() => {
                 this.feedImage(this.props.event.event.EventID)
             }, 100)
+        }
+        else if (this.props.searchBib === nextProps.searchBib) {
+            console.log("shouldComponentUpdate searchBib")
+
         }
     }
     shouldComponentUpdate(nextProps) {
@@ -80,14 +86,9 @@ class ImageLayout extends React.Component {
                 { name: "EventID", value: eventid },
                 { name: "PhotoGrapherID", value: this.props.event.photoGraID },
                 { name: "BibNumber", value: this.props.searchBib },
-                { name: "Time", value: "08:00" },
+                { name: "Time", value: this.props.searchTime },
                 { name: "PageNo", value: this.state.pageNo },
-                {
-                    name: "RowPerPage", value:
-                        this.props.searchBib == "" || this.props.searchTime == "" ?
-                            "36" :
-                            "100"
-                }
+                { name: "RowPerPage", value: "33" }
             ]
         })
 
@@ -104,17 +105,8 @@ class ImageLayout extends React.Component {
             .then((response) => {
                 this.setState({ images: response.data });
                 console.log(this.state.images)
-                this.state.images.map((item, index) => {
-                    var tem = {
-                        src: item.ImageURL,
-                        timer: item.ImageTakenTime
-                    }
-                    images.splice(index, 1, tem)
-                    setTimeout(() => {
-                        this.setState({ showimage: true, isLoad: false })
-                    }, 100)
-                })
-
+                images.splice(1)
+                this.checkSuggest(this.state.images)
             }).catch((error) => {
                 this.setState({ isLoad: true, showimage: false })
                 setTimeout(() => {
@@ -122,6 +114,25 @@ class ImageLayout extends React.Component {
                 }, 100)
                 // this.props.history.push("./")
             });
+    }
+    checkSuggest(data) {
+        if (data == "") {
+            this.setState({ noSugest: true })
+        }
+        else if (data != "") {
+            this.setState({ noSugest: false })
+            data.map((item, index = 0) => {
+                var tem = {
+                    src: item.ImageURL,
+                    timer: item.ImageTakenTime
+                }
+                images.splice(index, 1, tem)
+                setTimeout(() => {
+                    console.log(images)
+                    this.setState({ showimage: true, isLoad: false })
+                }, 100)
+            })
+        }
     }
     counterimage() {
         let { count, countter } = 0
@@ -184,6 +195,7 @@ class ImageLayout extends React.Component {
                     }
                     {this.state.showimage &&
                         <Row>
+
                             {
                                 images.map((dynamicData, i = 1) =>
                                     <Col xs={12} md={4} sm={4} lg={4}>
@@ -201,6 +213,17 @@ class ImageLayout extends React.Component {
                                     </Col>
                                 )}
                         </Row>
+                    }
+                    {this.state.noSugest &&
+                        <Container>
+                            <Row>
+                                <Col xs={12} md={12} sm={12} lg={12}>
+                                    <div className="no-suggest">
+                                        <h3>ไม่พบรายการที่ค้นหา</h3>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>
                     }
                 </Container>
                 {isOpen &&

@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 import FormCredit from '../../form/form-credit'
+import { Button } from "semantic-ui-react";
+import Modal from "react-responsive-modal";
+import DetailPayment from '../detailPayment/detailPayment'
+import { connect } from 'react-redux'
+
 import './credit.css'
 
 class CreditPayment extends Component {
@@ -10,7 +15,8 @@ class CreditPayment extends Component {
             monthEXp: "xx",
             yearExp: "xxxx",
             name: "NAME FONT CARD",
-            cvc: "xxx"
+            cvc: "xxx",
+            layoutCart: false
         }
     }
     setCreditCard(data) {
@@ -23,12 +29,24 @@ class CreditPayment extends Component {
             cvc: data.passCVC
         })
     }
+    getChangeID(id){
+        this.props.setChangeID(id)
+    }
+    getTransaction(transaction){
+        this.props.setTransaction(transaction)
+    }
 
     render() {
         return (
             <div>
-                <h3 className="title">บัตรเครดิตหรือเดบิต</h3>
+                <div className="title-credit">
+                    <h3 className="title">บัตรเครดิตหรือเดบิต</h3>
+                    <Button size='medium' color='blue' id="btn-detailPay" onClick={() => this.setState({ layoutCart: true })}>
+                        <p>รายละเอียดการชำระ</p>
+                    </Button>
+                </div>
                 <div className="content">
+
                     <div className="credit-card">
                         {/* <div className="priceDisplay">
                             <h4 className="text-card">Price : .....</h4>
@@ -62,11 +80,40 @@ class CreditPayment extends Component {
                     onNextPage={this.props.onNextPages}
                     onsetCreditCard={this.setCreditCard.bind(this)}
                     onAddOrder={this.props.addOrder}
+                    clickPrev={this.props.clickPrev.bind(this)}
+                    clickNext={this.props.clickNext.bind(this)}
+                    totalPrice={this.props.order.totalPrice}
+                    changeID={this.getChangeID.bind(this)}
+                    transaction={this.getTransaction.bind(this)}
                 />
+                <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center>
+                    <DetailPayment />
+                </Modal>
             </div>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        order : state.order
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        setChangeID: (changeid) => {
+            dispatch({
+                type: "setChangeID",
+                payload: changeid
+            })
+        },
+        setTransaction: (transaction) => {
+            dispatch({
+                type: "setTransaction",
+                payload: transaction
+            })
+        },
+    }
+}
 
-export default CreditPayment
+export default connect(mapStateToProps,mapDispatchToProps)(CreditPayment)

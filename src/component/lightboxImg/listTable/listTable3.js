@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Button, Input } from 'reactstrap';
+import { Button, Input,Alert } from 'reactstrap';
 import { Table } from 'semantic-ui-react'
 import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
@@ -12,10 +12,13 @@ class ListTable3 extends React.Component {
         this.state = {
             dataSouce: "",
             quantity: 0,
-            buyTyoeID: 0
+            buyTyoeID: 0,
+            // status : 3
         }
     }
-    
+    componentWillMount(){
+        console.log(this.props.propertyImg)
+    }
     // componentWillUpdate(nextProps) {
     //     if (nextProps.propertyImg != this.props.propertyImg) {
     //         console.log(nextProps.propertyImg)
@@ -41,6 +44,7 @@ class ListTable3 extends React.Component {
         dataPrice.push(sumPrice)
         this.setState({ price: sumPrice })
         console.log("price" + sumPrice)
+        this.props.setPostPrice(this.props.postPrice)
     }
     handleClick() {
         console.log(this.props.details)
@@ -54,11 +58,11 @@ class ListTable3 extends React.Component {
             ImageURL: this.props.details.ImageURL,
             PropertyBuyImageID: this.state.buyTyoeID,
             Quantity: this.state.quantity,
-            Detail : this.state.detail,
-            Price : this.state.price,
-            PriceDisplay : this.state.priceDisplay,
+            Detail: this.state.detail,
+            Price: this.state.price,
+            PriceDisplay: this.state.priceDisplay,
             FormatBuyImageID: this.state.FormatBuyImageID,
-            Size : this.state.size
+            Size: this.state.size
         }
         orderlist.push(dataOrder)
         orderlistFull.push(dataOrderFull)
@@ -82,45 +86,59 @@ class ListTable3 extends React.Component {
 
                             </Table.Row>
                         </Table.Header>
-                        <Table.Body>
-                            {
-                                this.props.propertyImg.map((item, index) =>
+                        {this.props.propertyImg[0].Price != -1 ?
+                            <Table.Body>
+                                {
+                                    this.props.propertyImg.map((item, index) =>
 
-                                    <Table.Row>
-                                        <Table.Cell textAlign='center'>
-                                            <Input type="select" name="select" id="exampleSelect"
-                                                onChangeCapture={() => this.setState({
-                                                    buyTyoeID: item.PropertyBuyImageID,
-                                                    detail: item.Detail,
-                                                    price: item.Price,
-                                                    priceDisplay: item.PriceDisplay,
-                                                    FormatBuyImageID: item.FormatBuyImageID,
-                                                    size: item.Size
+                                        <Table.Row>
+                                            <Table.Cell textAlign='center'>
+                                                <Input type="select" name="select" id="exampleSelect"
+                                                    onChangeCapture={() => this.setState({
+                                                        buyTyoeID: item.PropertyBuyImageID,
+                                                        detail: item.Detail,
+                                                        price: item.Price,
+                                                        priceDisplay: item.PriceDisplay,
+                                                        FormatBuyImageID: item.FormatBuyImageID,
+                                                        size: item.Size
 
-                                                })}
-                                                onChange={this.handleChange.bind(this)}
-                                            >
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </Input>
-                                        </Table.Cell>
-                                        <Table.Cell textAlign='center'>
-                                            <p>{item.Detail}</p>
-                                        </Table.Cell>
-                                        <Table.Cell textAlign='center'>
-                                            <p>{item.Size}</p>
-                                        </Table.Cell>
-                                        <Table.Cell textAlign='center'>
-                                            <p>{item.PriceDisplay}</p>
-                                        </Table.Cell>
+                                                    })}
+                                                    onChange={this.handleChange.bind(this)}
+                                                >
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </Input>
+                                            </Table.Cell>
+                                            <Table.Cell textAlign='center'>
+                                                <p>{item.Detail}</p>
+                                            </Table.Cell>
+                                            <Table.Cell textAlign='center'>
+                                                <p>{item.Size}</p>
+                                            </Table.Cell>
+                                            <Table.Cell textAlign='center'>
+                                                <p>{item.PriceDisplay}</p>
+                                            </Table.Cell>
 
-                                    </Table.Row>
-                                )}
-                        </Table.Body>
+                                        </Table.Row>
+                                    )}
+                            </Table.Body>
+                            :
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell colSpan="4">
+                                        <div className="choice-contai">
+                                            <Alert color="danger">
+                                                <p>รายการวิ่งนี้ไม่มีการขายภาพพร้อมกรอบ</p>
+                                            </Alert>
+                                        </div>
+                                    </Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        }
                     </Table>
                 }
                 <Button block color="success" onClick={() => this.handleClick()}>

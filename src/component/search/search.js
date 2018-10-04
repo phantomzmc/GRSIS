@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Col, Row, InputGroup, InputGroupAddon, Input, Button, Form, FormGroup, Label } from 'reactstrap';
+import { Col, Row, Card, CardDeck, CardBody, CardTitle, CardSubtitle, CardImg, Input, Button, Form, FormGroup, Label, Container } from 'reactstrap';
+import { Dropdown } from 'semantic-ui-react'
 import axios from "axios";
 import { connect } from 'react-redux'
 import { BrowserRouter, Link, withRouter } from 'react-router-dom'
@@ -7,6 +8,8 @@ import req from '../../config/uri_req'
 import apikey from '../../config/apikey'
 import './search.css'
 import SuggestEvent from '../form/sugestion/sug_event'
+import VdoHeader from '../header/header'
+import Modal from "react-responsive-modal";
 
 const languages = [];
 const getSuggestions = value => {
@@ -36,7 +39,10 @@ class SearchEvent extends Component {
             dataSource: [],
             value: '',
             suggestions: [],
-            typeSearch: 0
+            typeSearch: 0,
+            statusEventSug: false,
+            eventSugestion: "",
+
         }
     }
 
@@ -62,18 +68,46 @@ class SearchEvent extends Component {
             .then((response) => {
                 this.setState({ suggestions: response.data });
                 console.log(this.state.suggestions)
-                this.setEventSugest(response.data[0])
             }).catch((error) => {
                 console.error(error)
             });
     }
-    setSugestEvent(event) {
-        this.setState({ value: event })
+    setSugestEvent(eventid) {
+        // this.setState({ value: event })
+        const uri = req[0].uspGetEvent
+        const api_key = apikey[0].apikey
+        const token = this.props.token.token
+        let data = ({
+            params: [
+                {
+                    name: "EventID", value: eventid
+                }
+            ]
+        })
 
+        axios.post(uri, data, {
+            headers: {
+                "X-DreamFactory-API-Key": api_key,
+                "X-DreamFactory-Session-Token": token
+            },
+            responseType: 'json'
+        })
+            .then((response) => {
+                this.setState({ event: response.data });
+                console.log(this.state.event)
+                this.setEventSugest(response.data[0])
+            }).catch((error) => {
+                console.error(error)
+                // this.props.navigation.navigate('EventList')
+            });
     }
     setEventSugest(eventSugest) {
+        this.setState({ eventSugestion: eventSugest })
         this.props.setEvent(eventSugest)
-        this.props.history.push("/showimage")
+        setTimeout(() => {
+            this.setState({ statusEventSug: true })
+            // this.props.history.push("/showimage")
+        }, 100)
     }
 
     handleChange(e) {
@@ -93,13 +127,14 @@ class SearchEvent extends Component {
         e.preventDefault();
         const type = 2
         const time = this.getTime.value
-        const min = this.getMin.value
-        const timeSearch = time + ":" + min
-        console.log(timeSearch)
-        this.props.getValueBib(timeSearch, type)
+        // const min = this.getMin.value
+        // const timeSearch = time + ":" + min
+        console.log(time)
+        this.props.getValueBib(time, type)
     }
     render() {
-        const { value, suggestions } = this.state;
+        const { value, suggestions, eventSugestion } = this.state;
+        const uri = "https://shutterrunning.com/assets/img/eventbanner/"
         const inputProps = {
             className: 'input-sugges',
             placeholder: this.state.titleInput,
@@ -107,92 +142,113 @@ class SearchEvent extends Component {
             onChange: this.onChange
         };
         return (
-            this.props.pages == true ?
-                <div className="seach-haeder">
-                    <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
-                    <hr className="hr-style1" />
-                    <hr className="hr-style2" />
-                    <div className="input-seach">
-                        <Row>
-                            <Col xs={12} sm={12} md={12}>
-                                <SuggestEvent
-                                    getEventID={this.setSugestEvent.bind(this)}
-                                />
-                            </Col>
-                        </Row>
+            <Container>
+                {this.props.pages == true ?
+                    <div className="seach-haeder">
+                        <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
+                        <hr className="hr-style1" />
+                        <hr className="hr-style2" />
+                        <div className="input-seach">
+                            <Row>
+                                <Col xs={12} sm={12} md={12}>
+                                    <SuggestEvent
+                                        getEventID={this.setSugestEvent.bind(this)}
+                                    />
+                                </Col>
+                            </Row>
+
+                        </div>
+                        <Modal open={this.state.statusEventSug} onClose={() => this.setState({ statusEventSug: false })} center>
+                            <CardDeck className="card-item">
+                                <Card >
+                                    <CardImg top width="100%" src="" alt="Card image cap" src={uri + eventSugestion.EventPic} />
+                                    <CardBody>
+                                        <CardTitle className="cerd-title">{eventSugestion.EventName}</CardTitle>
+                                        <CardTitle>
+                                            <label className="card-date">Date :</label> {eventSugestion.EventDate}
+                                        </CardTitle>
+                                        <CardTitle>
+                                            <div className="card-button">
+                                                {/* <Link to="/showimage"> */}
+                                                <Button outline color="info" onClick={() => this.saveEvent(eventSugestion)}>View Image</Button>
+                                                {/* </Link> */}
+                                            </div>
+                                        </CardTitle>
+                                    </CardBody>
+                                    <CardBody>
+                                        <CardSubtitle>
+                                            {/* <SubCard
+                                                photographer={JSON.parse(dynamicData.PhotoGrapher)}
+                                            /> */}
+                                        </CardSubtitle>
+                                    </CardBody>
+                                </Card>
+                            </CardDeck>
+                        </Modal>
 
                     </div>
 
-                    <div className="btn-goevent">
-                        <Button outline color="warning" size="lg" onClick={() => this.segesEvent()}> Go to Event </Button>{' '}
-                    </div>
-                </div>
-                :
-                <div className="seach-haeder">
-                    <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
-                    <hr className="hr-style1" />
-                    <hr className="hr-style2" />
-                    <div className="input-seach">
-                        <Form onSubmit={this.handleSubmit}>
-                            <FormGroup>
-                                <Input type="select" bsSize="lg" onChange={this.handleChange.bind(this)} id="typeInput">
-                                    <option value="0">เลือกกลุ่มการค้นหา</option>
-                                    <option value="1">BiB Number</option>
-                                    <option value="2">เวลา ชั่วโมง : นาที</option>
-                                </Input>
-                            </FormGroup>
-                        </Form>
-                    </div>
-                    <div className="input-seach">
-                        {this.state.typeSearch == 1 ?
-                            <div id="formtime">
-                                <Form inline onSubmit={this.handleSubmit}>
-                                    <FormGroup>
-                                        <Input
-                                            id="typeInput"
-                                            bsSize="lg"
-                                            placeholder="Ex.A1234"
-                                            innerRef={(input) => this.getSearch = input}
-                                        />
-                                    </FormGroup>
-                                    <div className="btn-gobib">
-                                        <Button outline color="warning" size="lg" type="submit"> Search BiB </Button>
-                                    </div>
-                                </Form>
-                            </div>
-                            :
-                            <div></div>
-                        }
-                        {this.state.typeSearch == 2 ?
-                            <div id="formtime">
-                                <Form inline onSubmit={this.handleSubmitTime}>
-                                    <FormGroup>
-                                        <Input
-                                            id="typeInput"
-                                            bsSize="lg"
-                                            placeholder=" ชั่วโมง Ex.06"
-                                            innerRef={(input) => this.getTime = input}
-                                        />
-                                        <div id="in-time">
-                                            <Label >  :  </Label>
+                    :
+
+                    <div className="seach-haeder">
+                        <h1 className="text-seach">{this.state.text1}<b>{this.state.text2}</b></h1>
+                        <hr className="hr-style1" />
+                        <hr className="hr-style2" />
+                        <div className="input-seach">
+                            <Form onSubmit={this.handleSubmit}>
+                                <FormGroup>
+                                    <Input type="select" bsSize="lg" onChange={this.handleChange.bind(this)} id="typeInput">
+                                        <option value="0">เลือกกลุ่มการค้นหา</option>
+                                        <option value="1">BiB Number</option>
+                                        <option value="2">เวลา ชั่วโมง : นาที</option>
+                                    </Input>
+                                </FormGroup>
+                            </Form>
+                        </div>
+                        <div className="input-seach">
+                            {this.state.typeSearch == 1 ?
+                                <div id="formtime">
+                                    <Form inline onSubmit={this.handleSubmit}>
+                                        <FormGroup>
+                                            <Input
+                                                id="typeInput"
+                                                bsSize="lg"
+                                                placeholder="Ex.A1234"
+                                                innerRef={(input) => this.getSearch = input}
+                                            />
+                                        </FormGroup>
+                                        <div className="btn-gobib">
+                                            <Button outline color="warning" size="lg" type="submit"> Search BiB </Button>
                                         </div>
-                                        <Input
-                                            id="typeInput"
-                                            bsSize="lg"
-                                            placeholder=" นาที Ex. 45"
-                                            innerRef={(input) => this.getMin = input}
-                                        />
-                                    </FormGroup>
-                                    <div className="btn-gobib">
-                                        <Button outline color="warning" size="lg" type="submit"> Search Time </Button>
-                                    </div>
-                                </Form>
-                            </div>
-                            :
-                            <div></div>
-                        }
+                                    </Form>
+                                </div>
+                                :
+                                <div></div>
+                            }
+                            {this.state.typeSearch == 2 ?
+                                <div id="formtime">
+                                    <Form inline onSubmit={this.handleSubmitTime}>
+                                        <FormGroup>
+                                            <Input
+                                                type="time"
+                                                name="time"
+                                                id="typeInputTime"
+                                                placeholder="Ex.06:59"
+                                                innerRef={(input) => this.getTime = input}
+                                            />
+                                        </FormGroup>
+                                        <div className="btn-gobib">
+                                            <Button outline color="warning" size="lg" type="submit"> Search Time </Button>
+                                        </div>
+                                    </Form>
+                                </div>
+                                :
+                                <div></div>
+                            }
+                        </div>
                     </div>
-                </div>
+                }
+            </Container>
         )
     }
 }

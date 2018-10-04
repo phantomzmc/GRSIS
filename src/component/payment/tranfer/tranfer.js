@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ImageUploader from 'react-images-upload';
-import { Image } from 'semantic-ui-react';
+import { Image, Button } from 'semantic-ui-react';
+import Modal from "react-responsive-modal";
+import DetailPayment from '../detailPayment/detailPayment'
 import axios from 'axios'
 import './tranfer.css'
 
@@ -11,9 +13,37 @@ class TranferPayment extends Component {
         super(props);
         this.state = {
             pictures: [],
-            image: "https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
+            image: "https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png",
+            layoutCart: false,
+            file: null
         };
+        this.onFormSubmit = this.onFormSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.onDrop = this.onDrop.bind(this);
+    }
+    onFormSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('myImage', this.state.file);
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'Cache-Control': 'no-cache'
+            },
+            responseType: 'json'
+        };
+        axios.post("https://upload.i-bitz.co.th/upload/", formData, config)
+            .then((responseJson) => {
+                console.log(responseJson)
+                this.setState({ img: responseJson.data.files[0] })
+                this.props.setSlip(responseJson.data.files[0])
+                alert("The file is successfully uploaded");
+            }).catch((error) => {
+            });
+    }
+    onChange(e) {
+        this.setState({ file: e.target.files[0] });
     }
     onDrop(picture) {
         this.setState({
@@ -24,21 +54,20 @@ class TranferPayment extends Component {
     }
     upimageToServe(response) {
         var photo = {
-            uri: '',
-            type: response.type,
+            uri: response.uri,
+            type: 'image/jpeg',
             name: response.name,
             size: response.size,
         };
         console.log(photo)
+        this.setState({ img: response.name })
         var form = new FormData();
-        form.append("imageLink", photo);
+        form.append("imageLink", photo.name);
 
         let uri = "https://upload.i-bitz.co.th/upload/"
-        let data = form
         axios.post(uri, form, {
             headers: {
                 'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'multipart/form-data',
                 'Cache-Control': 'no-cache'
             },
@@ -46,23 +75,48 @@ class TranferPayment extends Component {
         })
             .then((responseJson) => {
                 console.log(responseJson)
-                this.props.onAddOrder
             }).catch((error) => {
                 console.error(error)
             });
     }
+    submitUpImg() {
+        this.props.addOrder()
+        setTimeout(() => {
+            this.props.clickNext()
+        }, 2000)
+    }
     render() {
         return (
             <div>
-                <h3>หลักฐานการชำระค่าสั่งซื้อภาพ</h3>
-                <ImageUploader
+                <div className="title-credit">
+                    <h3 className="title">หลักฐานการชำระค่าสั่งซื้อภาพ</h3>
+                    <Button size='medium' color='blue' id="btn-detailPay" onClick={() => this.setState({ layoutCart: true })}>
+                        <p>รายละเอียดการชำระ</p>
+                    </Button>
+                    <img src={this.state.img} width="100%" />
+                </div>
+                {/* <ImageUploader
                     label="* หมายเหตุ : กรุณาแนบหลักฐานการชำระค่าสั่งซื้อภาพ ไฟล์ที่สามารถ upload ได้คือ JPG, PNG ขนาดไม่เกิน 3 MB"
                     withIcon={true}
                     buttonText='Choose images'
                     onChange={this.onDrop}
                     imgExtension={['.jpg', '.gif', '.png', '.gif']}
                     maxFileSize={5242880}
-                />
+                /> */}
+                <form onSubmit={this.onFormSubmit}>
+                    <h1>File Upload</h1>
+                    <input type="file" name="myImage" onChange={this.onChange} />
+                    <button type="submit">Upload</button>
+                </form>
+                <div id="btn-submit">
+                    <Button inverted color='red' onClick={() => this.props.clickPrev()} className="btn-prev">
+                        <p>ย้อนกลับ</p>
+                    </Button>
+                    <Button inverted color='green' onClick={() => this.submitUpImg()} className="btn-next" type="submit">
+                        <p>ชำระค่าบริการ</p>
+                    </Button>
+
+                </div>
                 <div className="container-tabel">
                     <table>
                         <tr>
@@ -89,8 +143,10 @@ class TranferPayment extends Component {
                         </tr>
 
                     </table>
-
                 </div>
+                <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center>
+                    <DetailPayment />
+                </Modal>
             </div>
         )
     }
