@@ -11,15 +11,48 @@
 .image-logo {
     margin: 20px;
 }
+
 #btn-detailPay {
     position: absolute;
     text-align: right;
     top: 5px;
-    right: 20px;;
+    right: 20px;
+    ;
 }
+
 #btn-submit {
     margin-top: 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.body-slip {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-slip {
+    text-align: center;
+    flex: 1;
+    display: flex; 
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    border: #e1e1e1 1px solid;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#slip {
+    width: 200px;
+    height: 200px;
+}
+#input-file {
+    justify-content: center;
+    align-items: center;
 }

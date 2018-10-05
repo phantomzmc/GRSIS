@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import '../css/home.css';
 import { connect } from 'react-redux'
 import Navbar from '../component/nav/nav'
-import VdoHeader from '../component/header/header2'
+import VdoHeader from '../component/header/header'
 import SearchEvent from '../component/search/search'
 import TabsControl from '../component/tabs/tabs'
 import ImageGrid from '../component/imageGrid/image-grid';
@@ -51,8 +51,8 @@ class ShowImageEvent extends Component {
                     <Navbar />
                 </div>
                 {/* <header className="App-header"></header> */}
-                <VdoHeader />
                 <Container>
+                    <VdoHeader />
                     <Row>
                         <Col xs="12" sm="12" md="12">
                             <div className="content-container">
@@ -91,16 +91,10 @@ class ShowImageEvent extends Component {
                                     />
                                 }
                             </div>
-                            {/* <div>
-                                    <Pagenation />
-                                </div> */}
-                            {/* <div>
-                                    <LigthBoxImage />
-                                </div> */}
+                            
                         </div>
                     </Col>
                 </Row>
-                {/* </Container> */}
                 <footer className="footer">
                     <Footer />
                 </footer>

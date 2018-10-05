@@ -5,6 +5,11 @@ const cart = {
     image: [],
     counter: 0
 }
+const events = {
+    event : {
+        PhotoGrapher : {}
+    }
+}
 const token = (state = { token: "" }, action) => {
     switch (action.type) {
         case "setToken": {
@@ -15,7 +20,7 @@ const token = (state = { token: "" }, action) => {
     return state
 };
 
-const event = (state = { photoGraID: "" }, action) => {
+const event = (state = events, action) => {
     switch (action.type) {
         case "setEvent": {
             state.event = action.payload
