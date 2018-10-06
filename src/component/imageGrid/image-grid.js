@@ -1,15 +1,14 @@
 import React from 'react';
 import Lightbox from 'lightbox-react';
 import ReactLoading from 'react-loading';
-import { Container, Col, Row, Card, CardBody, Button } from "reactstrap";
+import { Container, Col, Row, Card, CardBody, Button, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { withRouter } from 'react-router-dom'
 import { connect } from "react-redux";
 import axios from 'axios'
 import images from './dataimage'
-import imgSugest from './dataImageSugest'
-import Modal from "react-responsive-modal";
+// import Modal from "react-responsive-modal";
 import Pagenation from '../pagenation/pagenation'
 import TabsLightBox from '../lightboxImg/tabs/tabs'
 import req from '../../config/uri_req'
@@ -289,11 +288,18 @@ class ImageLayout extends React.Component {
                         }
                     />
                 }
-                <Modal open={this.state.openTab} onClose={() => this.setState({ openTab: false, isOpen: true })} center>
-                    <TabsLightBox
-                        detail={this.state.images[photoIndex]}
-                        nextPages={this.onPressNextPage}
-                    />
+                <Modal isOpen={this.state.openTab} toggle={() => this.setState({ openTab: false, isOpen: true })} size="lg">
+                    <ModalHeader toggle={() => this.setState({ openTab: false, isOpen: true })}>
+                        <p>รายละเอียดรูปภาพ</p>
+                    </ModalHeader>
+                    <div className="detail-img-tab">
+                        <ModalBody>
+                            <TabsLightBox
+                                detail={this.state.images[photoIndex]}
+                                nextPages={this.onPressNextPage}
+                            />
+                        </ModalBody>
+                    </div>
                 </Modal>
                 {/* {this.state.openTab &&
                     <Lightbox

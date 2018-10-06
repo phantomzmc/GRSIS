@@ -4,3 +4,7 @@ p {
 .choice-contai {
     padding: 20px;
 }
+.table-contai {
+    width: 500px;
+    max-width: 500px;
+}

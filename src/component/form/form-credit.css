@@ -12,11 +12,15 @@
     flex-direction: row;
     justify-content: space-around;
 }
-.crad-status-payment {
-    margin: 100px;
+.crad-status-payment{
+    padding: 100px;
+    text-align: center;
 }
 #status-payment {
     color: green;
+}
+#status-payment-error {
+    color: red;
 }
 .modal-status { 
     border-radius: 5%;

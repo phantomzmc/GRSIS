@@ -76,7 +76,7 @@ class ListTable3 extends React.Component {
                 {this.props.propertyImg == "" ?
                     <div></div>
                     :
-                    <Table color="orange" key="orange">
+                    <Table color="orange" key="orange" size="large">
                         <Table.Header>
                             <Table.Row textAlign='center' >
                                 <Table.HeaderCell>จำนวน</Table.HeaderCell>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup, Label, Input, FormText, FormFeedback, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Button, Header, Icon } from 'semantic-ui-react'
 import Omise from '../../config/omisePayment'
-import Modal from "react-responsive-modal";
+// import Modal from "react-responsive-modal";
 import Loader from 'react-loader-spinner'
 import Cards from 'react-credit-cards';
 import './form-credit.css'
@@ -258,33 +258,43 @@ class FormRegister extends Component {
                     </Row>
                     <Row>
                         <Col xs={12} sm={12} md={12}>
-                            <Modal open={this.state.statusPayment} onClose={() => this.setState({ statusPayment: false })} center className="modal-status">
-                                <div className="crad-status-payment">
-                                    <Header as='h2' icon>
-                                        <Icon name='check circle' color="green" />
-                                        <p id="status-payment">ชำระสำเร็จ</p>
-                                        <Header.Subheader id="status-payment">ชำระเงินค่าสั่งซื้อสำเร็จ</Header.Subheader>
-                                    </Header>
-                                </div>
+                            <Modal isOpen={this.state.statusPayment} toggle={() => this.setState({ statusPayment: false })} size="lg">
+                                <ModalBody >
+                                    <div className="crad-status-payment">
+                                        <Header as='h2' icon>
+                                            <Icon name='check circle' color="green" />
+                                            <p id="status-payment">ชำระสำเร็จ</p>
+                                            <Header.Subheader id="status-payment">
+                                                <p>ชำระเงินค่าสั่งซื้อสำเร็จ</p>
+                                            </Header.Subheader>
+                                        </Header>
+                                    </div>
+                                </ModalBody>
                             </Modal>
-                            <Modal open={this.state.statusPaymentError} onClose={() => this.setState({ statusPaymentError: false })} center >
-                                <div className="crad-status-payment">
-                                    <Header as='h2' icon>
-                                        <Icon name='close' color="red" />
-                                        <p id="status-payment">ชำระไม่สำเร็จ</p>
-                                        <Header.Subheader id="status-payment">ชำระเงินค่าสั่งซื้อไม่สำเร็จ กรุณาตรวจสอบอีกครั้ง</Header.Subheader>
-                                    </Header>
-                                </div>
+                            <Modal isOpen={this.state.statusPaymentError} toggle={() => this.setState({ statusPaymentError: false })} size="lg">
+                                <ModalBody >
+                                    <div className="crad-status-payment">
+                                        <Header as='h2' icon>
+                                            <Icon name='close' color="red" />
+                                            <p id="status-payment-error">ชำระไม่สำเร็จ</p>
+                                            <Header.Subheader id="status-payment-error">
+                                                <p>ชำระเงินค่าสั่งซื้อไม่สำเร็จ กรุณาตรวจสอบอีกครั้ง</p>
+                                            </Header.Subheader>
+                                        </Header>
+                                    </div>
+                                </ModalBody>
                             </Modal>
-                            <Modal open={this.state.checkPayment} center >
-                                <div className="crad-status-payment">
-                                    <Loader
-                                        type="ThreeDots"
-                                        color="#00BFFF"
-                                        height="100"
-                                        width="100"
-                                    />
-                                </div>
+                            <Modal isOpen={this.state.checkPayment} toggle={() => this.setState({ statusPaymentError: false })} size="lg">
+                                <ModalBody >
+                                    <div className="crad-status-payment">
+                                        <Loader
+                                            type="ThreeDots"
+                                            color="#00BFFF"
+                                            height="100"
+                                            width="100"
+                                        />
+                                    </div>
+                                </ModalBody>
                             </Modal>
                         </Col>
                     </Row>

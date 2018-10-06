@@ -20,7 +20,9 @@ export default
             uspGetOrder : url + "Main.uspGetOrder",
             uspGetOrderList : url + "Main.uspGetOrderList",
             uspGetPhotoGrapherLists : url + "Main.uspGetPhotoGrapherLists",
-            
 
+        },
+        {
+            url_mailgun: "https://api.mailgun.net/v3/mg.guurun.com/messages",
         }
     ]
