@@ -37,6 +37,7 @@
     "react-image-responsive": "^2.0.2",
     "react-images": "^0.5.19",
     "react-images-upload": "^1.2.0",
+    "react-inner-html": "^1.0.1",
     "react-loader-spinner": "^2.0.6",
     "react-loading": "^2.0.3",
     "react-measure": "^2.0.2",

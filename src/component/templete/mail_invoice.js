@@ -1,26 +1,8 @@
 import React, { Component } from 'react'
-import ReactDOMServer from "react-dom/server";
-import MailGunSend from './config/send-mailgun'
-import html from 'react-inner-html';
-import dataCart from './data/dataCart'
+import dataCart from '../../data/dataCart'
 
-
-
-class Test extends Component {
-    state = {
-        email: "phantomzmc@gmail.com"
-    }
+class MailInvoice extends Component {
     
-    async sendEmailInvoice(html) {
-        const data = await MailGunSend.onSendInvoice({
-            'from': 'Guurun Support Team. <support@guurun.com>',
-            'to': this.state.email,
-            'subject': 'Guurun Support Team รหัสในการยืนยันตัวตน',
-            'html': html
-            // 'html': '<html >\r\n<body style=\"margin: 0; padding: 0;\">\r\n\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\t\r\n\t\t<tr>\r\n\t\t\t<td style=\"padding: 10px 0 30px 0;\">\r\n\t\t\t\t<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border: 1px solid #cccccc; border-collapse: collapse;\">\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td align=\"center\" bgcolor=\"#70bbd9\" style=\"padding: 40px 0 30px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;\">\r\n\t\t\t\t\t\t\t<img src=\"https:\/\/www.quickanddirtytips.com\/sites\/default\/files\/images\/8788\/email.jpg\" alt=\"Creating Email Magic\" width=\"300\" height=\"230\" style=\"display: block;\" \/>\r\n\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td bgcolor=\"#ffffff\" style=\"padding: 40px 30px 40px 30px;\">\r\n\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 24px;\">\r\n\t\t\t\t\t\t\t\t\t\t<b>Lorem ipsum dolor sit amet!<\/b>\r\n\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<td style=\"padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\r\n\t\t\t\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\r\n\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<td width=\"260\" valign=\"top\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"http:\/\/iconion.com\/posts\/video\/icon-fonts\/icon-fonts.jpg\" alt=\"\" width=\"100%\" height=\"140\" style=\"display: block;\" \/>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"font-size: 0; line-height: 0;\" width=\"20\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t \r\n\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<td width=\"260\" valign=\"top\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"https:\/\/cdn.dribbble.com\/users\/277751\/screenshots\/2278467\/icon_1x.png\" alt=\"\" width=\"100%\" height=\"140\" style=\"display: block;\" \/>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t<\/table>\r\n\t\t\t<\/td>\r\n\t\t<\/tr>\r\n\t<\/table>\r\n<\/body>\r\n<\/html>'
-        })
-        console.log(data)
-    }
     render() {
         return (
             <div>
@@ -43,7 +25,7 @@ class Test extends Component {
                                 </td>
                             </tr>
                         </table>
-                        <h4 style={{ color: "#FA8601" }}>ใบเสร็จหมายเลขที่ #153643</h4>
+                        <h4 style={{ color: "#FA8601" }}>ใบเสร็จหมายเลขที่ #{this.props.idinvoice}</h4>
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <th>#</th>
@@ -67,15 +49,15 @@ class Test extends Component {
 
                             <tr style={{ textAlign: 'right' }}>
                                 <td colspan="4">ค่าจัดส่ง</td>
-                                <td>0.00 บาท</td>
+                                <td>{this.props.postPrice} บาท</td>
                             </tr>
                             <tr style={{ textAlign: 'right' }}>
                                 <td colspan="4">ค่าธรรมเนียมการใชับัตรเครดิต/เดบิต</td>
-                                <td>0.00 บาท</td>
+                                <td>{this.props.creditPrice} บาท</td>
                             </tr>
                             <tr style={{ textAlign: 'right' }}>
                                 <td colspan="4"><b>รวมทั้งหมด</b></td>
-                                <td><b>0.00 บาท</b></td>
+                                <td><b>{this.props.price} บาท</b></td>
                             </tr>
                             <tr>
                                 <td colspan="5">
@@ -119,4 +101,5 @@ class Test extends Component {
     }
 }
 
-export default Test
+
+export default MailInvoice

@@ -6606,6 +6606,10 @@ react-images@^0.5.16, react-images@^0.5.19:
     react-scrolllock "^2.0.1"
     react-transition-group "2"
 
+react-inner-html@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-inner-html/-/react-inner-html-1.0.1.tgz#23258d44e151d3220f4aebbeb67c14a6b9980abb"
+
 react-input-autosize@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
