@@ -47,7 +47,7 @@ const cartImage = (state = cart, action) => {
     }
     return state
 };
-const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0, pricePost: 0.0 }, action) => {
+const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0, pricePost: 0.0 ,quantity : 0}, action) => {
     switch (action.type) {
         case "addOrderList": {
             state.orderlist = action.payload;
@@ -71,6 +71,10 @@ const order = (state = { orderlist: [], orderlistFull: [], totalPrice: 0.0, pric
         }
         case "invoiceOrder": {
             state.invoice = action.payload
+            break;
+        }
+        case "setQuantity" : {
+            state.quantity = action.payload
             break;
         }
     }

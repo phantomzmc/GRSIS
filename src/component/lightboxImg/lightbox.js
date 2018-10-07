@@ -27,35 +27,7 @@ class LigthBoxImage extends Component {
         return (
             <div className="row-style">
                 {this.state.isOpen1 &&
-                    // <Card>
-                    //     <Row>
-                    //         <Col md={12} sm={12} xs={12}>
-                    //             <div className="img-ligth">
-                    //                 <CardTitle>
-                    //                     <div className="click-full">
-                    //                         <Button color="secondary" size="sm" onClick={() => this.setState({ isOpen: true, isOpen1: false })}>
-                    //                             <Icon name="expand arrows alternate" className="icon-full" />
-                    //                             ดูภาพขนาดใหญ่
-                    //                     </Button>
-                    //                     </div>
-                    //                     <span>{this.props.keyImage} / 35</span>
-
-                    //                 </CardTitle>
-                    //                 <CardSubtitle>
-                    //                     <div className="img-view">
-                    //                         <img src={this.state.img} id="img-worker" />
-                    //                     </div>
-                    //                     <div className="btn-buy">
-                    //                     <Button color="success" block onClick={() => this.setState({ layoutCart: true, isOpen1: false })}>
-                    //                             <Icon name="cart" className="icon-full" />
-                    //                             <span id="text-buy">สั่งซื้อภาพ</span>
-                    //                     </Button>
-                    //                     </div>
-                    //                 </CardSubtitle>
-                    //             </div>
-                    //         </Col>
-                    //     </Row>
-                    // </Card>
+                    
                     <img src={this.state.img} />
 
                 }
@@ -73,16 +45,6 @@ class LigthBoxImage extends Component {
                         onCloseRequest={() => this.setState({ layoutCart: false, isOpen1: true })}
                     />
                 }
-                {/* <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false, isOpen1: true })} center>
-                    <div className="tab-ligth">
-                        <CardBody>
-                            <TabsLightBox
-                                detail={this.state.imgDetail}
-                                nextPages={() => this.props.nextPage()}
-                            />
-                        </CardBody>
-                    </div>
-                </Modal> */}
                 {
                     this.state.isOpen &&
                     <Lightbox

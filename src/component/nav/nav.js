@@ -22,13 +22,14 @@ class NavBar extends React.Component {
     this.toggleNavbar = this.toggleNavbar.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.cartImage.counter)
-    this.setState({ count: this.props.cartImage.counter })
+    console.log(this.props.order.quantity)
+    // this.setState({ count: this.props.cartImage.counter })
+    this.setState({ count : this.props.order.quantity})
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.count != this.props.cartImage.counter) {
+    if (nextProps.count != this.props.order.quantity) {
       console.log("update")
-      this.setState({ count: this.props.cartImage.counter })
+      this.setState({ count: this.props.order.quantity })
     }
   }
   toggleNavbar() {
@@ -63,7 +64,7 @@ class NavBar extends React.Component {
 
             <NavItem style={{ padding: "10px" }}>
               <div>
-                <NotificationBadge count={this.state.count} effect={Effect.SCALE} frameLength={120.0} />
+                <NotificationBadge count={this.props.order.quantity} effect={Effect.SCALE} frameLength={120.0} />
                 <Icon name='shopping cart' size='big' inverted color='white' onClick={() => this.setState({ layoutCart: !this.state.layoutCart })} />
               </div>
               {/* <Popup
@@ -91,7 +92,8 @@ class NavBar extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    cartImage: state.cartImage
+    cartImage: state.cartImage,
+    order : state.order
   }
 }
 

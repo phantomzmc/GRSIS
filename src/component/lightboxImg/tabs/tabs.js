@@ -8,6 +8,7 @@ import apikey from '../../../config/apikey'
 import ListTable1 from '../listTable/listTable'
 import ListTable2 from '../listTable/listTable2'
 import ListTable3 from '../listTable/listTable3'
+import dataQuantity from '../../../data/dataQuantity'
 
 import './tabs.css'
 
@@ -84,6 +85,14 @@ class TabsLightBox extends React.Component {
     setPostPrice(price){
         this.props.setPricePost(parseInt(price))
     }
+    sumQuantity() {
+        const add = (a, b) => a + b
+        const sum = dataQuantity.reduce(add)
+        this.setState({ quantity: sum })
+        this.props.setQuantity(sum)
+        console.log(sum)
+    }
+
     render() {
         const { format } = this.state
         return (
@@ -127,6 +136,7 @@ class TabsLightBox extends React.Component {
                                             postPrice={format[0].ExtraPostPrice}
                                             sendPost={format[0].ExtraSendPost}
                                             setPostPrice={this.setPostPrice.bind(this)}
+                                            sumQuantity={this.sumQuantity.bind(this)}
                                             nextPage={() => this.props.nextPages()}
                                         />
                                         <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
@@ -144,6 +154,7 @@ class TabsLightBox extends React.Component {
                                             postPrice={format[1].ExtraPostPrice}
                                             sendPost={format[1].ExtraSendPost}
                                             setPostPrice={this.setPostPrice.bind(this)}
+                                            sumQuantity={this.sumQuantity.bind(this)}
                                             nextPage={() => this.props.nextPages()}
 
                                         />
@@ -162,6 +173,7 @@ class TabsLightBox extends React.Component {
                                             postPrice={format[2].ExtraPostPrice}
                                             sendPost={format[2].ExtraSendPost}
                                             setPostPrice={this.setPostPrice.bind(this)}
+                                            sumQuantity={this.sumQuantity.bind(this)}
                                             nextPage={() => this.props.nextPages()}
 
                                         />
@@ -194,6 +206,12 @@ const mapDispatchToProps = dispatch => {
                 payload: pricepost
             })
         },
+        setQuantity : (quantity) => {
+            dispatch({
+                type : "setQuantity",
+                payload : quantity
+            })
+        }
     }
 }
 

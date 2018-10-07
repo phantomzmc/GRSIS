@@ -9,6 +9,7 @@ import { connect } from "react-redux"
 import ReactDOMServer from "react-dom/server";
 import MailGunSend from '../config/send-mailgun'
 import dataPrice from '../data/dataPrice'
+import dataQuantity from '../data/dataQuantity'
 import '../css/invoice-bill.css'
 import TempleteInvoice from '../component/templete/mail_invoice'
 
@@ -33,20 +34,21 @@ class Invoice extends Component {
             passcode: stored.passcode == "" || undefined ? "" : stored.passcode,
             tel: stored.tel == "" || undefined ? "" : stored.tel,
             // date: new Date
+            quantity : 0
         }
     }
 
     componentWillMount() {
-
+        this.sumQuantity()
     }
-    componentDidMount(){
-        setTimeout(()=>{
+    componentDidMount() {
+        setTimeout(() => {
             this.sendEmailInvoice()
-        },3000)
+        }, 3000)
     }
     async sendEmailInvoice() {
         const html = ReactDOMServer.renderToString(
-            <TempleteInvoice 
+            <TempleteInvoice
                 idinvoice={this.props.order.invoice.OrderID}
                 creditPrice={parseFloat(this.props.order.credit).toFixed(2)}
                 postPrice={parseFloat(this.props.order.pricePost).toFixed(2)}
@@ -55,9 +57,8 @@ class Invoice extends Component {
         const data = await MailGunSend.onSendInvoice({
             'from': 'Guurun Support Team. <support@guurun.com>',
             'to': this.state.email,
-            'subject': 'Guurun Support Team รหัสในการยืนยันตัวตน',
+            'subject': 'Shutter Running ImageService อีเมล์ยืนยันการสั่งซื้อรูปภาพผ่านทางเว็บไซค์',
             'html': html
-            // 'html': '<html >\r\n<body style=\"margin: 0; padding: 0;\">\r\n\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\t\r\n\t\t<tr>\r\n\t\t\t<td style=\"padding: 10px 0 30px 0;\">\r\n\t\t\t\t<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border: 1px solid #cccccc; border-collapse: collapse;\">\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td align=\"center\" bgcolor=\"#70bbd9\" style=\"padding: 40px 0 30px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;\">\r\n\t\t\t\t\t\t\t<img src=\"https:\/\/www.quickanddirtytips.com\/sites\/default\/files\/images\/8788\/email.jpg\" alt=\"Creating Email Magic\" width=\"300\" height=\"230\" style=\"display: block;\" \/>\r\n\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td bgcolor=\"#ffffff\" style=\"padding: 40px 30px 40px 30px;\">\r\n\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<td style=\"color: #153643; font-family: Arial, sans-serif; font-size: 24px;\">\r\n\t\t\t\t\t\t\t\t\t\t<b>Lorem ipsum dolor sit amet!<\/b>\r\n\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<td style=\"padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\r\n\t\t\t\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\r\n\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<td width=\"260\" valign=\"top\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"http:\/\/iconion.com\/posts\/video\/icon-fonts\/icon-fonts.jpg\" alt=\"\" width=\"100%\" height=\"140\" style=\"display: block;\" \/>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"font-size: 0; line-height: 0;\" width=\"20\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t \r\n\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<td width=\"260\" valign=\"top\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"https:\/\/cdn.dribbble.com\/users\/277751\/screenshots\/2278467\/icon_1x.png\" alt=\"\" width=\"100%\" height=\"140\" style=\"display: block;\" \/>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t\t\t<\/table>\r\n\t\t\t\t\t\t<\/td>\r\n\t\t\t\t\t<\/tr>\r\n\t\t\t\t\t<\/table>\r\n\t\t\t<\/td>\r\n\t\t<\/tr>\r\n\t<\/table>\r\n<\/body>\r\n<\/html>'
         })
         console.log(html)
         console.log(data)
@@ -71,7 +72,12 @@ class Invoice extends Component {
         pri.focus();
         pri.print();
     }
-
+    sumQuantity() {
+        const add = (a, b) => a + b
+        const sum = dataQuantity.reduce(add)
+        this.setState({ quantity: sum })
+        console.log(sum)
+    }
     render() {
         let { address, soi, tumpon, amphoe, province, country, passcode } = this.state
         return (
@@ -119,7 +125,7 @@ class Invoice extends Component {
                                                             </Table.Row>
                                                             <Table.Row>
                                                                 <Table.Cell>จำนวน</Table.Cell>
-                                                                <Table.Cell>{dataPrice.length}</Table.Cell>
+                                                                <Table.Cell>{this.state.quantity}</Table.Cell>
                                                             </Table.Row>
                                                             <Table.Row>
                                                                 <Table.Cell>รูปแบบการชำระเงิน</Table.Cell>

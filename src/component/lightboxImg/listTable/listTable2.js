@@ -6,6 +6,8 @@ import orderlist from '../../../json/orderlist' //json orderlist
 import orderlistFull from '../../../json/orderlistFull'
 import dataCart from '../../../data/dataCart'
 import dataPrice from '../../../data/dataPrice'
+import dataQuantity from '../../../data/dataQuantity'
+import './listTable.css'
 
 class ListTable2 extends React.Component {
     constructor(props) {
@@ -73,10 +75,13 @@ class ListTable2 extends React.Component {
             FormatBuyImageID: this.state.FormatBuyImageID,
             Size: this.state.size
         }
+        dataQuantity.push(parseInt(this.state.quantity))
         orderlist.push(dataOrder)
         orderlistFull.push(dataOrderFull)
         dataCart.push(dataOrderFull)
         this.props.nextPage()
+        this.props.sumQuantity()
+
     }
     handleArray(item, index) {
         orderlist.ImageID = this.props.details.ImageID

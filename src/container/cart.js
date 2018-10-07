@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-// import { Button } from 'reactstrap';
 import { Icon, Image, Table,Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import dataCart from '../data/dataCart';
-import dataOrderList from '../data/dataOrderList'
 import dataPrice from '../data/dataPrice'
-import Summary from '../component/items/summary'
+import dataQuantity from '../data/dataQuantity'
 import '../css/cart.css'
-
 
 class CartImages extends Component {
     constructor(props) {
@@ -22,16 +19,10 @@ class CartImages extends Component {
         console.log(dataPrice)
         console.log(dataCart)
     }
-    // testRefreshProps(){
-    //     this.setState({ totalPrice : parseInt(this.state.totalPrice) + parseInt(10)})
-    //     setTimeout(()=>{
-    //         this.testRefreshProps()
-    //     },2000)
-    // }
+    
     sumPriceBuy() {
         console.log(dataPrice)
         if (dataPrice == "") {
-            // dataPrice.push(parseFloat(0.0).toFixed(1))
         }
         else {
             const add = (a, b) => a + b;
@@ -58,8 +49,10 @@ class CartImages extends Component {
             dataCart[i].Price = parseFloat(priceItem).toFixed(1)
             dataCart[i].Quantity = quantity
             dataPrice[i] = priceItem
+            dataQuantity[i] = quantity
             this.setState({ listview: true })
             this.sumPriceBuy()
+            this.sumQuantity()
         }, 100)
     }
     disQuantityItem = (i) => {
@@ -70,10 +63,18 @@ class CartImages extends Component {
             dataCart[i].Price = parseFloat(priceItem).toFixed(1)
             dataCart[i].Quantity = quantity
             dataPrice[i] = priceItem
+            dataQuantity[i] = quantity
             this.setState({ listview: true })
             this.sumPriceBuy()
-            // alert("price : " + dataCart[i].Price, "quantity : " + dataCart[i].Quantity)
+            this.sumQuantity()
         }, 100)
+    }
+    sumQuantity() {
+        const add = (a, b) => a + b
+        const sum = dataQuantity.reduce(add)
+        this.setState({ quantity: sum })
+        this.props.setQuantity(sum)
+        console.log(sum)
     }
     render() {
         let { quantity } = this.state
@@ -163,6 +164,12 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: "setTotalPrice",
                 payload: totalPrice
+            })
+        },
+        setQuantity: (quantity) => {
+            dispatch({
+                type : "setQuantity",
+                payload : quantity
             })
         }
     }
