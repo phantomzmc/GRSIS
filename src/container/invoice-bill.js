@@ -34,7 +34,8 @@ class Invoice extends Component {
             passcode: stored.passcode == "" || undefined ? "" : stored.passcode,
             tel: stored.tel == "" || undefined ? "" : stored.tel,
             // date: new Date
-            quantity : 0
+            quantity : 0,
+            
         }
     }
 

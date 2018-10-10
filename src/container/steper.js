@@ -15,6 +15,7 @@ import Footer from '../component/footer/footer'
 import req from '../config/uri_req'
 import apikey from '../config/apikey'
 import axios from 'axios'
+import dataCart from '../data/dataCart'
 
 
 class StepControl extends Component {
@@ -103,7 +104,7 @@ class StepControl extends Component {
     }
     e_showButton(dataAddress) {
         console.log(dataAddress)
-        this.setState({ showButton: true })
+        // this.setState({ showButton: true })
     }
     onClickNext() {
         const { step, currentStep } = this.state;
@@ -116,7 +117,7 @@ class StepControl extends Component {
             this.controlPage()
         }, 100)
     }
-    
+
     onClickPrev() {
         const { step, currentStep } = this.state;
         this.setState({
@@ -185,7 +186,7 @@ class StepControl extends Component {
                                 </div>
                                 <div className="cart-images">
                                     {this.state.isOpenCart &&
-                                        <CartImages 
+                                        <CartImages
                                             statusBtn={true}
                                         />
                                     }
@@ -202,32 +203,29 @@ class StepControl extends Component {
                                             onAddOreder={this.addOrder.bind(this)}
                                             clickNext={this.onClickNext.bind(this)}
                                             clickPrev={this.onClickPrev.bind(this)}
-                                            
+
                                         />
                                     }
                                     {this.state.isOpenInvoice &&
                                         <Invoice />
                                     }
                                 </div>
-                                <div className="btn-groud">
-                                    {/* {!this.state.isOpenCart &&
-                                        <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
-                                            <p>ย้อนกลับ</p>
-                                        </Button>
-                                        // <Button color="danger" size="lg" >  </Button>
-                                    } */}
-                                    {this.state.isOpenCart &&
-                                        <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
-                                            <p>ยกเลิกรายการทั้งหมด</p>
-                                        </Button>
-                                    }
-                                    {this.state.isOpenCart &&
-                                        <Button inverted color='green' onClick={this.onClickNext} className="btn-next">
-                                            <p>ไปชำระค่าบริการ</p>
-                                        </Button>
-                                    }
-            
-                                </div>
+                                {dataCart.length != 0 ?
+                                    <div className="btn-groud">
+                                        {this.state.isOpenCart &&
+                                            <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
+                                                <p>ยกเลิกรายการทั้งหมด</p>
+                                            </Button>
+                                        }
+                                        {this.state.isOpenCart &&
+                                            <Button inverted color='green' onClick={this.onClickNext} className="btn-next">
+                                                <p>ไปชำระค่าบริการ</p>
+                                            </Button>
+                                        }
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
                             </div>
                         </Col>
                     </Row>

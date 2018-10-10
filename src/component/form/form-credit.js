@@ -176,12 +176,16 @@ class FormRegister extends Component {
                                     {this.state.errorCardNumber == false ?
                                         <Col sm={10}>
                                             <Input
+                                                type="tel"
+                                                maxLength="16"
                                                 placeholder="Ex.5555 9999 0000 9999"
                                                 innerRef={(input) => this.getCardNumber = input} />
                                         </Col>
                                         :
                                         <Col sm={10}>
                                             <Input
+                                                type="tel"
+                                                maxLength="16"
                                                 placeholder="Ex.5555 9999 0000 9999"
                                                 innerRef={(input) => this.getCardNumber = input}
                                                 invalid
@@ -195,12 +199,14 @@ class FormRegister extends Component {
                                     {this.state.errorExpMonth == false ?
                                         <Col sm={5}>
                                             <Input
+                                                type="tel"
                                                 placeholder="Ex.เดือนที่หมดอายุ"
                                                 innerRef={(input) => this.getExpMonth = input} />
                                         </Col>
                                         :
                                         <Col sm={5}>
                                             <Input
+                                                type="tel"
                                                 placeholder="Ex.เดือนที่หมดอายุ"
                                                 innerRef={(input) => this.getExpMonth = input}
                                                 invalid />
@@ -210,12 +216,14 @@ class FormRegister extends Component {
                                     {this.state.errorExpYear == false ?
                                         <Col sm={5}>
                                             <Input
+                                                type="tel"
                                                 placeholder="Ex.ปีที่หมดอายุ"
                                                 innerRef={(input) => this.getExpYear = input} />
                                         </Col>
                                         :
                                         <Col sm={5}>
                                             <Input
+                                                type="tel"
                                                 placeholder="Ex.ปีที่หมดอายุ"
                                                 innerRef={(input) => this.getExpYear = input}
                                                 invalid
@@ -229,12 +237,16 @@ class FormRegister extends Component {
                                     {this.state.errorCVC == false ?
                                         <Col sm={10}>
                                             <Input
+                                                type="tel"
+                                                maxLength="4"
                                                 placeholder="Ex.XXX"
                                                 innerRef={(input) => this.getCVC = input} />
                                         </Col>
                                         :
                                         <Col sm={10}>
                                             <Input
+                                                type="tel"
+                                                maxLength="4"
                                                 placeholder="Ex.XXX"
                                                 innerRef={(input) => this.getCVC = input}
                                                 invalid

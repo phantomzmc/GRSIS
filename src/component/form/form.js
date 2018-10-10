@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup, FormFeedback, Label, Input, FormText } from 'reactstrap';
 import { Button } from 'semantic-ui-react'
 
 import './form.css'
@@ -21,7 +21,18 @@ class FormRegister extends Component {
             province: "",
             country: "",
             totalPrice: this.props.order.totalPrice,
-            postPrice : this.props.order.pricePost == undefined || null ? 0.0 : this.props.order.pricePost
+            postPrice: this.props.order.pricePost == undefined || null ? 0.0 : this.props.order.pricePost,
+            errorName: false,
+            errorLastname: false,
+            errorEmail: false,
+            errorTel: false,
+            errorAddress: false,
+            errorAmphoe: false,
+            errorSoi: false,
+            errorTambon: false,
+            errorPostNum: false,
+            errorProvinse: false,
+            errorCountry: false
         }
         this.sumPricePost = this.sumPricePost.bind(this)
     }
@@ -60,6 +71,27 @@ class FormRegister extends Component {
 
     checkDataAddress() {
         if (this.state.formAddress !== true) {
+            this.checkForm1()
+        }
+        else if (this.state.formAddress === true) {
+            this.checkForm2()
+        }
+    }
+
+    checkForm1() {
+        if (this.getName.value === "") {
+            this.setState({ errorName: true })
+        }
+        else if (this.getLastname.value === "") {
+            this.setState({ errorLastname: true })
+        }
+        else if (this.getEmail.value === "") {
+            this.setState({ errorEmail: true })
+        }
+        else if (this.getTel.value === "") {
+            this.setState({ errorTel: true })
+        }
+        else {
             const dataAddress = {
                 name: this.getName.value,
                 lastname: this.getLastname.value,
@@ -68,8 +100,45 @@ class FormRegister extends Component {
             }
             this.props.setAddress(dataAddress)
             this.props.onNextPage(dataAddress)
+            console.log(dataAddress)
+            this.props.clickNext()
         }
-        else if (this.state.formAddress === true) {
+    }
+    checkForm2() {
+        if (this.getName.value === "") {
+            this.setState({ errorName: true })
+        }
+        else if (this.getLastname.value === "") {
+            this.setState({ errorLastname: true })
+        }
+        else if (this.getEmail.value === "") {
+            this.setState({ errorEmail: true })
+        }
+        else if (this.getTel.value === "") {
+            this.setState({ errorTel: true })
+        }
+        else if (this.getAddress.value === "") {
+            this.setState({ errorAddress: true })
+        }
+        else if (this.getStreet.value === "") {
+            this.setState({ errorSoi: true })
+        }
+        else if (this.state.tumpon === "") {
+            this.setState({ errorTambon: true })
+        }
+        else if (this.state.amphoe === "") {
+            this.setState({ errorAmphoe: true })
+        }
+        else if (this.state.province === "") {
+            this.setState({ errorProvinse: true })
+        }
+        else if (this.getPasscode.value === "") {
+            this.setState({ errorPostNum: true })
+        }
+        else if (this.state.country === "") {
+            this.setState({ errorCountry: true })
+        }
+        else {
             const dataAddress = {
                 name: this.getName.value,
                 lastname: this.getLastname.value,
@@ -86,6 +155,8 @@ class FormRegister extends Component {
             }
             this.props.setAddress(dataAddress)
             this.props.onNextPage(dataAddress)
+            console.log(dataAddress)
+            this.props.clickNext()
         }
     }
     render() {
@@ -98,103 +169,233 @@ class FormRegister extends Component {
                             <Form className="form-register" onSubmit={this.handleSubmit}>
                                 <FormGroup row>
                                     <Label for="username" sm={2} md={2} xs={12}>ชื่อ (จำเป็น)</Label>
-                                    <Col sm={4} md={4} xs={12}>
-                                        <Input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Ex.ชื่อ............"
-                                            innerRef={(input) => this.getName = input}
-                                        />
-                                    </Col>
+                                    {this.state.errorName === false ?
+                                        <Col sm={4} md={4} xs={12}>
+                                            <Input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Ex.ชื่อ............"
+                                                innerRef={(input) => this.getName = input}
+                                            />
+                                        </Col>
+                                        :
+                                        <Col sm={4} md={4} xs={12}>
+                                            <Input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Ex.ชื่อ............"
+                                                innerRef={(input) => this.getName = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกชื่อ</FormFeedback>
+                                        </Col>
+                                    }
+
                                     <Label for="lastname" sm={2} md={2} xs={12}>นามสกุล (จำเป็น)</Label>
-                                    <Col sm={4} md={4} xs={12}>
-                                        <Input
-                                            type="text"
-                                            name="surname"
-                                            placeholder="Ex.นามสกุล..........."
-                                            innerRef={(input) => this.getLastname = input} />
-                                    </Col>
+                                    {this.state.errorLastname === false ?
+                                        <Col sm={4} md={4} xs={12}>
+                                            <Input
+                                                type="text"
+                                                name="surname"
+                                                placeholder="Ex.นามสกุล..........."
+                                                innerRef={(input) => this.getLastname = input} />
+                                        </Col>
+                                        :
+                                        <Col sm={4} md={4} xs={12}>
+                                            <Input
+                                                type="text"
+                                                name="surname"
+                                                placeholder="Ex.นามสกุล..........."
+                                                innerRef={(input) => this.getLastname = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกนามสกุล</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="exampleEmail" sm={2}>Email (จำเป็น)</Label>
-                                    <Col sm={10}>
-                                        <Input
-                                            type="email"
-                                            name="email"
-                                            placeholder="Ex.Abc@gmail.com"
-                                            innerRef={(input) => this.getEmail = input}
-                                        />
-                                    </Col>
+                                    {this.state.errorEmail === false ?
+                                        <Col sm={10}>
+                                            <Input
+                                                type="email"
+                                                name="email"
+                                                placeholder="Ex.Abc@gmail.com"
+                                                innerRef={(input) => this.getEmail = input}
+                                            />
+                                        </Col>
+                                        :
+                                        <Col sm={10}>
+                                            <Input
+                                                type="email"
+                                                name="email"
+                                                placeholder="Ex.Abc@gmail.com"
+                                                innerRef={(input) => this.getEmail = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอก Email</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="tel" sm={2}>โทรศัพท์ (จำเป็น)</Label>
-                                    <Col sm={10}>
-                                        <Input
-                                            type="text"
-                                            name="tel"
-                                            placeholder="Ex.090-3198XXX"
-                                            innerRef={(input) => this.getTel = input}
-                                        />
-                                    </Col>
+                                    {this.state.errorTel === false ?
+                                        <Col sm={10}>
+                                            <Input
+                                                type="text"
+                                                name="tel"
+                                                placeholder="Ex.090-3198XXX"
+                                                innerRef={(input) => this.getTel = input}
+                                            />
+                                        </Col>
+                                        :
+                                        <Col sm={10}>
+                                            <Input
+                                                type="text"
+                                                name="tel"
+                                                placeholder="Ex.090-3198XXX"
+                                                innerRef={(input) => this.getTel = input}
+                                                invalid
+                                            />
+                                            <FormFeedback>กรุณากรอกเบอร์โทรศัพท์</FormFeedback>
+                                        </Col>
+                                    }
                                 </FormGroup>
                                 {this.state.formAddress &&
                                     <div>
                                         <FormGroup row>
                                             <Label for="username" sm={2}>บ้านเลขที่/อาคาร :  </Label>
-                                            <Col sm={4}>
-                                                <Input
-                                                    type="text"
-                                                    placeholder="Ex.100/xx"
-                                                    innerRef={(input) => this.getAddress = input} />
-                                            </Col>
+                                            {this.state.errorAddress === false ?
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Ex.100/xx"
+                                                        innerRef={(input) => this.getAddress = input} />
+                                                </Col>
+                                                :
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Ex.100/xx"
+                                                        innerRef={(input) => this.getAddress = input}
+                                                        invalid
+                                                    />
+                                                    <FormFeedback>กรุณากรอกบ้านเลขที่</FormFeedback>
+                                                </Col>
+                                            }
                                             <Label for="lastname" sm={2}>ซอย/ถนน : </Label>
-                                            <Col sm={4}>
-                                                <Input
-                                                    type="text"
-                                                    placeholder="Ex.ถนน ......"
-                                                    innerRef={(input) => this.getStreet = input}
-                                                />
-                                            </Col>
+                                            {this.state.errorSoi === false ?
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Ex.ถนน ......"
+                                                        innerRef={(input) => this.getStreet = input}
+                                                    />
+                                                </Col>
+                                                :
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Ex.ถนน ......"
+                                                        innerRef={(input) => this.getStreet = input}
+                                                        invalid
+                                                    />
+                                                    <FormFeedback>กรุณากรอกซอย/ถนน</FormFeedback>
+                                                </Col>
+                                            }
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="tel" sm={2}>แขวง/ตำบล : </Label>
-                                            <Col sm={4}>
-                                                <SugestTambon
-                                                    setTambon={(value) => this.setState({ tumbon: value })}
-                                                />
-                                                {/* <Input type="text" name="tel" id="tel" placeholder="Ex.090-3198XXX" /> */}
-                                            </Col>
+                                            {this.state.errorTambon === false ?
+                                                <Col sm={4}>
+                                                    <SugestTambon
+                                                        setTambon={(value) => this.setState({ tumbon: value })}
+                                                    />
+                                                    {/* <Input type="text" name="tel" id="tel" placeholder="Ex.090-3198XXX" /> */}
+                                                </Col>
+                                                :
+                                                <Col sm={4}>
+                                                    <SugestTambon
+                                                        setTambon={(value) => this.setState({ tumbon: value })}
+                                                    />
+                                                    <FormFeedback>กรุณากรอกแขวง/ตำบล</FormFeedback>
+
+                                                    {/* <Input type="text" name="tel" id="tel" placeholder="Ex.090-3198XXX" /> */}
+                                                </Col>
+                                            }
                                             <Label for="username" sm={2}>เขต/อำเภอ :  </Label>
-                                            <Col sm={4}>
-                                                <SugestAmphoe
-                                                    setAmphone={(value) => this.setState({ amphoe: value })}
-                                                />
-                                                {/* <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" /> */}
-                                            </Col>
+                                            {this.state.errorAmphoe === false ?
+                                                <Col sm={4}>
+                                                    <SugestAmphoe
+                                                        setAmphone={(value) => this.setState({ amphoe: value })}
+                                                    />
+                                                    {/* <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" /> */}
+                                                </Col>
+                                                :
+                                                <Col sm={4}>
+                                                    <SugestAmphoe
+                                                        setAmphone={(value) => this.setState({ amphoe: value })}
+                                                    />
+                                                    <FormFeedback>กรุณากรอกเขต/อำเภอ</FormFeedback>
+                                                    {/* <Input type="text" name="username" id="username" placeholder="Ex.ชื่อ............" /> */}
+                                                </Col>
+                                            }
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="lastname" sm={2}>จังหวัด : </Label>
-                                            <Col sm={4}>
-                                                <SugestProvince
-                                                    setProvince={(value) => this.setState({ province: value })}
-                                                />
-                                                {/* <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." /> */}
-                                            </Col>
+                                            {this.state.errorProvinse === false ?
+                                                <Col sm={4}>
+                                                    <SugestProvince
+                                                        setProvince={(value) => this.setState({ province: value })}
+                                                    />
+                                                    {/* <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." /> */}
+                                                </Col>
+                                                :
+                                                <Col sm={4}>
+                                                    <SugestProvince
+                                                        setProvince={(value) => this.setState({ province: value })}
+                                                    />
+                                                    <FormFeedback>กรุณากรอกจังหวัด</FormFeedback>
+                                                    {/* <Input type="text" name="lastname" id="lastname" placeholder="Ex.นามสกุล..........." /> */}
+                                                </Col>
+                                            }
                                             <Label for="tel" sm={2}>รหัสไปรษณีย์ : </Label>
-                                            <Col sm={4}>
-                                                <Input
-                                                    type="text"
-                                                    placeholder="Ex.10160"
-                                                    innerRef={(input) => this.getPasscode = input}
-                                                />                                            </Col>
+                                            {this.state.errorPostNum === false ?
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Ex.10160"
+                                                        innerRef={(input) => this.getPasscode = input}
+                                                    />
+                                                </Col>
+                                                :
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Ex.10160"
+                                                        innerRef={(input) => this.getPasscode = input}
+                                                        invalid
+                                                    />
+                                                    <FormFeedback>กรุณากรอกรหัสไปรษณีย์ </FormFeedback>
+                                                </Col>
+                                            }
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="username" sm={2}>ประเทศ :  </Label>
-                                            <Col sm={10}>
-                                                <SugestCountry
-                                                    setCountry={(value) => this.setState({ country: value })}
-                                                />
-                                            </Col>
+                                            {this.state.errorCountry === false ?
+                                                <Col sm={10}>
+                                                    <SugestCountry
+                                                        setCountry={(value) => this.setState({ country: value })}
+                                                    />
+                                                </Col>
+                                                :
+                                                <Col sm={10}>
+                                                    <SugestCountry
+                                                        setCountry={(value) => this.setState({ country: value })}
+                                                    />
+                                                    <FormFeedback>กรุณาเลือกประเทศ </FormFeedback>
+                                                </Col>
+                                            }
                                         </FormGroup>
 
                                     </div>
@@ -222,7 +423,7 @@ class FormRegister extends Component {
                                     <Button inverted color='red' onClick={() => this.props.clickPrev()} className="btn-prev">
                                         <p>ย้อนกลับ</p>
                                     </Button>
-                                    <Button inverted color='green' onClick={() => this.props.clickNext()} className="btn-next" type="submit">
+                                    <Button inverted color='green' className="btn-next" type="submit">
                                         <p>ไปยังชำระค่าบริการ</p>
                                     </Button>
                                 </div>
