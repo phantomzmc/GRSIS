@@ -7,7 +7,7 @@ const cart = {
 }
 const events = {
     event : {
-        PhotoGrapher : {}
+        PhotoGrapher : ""
     }
 }
 const token = (state = { token: "" }, action) => {

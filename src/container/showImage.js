@@ -8,6 +8,7 @@ import VdoHeader from '../component/header/header'
 import SearchEvent from '../component/search/search'
 import TabsControl from '../component/tabs/tabs'
 import ImageGrid from '../component/imageGrid/image-grid';
+import { BrowserRouter, Link, withRouter } from 'react-router-dom'
 import Pagenation from '../component/pagenation/pagenation'
 import LigthBoxImage from '../component/lightboxImg/lightbox'
 import Footer from '../component/footer/footer'
@@ -20,7 +21,16 @@ class ShowImageEvent extends Component {
             bib: "",
             time: "",
             imagegrid: true,
-            photograname: ""
+            photograname: "",
+            statusPhotoname: false
+        }
+    }
+    componentWillMount() {
+        if (this.props.event.event.PhotoGrapher === "") {
+            this.props.history.push("/")
+        }
+        else if (this.props.event.event.PhotoGrapher !== "") {
+            this.setState({ photograname: JSON.parse(this.props.event.event.PhotoGrapher), statusPhotoname: true })
         }
     }
     sendIdPhotogra(id) {
@@ -74,11 +84,13 @@ class ShowImageEvent extends Component {
                             <hr className="hr-style1" />
                             <hr className="hr-style2" />
                             <div className="">
-                                <TabsControl
-                                    namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
-                                    photograID={this.sendIdPhotogra.bind(this)}
-                                    photograName={this.sendNamePhotogra.bind(this)}
-                                />
+                                {this.state.statusPhotoname &&
+                                    < TabsControl
+                                        namePhotoGra={this.state.photograname}
+                                        photograID={this.sendIdPhotogra.bind(this)}
+                                        photograName={this.sendNamePhotogra.bind(this)}
+                                    />
+                                }
                             </div>
                             <div id="show-image">
                                 {this.state.imagegrid &&
@@ -91,7 +103,7 @@ class ShowImageEvent extends Component {
                                     />
                                 }
                             </div>
-                            
+
                         </div>
                     </Col>
                 </Row>
@@ -120,4 +132,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowImageEvent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShowImageEvent));
