@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
+import ReactDOMServer from 'react-dom/server';
 import {
     Card, CardImg, CardTitle, CardText, CardDeck,
     CardSubtitle, CardBody, Container, Row, Col, CardFooter
 } from 'reactstrap';
-import { Image, Table, Header, Icon, Button } from 'semantic-ui-react';
+import { Table, Header, Icon, Button } from 'semantic-ui-react';
 import CartImages from "../container/cart";
 import { connect } from "react-redux"
-import ReactDOMServer from "react-dom/server";
+import jsPDF from 'jspdf';
+import domtoimage from 'dom-to-image';
+import { BrowserRouter, Link, withRouter } from 'react-router-dom'
 import MailGunSend from '../config/send-mailgun'
 import dataPrice from '../data/dataPrice'
 import dataQuantity from '../data/dataQuantity'
 import '../css/invoice-bill.css'
 import TempleteInvoice from '../component/templete/mail_invoice'
-
 
 class Invoice extends Component {
     constructor(props) {
@@ -23,7 +25,7 @@ class Invoice extends Component {
         this.state = {
             // orderid: this.props.order.invoice.OrderID == "" || undefined ? "เกิดข้อผิดพลาด" : this.props.order.invoice.OrderID,
             // orderStatus: this.props.order.invoice.OrderStatus == 1 ? "จ่ายแล้ว" : "รอดำเนินการ",
-            fullname: stored.fullname == "" || undefined ? "" : stored.fullname,
+            fullname: stored.name == "" || undefined ? "" : stored.name,
             email: stored.email == "" || undefined ? "" : stored.email,
             address: stored.address == "" || undefined ? "" : stored.address,
             soi: stored.street == "" || undefined ? "" : stored.street,
@@ -34,8 +36,9 @@ class Invoice extends Component {
             passcode: stored.passcode == "" || undefined ? "" : stored.passcode,
             tel: stored.tel == "" || undefined ? "" : stored.tel,
             // date: new Date
-            quantity : 0,
-            
+            quantity: 0,
+            imageInvoice: ""
+
         }
     }
 
@@ -73,20 +76,40 @@ class Invoice extends Component {
         pri.focus();
         pri.print();
     }
+    savePdf(dataUrl) {
+        var doc = new jsPDF
+        doc.addImage(dataUrl, 'JPEG', 15, 40, 180, 180);
+        doc.save("ShutterRunning ImageService.pdf")
+    }
+    genImage() {
+        var content = document.getElementById('printarea');
+        domtoimage.toPng(content)
+            .then((dataUrl) => {
+                var img = new Image();
+                img.src = dataUrl;
+                document.body.appendChild(img);
+                console.log(dataUrl)
+                this.savePdf(dataUrl)
+            });
+    }
     sumQuantity() {
         const add = (a, b) => a + b
         const sum = dataQuantity.reduce(add)
         this.setState({ quantity: sum })
         console.log(sum)
     }
+    exportPDFWithMethod = () => {
+    }
+
+
     render() {
         let { address, soi, tumpon, amphoe, province, country, passcode } = this.state
         return (
             <div>
-                <div className="content-head">
+                <div className="content-head" id="printarea">
                     <div classname="head-bill">
                         <div className="logo-head-bill">
-                            <Image src="http://shutterrunning.com/assets/img/logos/str-logo-sm.png" size='tiny' />
+                            <img src="http://shutterrunning.com/assets/img/logos/str-logo-sm.png" />
                         </div>
                         <Header as='h1' className="text-head-bill">Shutter Running ImageService</Header>
                         <Header as='h6' className="text-head-bill">7 Market Today krungthepkreetra 7 Huamark<br />Bangkapi Bangkok , Thailand 10240</Header>
@@ -153,10 +176,13 @@ class Invoice extends Component {
                                                                 <Icon name="mail" />
                                                                 <Header.Content>Email : {this.state.email}</Header.Content>
                                                             </Header>
-                                                            <Header as='h5'>
-                                                                <Icon name="map marker alternate" />
-                                                                <Header.Content>Address : {address} {soi} {tumpon} {amphoe} {province} {country} {passcode}</Header.Content>
-                                                            </Header>
+                                                            {this.state.address !== "" ?
+                                                                <div></div> :
+                                                                <Header as='h5'>
+                                                                    <Icon name="map marker alternate" />
+                                                                    <Header.Content>Address : {address} {soi} {tumpon} {amphoe} {province} {country} {passcode}</Header.Content>
+                                                                </Header>
+                                                            }
                                                             <Header as='h5'>
                                                                 <Icon name="call" />
                                                                 <Header.Content>Tel : {this.state.tel}</Header.Content>
@@ -200,11 +226,11 @@ class Invoice extends Component {
                                                 <Button color='green' onClick={() => window.print()}>
                                                     <Icon name="print" /> <p>พิมพ์เอกสาร</p>
                                                 </Button>
-                                                <Button color='green'>
+                                                <Button color='green' onClick={() => this.genImage()}>
                                                     <Icon name="download" /> <p>ดาวน์โหลด</p>
                                                 </Button>
                                             </div>
-                                            <Button color='red'>
+                                            <Button color='red' onClick={() => this.props.history.push("/")}>
                                                 <p>ปิดหน้านี้</p>
                                             </Button>
                                         </div>
@@ -227,4 +253,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Invoice)
+export default withRouter(connect(mapStateToProps)(Invoice))

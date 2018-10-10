@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add v1.7.0
+  /usr/local/bin/node /usr/local/bin/yarn add @progress/kendo-react-pdf @progress/kendo-draw
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/v1.7.0: Not found
+  Error: https://registry.yarnpkg.com/@progress%2fkendo-draw: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:65656:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:134675:22)
       at emitTwo (events.js:126:13)

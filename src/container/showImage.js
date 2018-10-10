@@ -30,7 +30,7 @@ class ShowImageEvent extends Component {
             this.props.history.push("/")
         }
         else if (this.props.event.event.PhotoGrapher !== "") {
-            this.setState({ photograname: JSON.parse(this.props.event.event.PhotoGrapher), statusPhotoname: true })
+            this.setState({ statusPhotoname: true })
         }
     }
     sendIdPhotogra(id) {
@@ -86,7 +86,7 @@ class ShowImageEvent extends Component {
                             <div className="">
                                 {this.state.statusPhotoname &&
                                     < TabsControl
-                                        namePhotoGra={this.state.photograname}
+                                        namePhotoGra={JSON.parse(this.props.event.event.PhotoGrapher)}
                                         photograID={this.sendIdPhotogra.bind(this)}
                                         photograName={this.sendNamePhotogra.bind(this)}
                                     />
