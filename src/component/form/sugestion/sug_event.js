@@ -70,7 +70,7 @@ class SugestEvent extends Component {
 
     setValue(email) {
         this.setState({ event: email.EventName, id: email.EventID, isItems: false, emails: [] })
-        this.props.getEventID(email.EventID)
+        this.props.getEventID(email.EventName)
         console.log(email)
     }
     searchUpdated(term) {

@@ -72,41 +72,70 @@ class SearchEvent extends Component {
                 console.error(error)
             });
     }
-    setSugestEvent(eventid) {
-        // this.setState({ value: event })
-        const uri = req[0].uspGetEvent
-        const api_key = apikey[0].apikey
-        const token = this.props.token.token
+    // setSugestEvent(eventid) {
+    //     // this.setState({ value: event })
+    //     const uri = req[0].uspGetEvent
+    //     const api_key = apikey[0].apikey
+    //     const token = this.props.token.token
+    //     let data = ({
+    //         params: [
+    //             {
+    //                 name: "EventID", value: eventid
+    //             }
+    //         ]
+    //     })
+
+    //     axios.post(uri, data, {
+    //         headers: {
+    //             "X-DreamFactory-API-Key": api_key,
+    //             "X-DreamFactory-Session-Token": token
+    //         },
+    //         responseType: 'json'
+    //     })
+    //         .then((response) => {
+    //             this.setState({ event: response.data });
+    //             console.log(this.state.event)
+    //             this.setEventSugest(response.data[0])
+    //         }).catch((error) => {
+    //             console.error(error)
+    //             // this.props.navigation.navigate('EventList')
+    //         });
+    // }
+
+    setSugestEvent(eventname) {
+        let uri = req[0].uspGetEventLists
+        let api_key = apikey[0].apikey
         let data = ({
             params: [
-                {
-                    name: "EventID", value: eventid
-                }
+                { name: "Keyword", value: eventname },
+                { name: "EventStatus", value: 1 },
+                { name: "PageNo", value: 1 },
+                { name: "RowPerPage", value: 15 }
             ]
         })
-
         axios.post(uri, data, {
+            mode: 'no-cors',
             headers: {
                 "X-DreamFactory-API-Key": api_key,
-                "X-DreamFactory-Session-Token": token
+                "X-DreamFactory-Session-Token": this.props.token.token
             },
             responseType: 'json'
         })
             .then((response) => {
-                this.setState({ event: response.data });
-                console.log(this.state.event)
-                this.setEventSugest(response.data[0])
+                this.setState({ dataSource: response.data,statusEventSug : true });
+                console.log(this.state.dataSource)
+                // this.setEventSugest(response.data)
             }).catch((error) => {
-                console.error(error)
-                // this.props.navigation.navigate('EventList')
+                setTimeout(() => {
+                    this.getEvent(eventname)
+                }, 1000)
             });
     }
+
     setEventSugest(eventSugest) {
-        this.setState({ eventSugestion: eventSugest })
         this.props.setEvent(eventSugest)
         setTimeout(() => {
-            this.setState({ statusEventSug: true })
-            // this.props.history.push("/showimage")
+            this.props.history.push("/showimage")
         }, 100)
     }
 
@@ -114,6 +143,11 @@ class SearchEvent extends Component {
         this.setState({
             typeSearch: e.target.value
         })
+        if(e.target.value === 0){
+            const type = 0
+            this.props.getValueBib(null, type)
+        }
+        
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -133,7 +167,7 @@ class SearchEvent extends Component {
         this.props.getValueBib(time, type)
     }
     render() {
-        const { value, suggestions, eventSugestion } = this.state;
+        const { value, suggestions, eventSugestion, dataSource } = this.state;
         const uri = "https://shutterrunning.com/assets/img/eventbanner/"
         const inputProps = {
             className: 'input-sugges',
@@ -160,30 +194,33 @@ class SearchEvent extends Component {
                         </div>
                         <Modal open={this.state.statusEventSug} onClose={() => this.setState({ statusEventSug: false })} center>
                             <CardDeck className="card-item">
-                                <Card >
-                                    <CardImg top width="100%" src="" alt="Card image cap" src={uri + eventSugestion.EventPic} />
-                                    <CardBody>
-                                        <CardTitle className="cerd-title">{eventSugestion.EventName}</CardTitle>
-                                        <CardTitle>
-                                            <label className="card-date">Date :</label> {eventSugestion.EventDate}
-                                        </CardTitle>
-                                        <CardTitle>
-                                            <div className="card-button">
-                                                {/* <Link to="/showimage"> */}
-                                                <Button outline color="info" onClick={() => this.saveEvent(eventSugestion)}>View Image</Button>
-                                                {/* </Link> */}
-                                            </div>
-                                        </CardTitle>
-                                    </CardBody>
-                                    <CardBody>
-                                        <CardSubtitle>
-                                            {/* <SubCard
+                                {dataSource.map((item, index) =>
+                                    <Card >
+                                        <CardImg top width="100%" src="" alt="Card image cap" src={uri + item.EventPic} />
+                                        <CardBody>
+                                            <CardTitle className="cerd-title">{item.EventName}</CardTitle>
+                                            <CardTitle>
+                                                <label className="card-date">Date :</label> {item.EventDate}
+                                            </CardTitle>
+                                            <CardTitle>
+                                                <div className="card-button">
+                                                    {/* <Link to="/showimage"> */}
+                                                    <Button outline color="info" onClick={() => this.setEventSugest(item)}>View Image</Button>
+                                                    {/* </Link> */}
+                                                </div>
+                                            </CardTitle>
+                                        </CardBody>
+                                        <CardBody>
+                                            <CardSubtitle>
+                                                {/* <SubCard
                                                 photographer={JSON.parse(dynamicData.PhotoGrapher)}
                                             /> */}
-                                        </CardSubtitle>
-                                    </CardBody>
-                                </Card>
+                                            </CardSubtitle>
+                                        </CardBody>
+                                    </Card>
+                                )}
                             </CardDeck>
+
                         </Modal>
 
                     </div>

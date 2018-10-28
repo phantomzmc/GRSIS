@@ -24,7 +24,9 @@ class ShowImageEvent extends Component {
             photograname: "",
             statusPhotoname: false,
             quantity: 0,
-            eventid : this.props.event.event.EventID
+            eventid : this.props.event.event.EventID,
+            photograid : ""
+
         }
     }
     componentWillMount() {
@@ -46,10 +48,7 @@ class ShowImageEvent extends Component {
             console.log("จำนวน" + nextProps.order.quantity)
             console.log("จำนวน" + this.props.order.quantity)
         }
-        else if(nextProps.event.event.EventID !== this.props.event.event.EventID){
-            console.log("order" + nextProps.event.event.EventID)
-            this.setState({ eventid : nextProps.event.event.EventID})
-        }
+        
     }
     sendIdPhotogra(id) {
         var id = id
@@ -70,6 +69,9 @@ class ShowImageEvent extends Component {
         else if (type == 2) {
             this.setState({ time: value, bib: "", imagegrid: true })
             console.log(value)
+        }
+        else if (type == 0){
+            this.setState({ time: "", bib: "", imagegrid: true })
         }
     }
     passQuantity(value) {

@@ -108,7 +108,7 @@ class ImageLayout extends React.Component {
                 { name: "RowPerPage", value: "33" }
             ]
         })
-
+        console.log(data)
         axios.post(uri, data, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -144,7 +144,7 @@ class ImageLayout extends React.Component {
                 }
                 images.splice(index, 1, tem)
                 setTimeout(() => {
-                    console.log(images)
+                    // console.log(images)
                     this.setState({ showimage: true, isLoad: false })
                 })
             })

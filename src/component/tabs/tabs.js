@@ -14,15 +14,15 @@ class TabsControl extends Component {
         };
     }
 
-    toggle(tabs) {
-        const tab = tabs.ID
-        const name = tabs.Name
-        this.props.photograID(tab)
+    toggle(id,name) {
+        // const tab = tabs
+        // const name = tabs
+        this.props.photograID(id)
         this.props.photograName(name)
-        console.log(tab)
-        if (this.state.activeTab !== tab) {
+        console.log(id)
+        if (this.state.activeTab !== id) {
             this.setState({
-                activeTab: tab
+                activeTab: id
             });
         }
     }
@@ -37,7 +37,7 @@ class TabsControl extends Component {
                                 <NavItem>
                                     <NavLink
                                         className={classnames({ active: this.state.activeTab === "" })}
-                                        onClick={() => { this.toggle(""); }}>
+                                        onClick={() => { this.toggle(null); }}>
                                         <Icon name='align justify' size='small' inverted color='black' /> ทั้งหมด
                                     </NavLink>
                                 </NavItem>
@@ -45,7 +45,7 @@ class TabsControl extends Component {
                                     <NavItem>
                                         <NavLink
                                             className={classnames({ active: this.state.activeTab === item.ID })}
-                                            onClick={() => { this.toggle(item); }} >
+                                            onClick={() => { this.toggle(item.ID,item.Name); }} >
                                             <Icon name='angle right' size='small' inverted color='black' />{item.Name}
                                         </NavLink>
                                     </NavItem>
