@@ -18,7 +18,7 @@ class TranferPayment extends Component {
             layoutCart: false,
             file: null,
             uploadImg: false,
-            fileImage: ""
+            fileImage: "",
         };
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -124,8 +124,8 @@ class TranferPayment extends Component {
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="orange" type="submit">Upload</Button>{' '}
-                            <Button color="gray" onClick={() => this.setState({ uploadImg: false })}>ปิดหน้านี้</Button>
+                            <Button color="gray" onClick={() => this.setState({ uploadImg: false, fileImage: "" })}>ปิดหน้านี้</Button>
+                            <Button color="orange" type="submit">OK</Button>{' '}
                         </ModalFooter>
                     </Form>
                 </Modal>
@@ -172,7 +172,8 @@ class TranferPayment extends Component {
 
                     </table>
                 </div>
-                <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center>
+                <Modal isOpen={this.state.layoutCart} toggle={() => this.setState({ layoutCart: false })} size="md">
+                    {/* <Modal open={this.state.layoutCart} onClose={() => this.setState({ layoutCart: false })} center> */}
                     <DetailPayment />
                 </Modal>
             </div>

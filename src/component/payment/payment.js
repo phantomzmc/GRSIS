@@ -54,7 +54,7 @@ class PaymentLaout extends Component {
             this.props.setCreditCharge(parseFloat(0))
         }
     }
-    getSlip(silp){
+    getSlip(silp) {
         this.props.setSlip(silp)
     }
     render() {
@@ -81,12 +81,16 @@ class PaymentLaout extends Component {
                                         {this.state.activeTab == "1" ?
                                             <Row>
                                                 <Col sm="12" md="12" xs="12">
-                                                    <CreditPayment
-                                                        onNextPages={this.props.onNextPage}
-                                                        addOrder={this.props.onAddOreder}
-                                                        clickPrev={this.props.clickPrev.bind(this)}
-                                                        clickNext={this.props.clickNext.bind(this)}
-                                                    />
+                                                    {parseInt(this.props.order.totalPrice) < 100 ?
+                                                        <div></div>
+                                                        :
+                                                        <CreditPayment
+                                                            onNextPages={this.props.onNextPage}
+                                                            addOrder={this.props.onAddOreder}
+                                                            clickPrev={this.props.clickPrev.bind(this)}
+                                                            clickNext={this.props.clickNext.bind(this)}
+                                                        />
+                                                        }
                                                 </Col>
                                             </Row>
                                             :

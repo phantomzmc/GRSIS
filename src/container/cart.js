@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Image, Table,Button } from 'semantic-ui-react';
+import { Icon, Image, Table, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import dataCart from '../data/dataCart';
 import dataPrice from '../data/dataPrice'
@@ -19,7 +19,15 @@ class CartImages extends Component {
         console.log(dataPrice)
         console.log(dataCart)
     }
-    
+
+    componentWillReceiveProps(prevProps) {
+        const { refersh, nav_refersh } = this.props;
+        if ((prevProps.refersh !== refersh) || (prevProps.nav_refersh !== nav_refersh)) {
+            console.log(refersh)
+            console.log(prevProps.dataCart)
+        }
+    }
+
     sumPriceBuy() {
         console.log(dataPrice)
         if (dataPrice == "") {
@@ -41,6 +49,15 @@ class CartImages extends Component {
             this.setState({ listview: true })
         })
     }
+    cancelOrder() {
+        dataCart.splice(0, dataCart.length)
+        dataPrice.splice(1, 0)
+        this.setState({ listview: false })
+        setTimeout(() => {
+            this.props.addImage(dataCart)
+            this.setState({ listview: true })
+        })
+    }
     addQuantityItem = (i) => {
         const quantity = parseInt(dataCart[i].Quantity) + 1
         const fixPrice = parseInt(dataCart[i].PriceDisplay)
@@ -53,6 +70,7 @@ class CartImages extends Component {
             this.setState({ listview: true })
             this.sumPriceBuy()
             this.sumQuantity()
+            this.sendQuantity()
         }, 100)
     }
     disQuantityItem = (i) => {
@@ -67,6 +85,7 @@ class CartImages extends Component {
             this.setState({ listview: true })
             this.sumPriceBuy()
             this.sumQuantity()
+            this.sendQuantity()
         }, 100)
     }
     sumQuantity() {
@@ -75,6 +94,10 @@ class CartImages extends Component {
         this.setState({ quantity: sum })
         this.props.setQuantity(sum)
         console.log(sum)
+    }
+    sendQuantity() {
+        console.log(this.props.order.quantity)
+        this.props.onSentQuantity(this.props.order.quantity)
     }
     render() {
         let { quantity } = this.state
@@ -95,14 +118,21 @@ class CartImages extends Component {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {dataCart.length != 0 ?
+                            {dataCart.length === 0 ?
+                                this.props.cartImage.currentpage &&
+                                <Table.Row negative>
+                                    <Table.Cell textAlign='center' colSpan='6'>
+                                        <h3 style={{ padding: 20 }}>ยังไม่มีรายการสั่งซื้อ</h3>
+                                    </Table.Cell>
+                                </Table.Row>
+                                :
                                 dataCart.map((dynamicData, i) =>
 
                                     <Table.Row>
                                         <Table.Cell textAlign='center'>
                                             <div className="icon-del">
                                                 {this.props.statusBtn &&
-                                                    <Button size='tiny'color="red" onClick={() => this.deleteItem(i)} icon>
+                                                    <Button size='tiny' color="red" onClick={() => this.deleteItem(i)} icon>
                                                         <Icon name="cancel" />
                                                     </Button>
                                                 }
@@ -135,16 +165,24 @@ class CartImages extends Component {
                                     </Table.Cell>
                                     </Table.Row>
                                 )
-                                :
-                                <Table.Row negative>
-                                    <Table.Cell textAlign='center' colSpan='6'>
-                                        <h3 style={{ padding: 20 }}>ยังไม่มีรายการสั่งซื้อ</h3>
-                                    </Table.Cell>
 
-                                </Table.Row>
                             }
 
                         </Table.Body>
+                        {this.props.statusButton &&
+                            <Table.Footer fullWidth>
+                                <Table.Row>
+                                    <Table.HeaderCell colSpan='6'>
+                                        <Button inverted color='red' onClick={this.props.onCancel()} className="btn-prev">
+                                            <p>ยกเลิกรายการทั้งหมด</p>
+                                        </Button>
+                                        <Button inverted color='green' onClick={this.props.onGotoStepper()} className="btn-next">
+                                            <p>ไปชำระค่าบริการ</p>
+                                        </Button>
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Footer>
+                        }
                     </Table>
                 }
             </div >
@@ -168,8 +206,14 @@ const mapDispatchToProps = dispatch => {
         },
         setQuantity: (quantity) => {
             dispatch({
-                type : "setQuantity",
-                payload : quantity
+                type: "setQuantity",
+                payload: quantity
+            })
+        },
+        addImage: (image) => {
+            dispatch({
+                type: "addImage",
+                payload: image
             })
         }
     }

@@ -3,7 +3,8 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 
 const cart = {
     image: [],
-    counter: 0
+    counter: 0,
+    currentpage : true
 }
 const events = {
     event : {
@@ -43,6 +44,10 @@ const cartImage = (state = cart, action) => {
         case "counterCart": {
             state.counter = action.payload;
             break;
+        }
+        case "setCurrentPage" : {
+            state.currentpage = action.payload;
+            break; 
         }
     }
     return state

@@ -12,6 +12,8 @@ import domtoimage from 'dom-to-image';
 import { BrowserRouter, Link, withRouter } from 'react-router-dom'
 import MailGunSend from '../config/send-mailgun'
 import dataPrice from '../data/dataPrice'
+import dataCart from '../data/dataCart'
+import dataOrderList from '../data/dataEvent'
 import dataQuantity from '../data/dataQuantity'
 import '../css/invoice-bill.css'
 import TempleteInvoice from '../component/templete/mail_invoice'
@@ -46,9 +48,11 @@ class Invoice extends Component {
         this.sumQuantity()
     }
     componentDidMount() {
-        setTimeout(() => {
-            this.sendEmailInvoice()
-        }, 3000)
+        if (this.props.payment.type === 1) {
+            setTimeout(() => {
+                this.sendEmailInvoice()
+            }, 3000)
+        }
     }
     async sendEmailInvoice() {
         const html = ReactDOMServer.renderToString(
@@ -82,15 +86,30 @@ class Invoice extends Component {
         doc.save("ShutterRunning ImageService.pdf")
     }
     genImage() {
-        var content = document.getElementById('printarea');
-        domtoimage.toPng(content)
-            .then((dataUrl) => {
-                var img = new Image();
-                img.src = dataUrl;
-                document.body.appendChild(img);
-                console.log(dataUrl)
-                this.savePdf(dataUrl)
+        // var content = (document.getElementById('printarea'), { quality: 0.95 });
+        // domtoimage.toPng(content)
+        //     .then((dataUrl) => {
+        //         var img = new Image();
+        //         img.src = dataUrl;
+        //         document.body.appendChild(img);
+        //         console.log(dataUrl)
+        //         this.savePdf(dataUrl)
+        //     });
+        domtoimage.toJpeg(document.getElementById('printarea'), { quality: 0.95 })
+            .then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = 'ShutterRunning ImageService.jpeg';
+                link.href = dataUrl;
+                link.click();
             });
+
+    }
+    _close() {
+        dataCart.splice(0)
+        dataOrderList.splice(0)
+        dataPrice.splice(0)
+        dataQuantity.splice(0)
+        this.props.history.push("/")
     }
     sumQuantity() {
         const add = (a, b) => a + b
@@ -98,10 +117,6 @@ class Invoice extends Component {
         this.setState({ quantity: sum })
         console.log(sum)
     }
-    exportPDFWithMethod = () => {
-    }
-
-
     render() {
         let { address, soi, tumpon, amphoe, province, country, passcode } = this.state
         return (
@@ -153,7 +168,7 @@ class Invoice extends Component {
                                                             </Table.Row>
                                                             <Table.Row>
                                                                 <Table.Cell>รูปแบบการชำระเงิน</Table.Cell>
-                                                                {this.props.payment.type == 1 ?
+                                                                {this.props.payment.type === 1 ?
                                                                     <Table.Cell>Credit/Debit</Table.Cell> :
                                                                     <Table.Cell>ATM Tranfer</Table.Cell>
                                                                 }
@@ -230,7 +245,7 @@ class Invoice extends Component {
                                                     <Icon name="download" /> <p>ดาวน์โหลด</p>
                                                 </Button>
                                             </div>
-                                            <Button color='red' onClick={() => this.props.history.push("/")}>
+                                            <Button color='red' onClick={() => this._close()}>
                                                 <p>ปิดหน้านี้</p>
                                             </Button>
                                         </div>

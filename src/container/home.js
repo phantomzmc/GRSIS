@@ -10,6 +10,7 @@ import SearchEvent from '../component/search/search'
 import CardEvents from '../component/card/card';
 import Banner from '../component/banner/banner'
 import Footer from '../component/footer/footer'
+import images from '../component/imageGrid/dataimage'
 
 class Home extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Home extends Component {
         this.setState({ isLoading: false, token: response.data.session_token });
         console.log(this.state.token)
         this.props.setToken(this.state.token)
+        images.splice(0)
       }).catch((error) => {
         console.error(error)
       });
@@ -77,7 +79,7 @@ class Home extends Component {
           <Row>
             <Col xs="12" sm="12" md="12">
               <div className="content-container2">
-                <h2 id="title-banner"> Banner <b>Sponsor</b> </h2>
+                <h2 id="title-banner"><b>Sponsor</b> </h2>
                 <hr className="hr-style1" />
                 <hr className="hr-style3" />
                 <div className="event-card">

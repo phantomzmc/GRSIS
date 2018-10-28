@@ -3,9 +3,11 @@
     /* text-align: center; */
     width: 100%;
     height: 100%;
+    background-color: white;
 }
 .head-bill {
     text-align: center;
+    background-color: white;
 }
 .logo-head-bill { 
     display: flex;

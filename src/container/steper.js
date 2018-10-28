@@ -16,6 +16,8 @@ import req from '../config/uri_req'
 import apikey from '../config/apikey'
 import axios from 'axios'
 import dataCart from '../data/dataCart'
+import dataPrice from '../data/dataPrice'
+import dataQuantity from '../data/dataQuantity'
 
 
 class StepControl extends Component {
@@ -35,12 +37,15 @@ class StepControl extends Component {
             isOpenPayment: false,
             isOpenInvoice: false,
             showButton: true,
-            statusForm: false
+            statusForm: false,
+            listOrder: true
         }
+        this.cancelOrder = this.cancelOrder.bind(this)
         this.onClickNext = this.onClickNext.bind(this);
         this.onClickPrev = this.onClickPrev.bind(this)
     }
     componentDidMount() {
+        console.log(dataQuantity)
         let data = {
             email: "grs@guurun.com",
             password: "1f5ZIAEbhLg2GF6"
@@ -95,9 +100,17 @@ class StepControl extends Component {
             responseType: 'json'
         })
             .then((response) => {
-                this.setState({ dataSource: response.data[0] });
+                setTimeout(() => {
+                    this.setState({
+                        dataSource: response.data[0],
+                        isOpenCart: false,
+                        isOpenForm: false,
+                        isOpenPayment: false,
+                        isOpenInvoice: true
+                    })
+                })
                 console.log(response.data)
-                this.props.invoiceOrder(this.state.dataSource)
+                this.props.invoiceOrder(response.data[0])
             }).catch((error) => {
                 console.error(error)
             });
@@ -129,6 +142,19 @@ class StepControl extends Component {
             this.controlPage()
         }, 100)
     }
+    cancelOrder = () => {
+        dataCart.splice(0, dataCart.length)
+        dataPrice.splice(0, dataPrice.length)
+        this._disCancel()
+        this.setState({ listOrder: !this.state.listOrder })
+    }
+    _disCancel() {
+        this.props.addImage(dataCart)
+        this.props.addOrderList(dataCart)
+        this.props.addOrderlistFull(dataCart)
+        this.props.setTotalPrice(0)
+        this.props.setQuantity(0)
+    }
     controlPage() {
         let { currentStep } = this.state
         console.log(currentStep)
@@ -158,19 +184,26 @@ class StepControl extends Component {
             })
         }
         else if (currentStep === 3) {
-            this.setState({
-                isOpenCart: false,
-                isOpenForm: false,
-                isOpenPayment: false,
-                isOpenInvoice: true
-            })
+            // this.setState({
+            //     isOpenCart: false,
+            //     isOpenForm: false,
+            //     isOpenPayment: false,
+            //     isOpenInvoice: true
+            // })
+            this.props.setCurrentPage(false)
         }
+    }
+    passQuantity(value) {
+        console.log(value)
+        this.setState({ quantity: value })
     }
     render() {
         return (
             <div className="App">
                 <div className="nav-bar">
-                    <Navbar />
+                    <Navbar
+                        quantity={this.props.order.quantity}
+                    />
                 </div>
                 {/* <header className="App-header"></header> */}
                 <VdoHeader />
@@ -178,7 +211,7 @@ class StepControl extends Component {
                     <Row>
                         <Col xs="12" sm="12" md="12">
                             <div className="event-container">
-                                <h2>Images <b>Cart</b></h2>
+                                <h2>Order <b>Summary</b></h2>
                                 <hr className="hr-style1" />
                                 <hr className="hr-style2" />
                                 <div>
@@ -188,6 +221,9 @@ class StepControl extends Component {
                                     {this.state.isOpenCart &&
                                         <CartImages
                                             statusBtn={true}
+                                            statusButton={false}
+                                            refersh={this.state.listOrder}
+                                            onSentQuantity={this.passQuantity.bind(this)}
                                         />
                                     }
                                     {this.state.isOpenForm &&
@@ -213,7 +249,7 @@ class StepControl extends Component {
                                 {dataCart.length != 0 ?
                                     <div className="btn-groud">
                                         {this.state.isOpenCart &&
-                                            <Button inverted color='red' onClick={this.onClickPrev} className="btn-prev">
+                                            <Button inverted color='red' onClick={this.cancelOrder} className="btn-prev">
                                                 <p>ยกเลิกรายการทั้งหมด</p>
                                             </Button>
                                         }
@@ -259,6 +295,42 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: "invoiceOrder",
                 payload: invoice
+            })
+        },
+        setCurrentPage: (currentStep) => {
+            dispatch({
+                type: "setCurrentPage",
+                payload: currentStep
+            })
+        },
+        addImage: (image) => {
+            dispatch({
+                type: "addImage",
+                payload: image
+            })
+        },
+        addOrderList: (image) => {
+            dispatch({
+                type: "addOrderList",
+                payload: image
+            })
+        },
+        addOrderlistFull: (image) => {
+            dispatch({
+                type: "addOrderlistFull",
+                payload: image
+            })
+        },
+        setTotalPrice: (totalprice) => {
+            dispatch({
+                type: "setTotalPrice",
+                payload: totalprice
+            })
+        },
+        setQuantity: (quantity) => {
+            dispatch({
+                type: "setQuantity",
+                payload: quantity
             })
         }
     }

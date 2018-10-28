@@ -76,14 +76,32 @@ class ImageLayout extends React.Component {
         }
         return true
     }
+    componentDidUpdate(prevProps) {
+        if (prevProps.searchBib !== this.props.searchBib) {
+            images.splice(0)
+            this.feedImage(this.props.evenid)
+        }
+        else if (prevProps.searchTime !== this.props.searchTime) {
+            images.splice(0)
+            this.feedImage(this.props.evenid)
+        }
+        else if(prevProps.photograID !== this.props.photograID){
+            images.splice(0)
+            this.feedImage(this.props.evenid)
+        }
+        else if(prevProps.photograID !== this.props.photograID){
+            images.splice(0)
+            this.feedImage(this.props.evenid)
+        }
+    }
     feedImage(eventid) {
-        console.log(this.props.searchTime)
+        console.log("image-grid" + this.props.searchTime)
         const uri = req[0].uspGetImageLists_
         const api_key = apikey[0].apikey
         let data = ({
             params: [
                 { name: "EventID", value: eventid },
-                { name: "PhotoGrapherID", value: this.props.event.photoGraID },
+                { name: "PhotoGrapherID", value: this.props.photograID },
                 { name: "BibNumber", value: this.props.searchBib },
                 { name: "Time", value: this.props.searchTime },
                 { name: "PageNo", value: this.state.pageNo },
@@ -102,14 +120,13 @@ class ImageLayout extends React.Component {
             // responseType: 'json'
         })
             .then((response) => {
-                this.setState({ images: response.data });
+                this.setState({ showimage: true, images: response.data });
                 console.log(this.state.images)
-                images.splice(1)
                 this.checkSuggest(this.state.images)
             }).catch((error) => {
                 this.setState({ isLoad: true, showimage: false })
                 setTimeout(() => {
-                    this.feedImage(this.props.event.event.EventID)
+                    this.feedImage(this.props.evenid)
                 }, 100)
                 // this.props.history.push("./")
             });
@@ -120,7 +137,7 @@ class ImageLayout extends React.Component {
         }
         else if (data != "") {
             this.setState({ noSugest: false })
-            data.map((item, index = 0) => {
+            data.map((item, index) => {
                 var tem = {
                     src: item.ImageURL,
                     timer: item.ImageTakenTime
@@ -129,7 +146,7 @@ class ImageLayout extends React.Component {
                 setTimeout(() => {
                     console.log(images)
                     this.setState({ showimage: true, isLoad: false })
-                }, 100)
+                })
             })
         }
     }
@@ -153,6 +170,10 @@ class ImageLayout extends React.Component {
         this.props.addImage(orderlistFull)
         this.counterimage()
     }
+    sendQuantity() {
+        console.log(this.props.order.quantity)
+        this.props.onSentQuantity(this.props.order.quantity)
+    }
 
     submit = () => {
         confirmAlert({
@@ -165,8 +186,8 @@ class ImageLayout extends React.Component {
 
                 },
                 {
-                    label: <label style={{ fontFamily: 'kanit' }}>เลือกภาพอื่นต่อ</label>
-                    // onClick: () => this.setState({ isOpenImage: true })
+                    label: <label style={{ fontFamily: 'kanit' }}>เลือกภาพอื่นต่อ</label>,
+                    onClick: () => this.sendQuantity()
                 }
             ]
         })
@@ -186,6 +207,7 @@ class ImageLayout extends React.Component {
         return (
             <div>
                 <Container>
+                    {/* <Container id="contai"> */}
                     {
                         this.state.isLoad &&
                         <div className="container-isload">
@@ -194,25 +216,26 @@ class ImageLayout extends React.Component {
                     }
                     {this.state.showimage &&
                         <Row>
-
-                            {
-                                images.map((dynamicData, i = 1) =>
-                                    <Col xs={12} md={4} sm={4} lg={4}>
-                                        <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
-                                            <div id="contai-timer">
-                                                <span id="timer">{dynamicData.timer}</span>
-                                            </div>
-                                            <div id="contai-img">
-                                                <ImageWorker
-                                                    src={dynamicData.src}
-                                                    style={{ width: "100%", height: "50%", }}
-                                                />
-                                            </div>
+                            {images.map((dynamicData, i = 1) =>
+                                <Col xs={12} sm={4} md={4}>
+                                    {/* <div id="contai-img"> */}
+                                    <div onClick={() => this.setState({ isOpen: !this.state.isOpen, isOpenImage: !this.state.isOpenImage, photoIndex: i })}>
+                                        <div id="contai-timer">
+                                            <span id="timer">{dynamicData.timer}</span>
                                         </div>
-                                    </Col>
-                                )}
+                                        <div id="contai-img2">
+                                            <ImageWorker
+                                                src={dynamicData.src}
+                                                style={{ width: "100%", height: "50%", }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* </div> */}
+                                </Col>
+                            )}
                         </Row>
                     }
+
                     {this.state.noSugest &&
                         <Container>
                             <Row>
@@ -251,7 +274,7 @@ class ImageLayout extends React.Component {
                             photoIndex: (photoIndex + 1) % images.length,
                         })}
                         imageTitle={
-                            <span>{this.state.photoIndex} / 35</span>
+                            <span>{this.state.photoIndex + 1} / 35</span>
                         }
                         imageCaption={
                             <div id="btn-caption">
@@ -272,7 +295,7 @@ class ImageLayout extends React.Component {
                                     </Col>
                                     <Col xs={12} sm={3} md={3}>
                                         <div id="contai-caption">
-                                            <span> รูปภาพที่ {this.state.photoIndex} จาก 35 รูป</span>
+                                            <span> รูปภาพที่ {this.state.photoIndex + 1} จาก 35 รูป</span>
                                         </div>
 
                                     </Col>
@@ -327,7 +350,8 @@ class ImageLayout extends React.Component {
 const mapStateToProps = state => {
     return {
         token: state.token,
-        event: state.event
+        event: state.event,
+        order: state.order
     }
 }
 const mapDispatchToProps = dispatch => {

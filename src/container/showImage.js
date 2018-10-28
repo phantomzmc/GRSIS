@@ -22,7 +22,9 @@ class ShowImageEvent extends Component {
             time: "",
             imagegrid: true,
             photograname: "",
-            statusPhotoname: false
+            statusPhotoname: false,
+            quantity: 0,
+            eventid : this.props.event.event.EventID
         }
     }
     componentWillMount() {
@@ -31,6 +33,22 @@ class ShowImageEvent extends Component {
         }
         else if (this.props.event.event.PhotoGrapher !== "") {
             this.setState({ statusPhotoname: true })
+        }
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.order.quantity !== this.props.order.quantity) {
+            console.log("update")
+            this.setState({ cartItem: true })
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.order.quantity != this.props.order.quantity) {
+            console.log("จำนวน" + nextProps.order.quantity)
+            console.log("จำนวน" + this.props.order.quantity)
+        }
+        else if(nextProps.event.event.EventID !== this.props.event.event.EventID){
+            console.log("order" + nextProps.event.event.EventID)
+            this.setState({ eventid : nextProps.event.event.EventID})
         }
     }
     sendIdPhotogra(id) {
@@ -54,11 +72,17 @@ class ShowImageEvent extends Component {
             console.log(value)
         }
     }
+    passQuantity(value) {
+        console.log(value)
+        this.setState({ quantity: value })
+    }
     render() {
         return (
             <div className="App">
                 <div className="nav-bar">
-                    <Navbar />
+                    <Navbar
+                        quantity={this.state.quantity}
+                    />
                 </div>
                 {/* <header className="App-header"></header> */}
                 <Container>
@@ -95,11 +119,13 @@ class ShowImageEvent extends Component {
                             <div id="show-image">
                                 {this.state.imagegrid &&
                                     <ImageGrid
+                                        eventid={this.state.eventid}
                                         photograID={this.state.photograid}
                                         photograName={this.state.photograname}
                                         showimage={this.state.showimage}
                                         searchBib={this.state.bib}
                                         searchTime={this.state.time}
+                                        onSentQuantity={this.passQuantity.bind(this)}
                                     />
                                 }
                             </div>
@@ -117,7 +143,8 @@ class ShowImageEvent extends Component {
 
 const mapStateToProps = state => {
     return {
-        event: state.event
+        event: state.event,
+        order: state.order
     }
 }
 
