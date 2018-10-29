@@ -105,6 +105,7 @@ class FormRegister extends Component {
         }
     }
     checkForm2() {
+        console.log("checkForm2")
         if (this.getName.value === "") {
             this.setState({ errorName: true })
         }
@@ -135,9 +136,9 @@ class FormRegister extends Component {
         else if (this.getPasscode.value === "") {
             this.setState({ errorPostNum: true })
         }
-        else if (this.state.country === this.state.country) {
-            this.setState({ errorCountry: true })
-        }
+        // else if (this.state.country === this.state.country) {
+        //     this.setState({ errorCountry: true })
+        // }
         else {
             const dataAddress = {
                 name: this.getName.value,
@@ -159,7 +160,7 @@ class FormRegister extends Component {
             this.props.clickNext()
         }
     }
-    
+
     render() {
         return (
             <div>
@@ -170,7 +171,7 @@ class FormRegister extends Component {
                             <Form className="form-register" onSubmit={this.handleSubmit}>
                                 <FormGroup row>
                                     <Label for="username" sm={2} md={2} xs={12}>ชื่อ (จำเป็น)</Label>
-                                    {this.state.errorName === false  || this.getName.value !== ""?
+                                    {this.state.errorName === false || this.getName.value !== "" ?
                                         <Col sm={4} md={4} xs={12}>
                                             <Input
                                                 type="text"
@@ -197,7 +198,7 @@ class FormRegister extends Component {
                                         <Col sm={4} md={4} xs={12}>
                                             <Input
                                                 type="text"
-                                                name="surname"
+                                                name="lastname"
                                                 placeholder="Ex.นามสกุล..........."
                                                 innerRef={(input) => this.getLastname = input} />
                                         </Col>
@@ -205,7 +206,7 @@ class FormRegister extends Component {
                                         <Col sm={4} md={4} xs={12}>
                                             <Input
                                                 type="text"
-                                                name="surname"
+                                                name="lastname"
                                                 placeholder="Ex.นามสกุล..........."
                                                 innerRef={(input) => this.getLastname = input}
                                                 invalid
@@ -240,7 +241,7 @@ class FormRegister extends Component {
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="tel" sm={2}>โทรศัพท์ (จำเป็น)</Label>
-                                    {this.state.errorTel === false || this.getTel.value !== ""?
+                                    {this.state.errorTel === false || this.getTel.value !== "" ?
                                         <Col sm={10}>
                                             <Input
                                                 type="text"
@@ -266,9 +267,10 @@ class FormRegister extends Component {
                                     <div>
                                         <FormGroup row>
                                             <Label for="username" sm={2}>บ้านเลขที่/อาคาร :  </Label>
-                                            {this.state.errorAddress === false || this.getAddress.value !== ""?
+                                            {this.state.errorAddress === false || this.getAddress.value !== "" ?
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="address-line1"
                                                         type="text"
                                                         placeholder="Ex.100/xx"
                                                         innerRef={(input) => this.getAddress = input} />
@@ -276,6 +278,7 @@ class FormRegister extends Component {
                                                 :
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="address-line1"
                                                         type="text"
                                                         placeholder="Ex.100/xx"
                                                         innerRef={(input) => this.getAddress = input}
@@ -285,9 +288,10 @@ class FormRegister extends Component {
                                                 </Col>
                                             }
                                             <Label for="lastname" sm={2}>ซอย/ถนน : </Label>
-                                            {this.state.errorSoi === false || this.getStreet.value !== ""?
+                                            {this.state.errorSoi === false || this.getStreet.value !== "" ?
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="address-line2"
                                                         type="text"
                                                         placeholder="Ex.ถนน ......"
                                                         innerRef={(input) => this.getStreet = input}
@@ -296,6 +300,7 @@ class FormRegister extends Component {
                                                 :
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="address-line2"
                                                         type="text"
                                                         placeholder="Ex.ถนน ......"
                                                         innerRef={(input) => this.getStreet = input}
@@ -307,9 +312,10 @@ class FormRegister extends Component {
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="tel" sm={2}>แขวง/ตำบล : </Label>
-                                            {this.state.errorTambon === false || this.getTambon.value !== ""?
+                                            {this.state.errorTambon === false || this.getTambon.value !== "" ?
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="city"
                                                         type="text"
                                                         placeholder="Ex.แขวง ......"
                                                         innerRef={(input) => this.getTambon = input}
@@ -324,6 +330,7 @@ class FormRegister extends Component {
                                                         setTambon={(value) => this.setState({ tumbon: value })}
                                                     /> */}
                                                     <Input
+                                                        name="city"
                                                         type="text"
                                                         placeholder="Ex.แขวง ......"
                                                         innerRef={(input) => this.getTambon = input}
@@ -334,12 +341,13 @@ class FormRegister extends Component {
                                                 </Col>
                                             }
                                             <Label for="username" sm={2}>เขต/อำเภอ :  </Label>
-                                            {this.state.errorAmphoe === false || this.getAmphoe.value !== ""?
+                                            {this.state.errorAmphoe === false || this.getAmphoe.value !== "" ?
                                                 <Col sm={4}>
                                                     {/* <SugestAmphoe
                                                         setAmphone={(value) => this.setState({ amphoe: value })}
                                                     /> */}
                                                     <Input
+                                                        name="city"
                                                         type="text"
                                                         placeholder="Ex.เขต ......"
                                                         innerRef={(input) => this.getAmphoe = input}
@@ -351,6 +359,7 @@ class FormRegister extends Component {
                                                         setAmphone={(value) => this.setState({ amphoe: value })}
                                                     /> */}
                                                     <Input
+                                                        name="city"
                                                         type="text"
                                                         placeholder="Ex.เขต ......"
                                                         innerRef={(input) => this.getAmphoe = input}
@@ -362,9 +371,10 @@ class FormRegister extends Component {
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="lastname" sm={2}>จังหวัด : </Label>
-                                            {this.state.errorProvinse === false || this.getProvince.value !== ""?
+                                            {this.state.errorProvinse === false || this.getProvince.value !== "" ?
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="region"
                                                         type="text"
                                                         placeholder="Ex.จังหวัด ......"
                                                         innerRef={(input) => this.getProvince = input}
@@ -376,6 +386,7 @@ class FormRegister extends Component {
                                                         setProvince={(value) => this.setState({ province: value })}
                                                     /> */}
                                                     <Input
+                                                        name="region"
                                                         type="text"
                                                         placeholder="Ex.จังหวัด ......"
                                                         innerRef={(input) => this.getProvince = input}
@@ -385,9 +396,10 @@ class FormRegister extends Component {
                                                 </Col>
                                             }
                                             <Label for="tel" sm={2}>รหัสไปรษณีย์ : </Label>
-                                            {this.state.errorPostNum === false || this.getPasscode.value !== ""?
+                                            {this.state.errorPostNum === false || this.getPasscode.value !== "" ?
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="postal-code"
                                                         type="text"
                                                         placeholder="Ex.10160"
                                                         innerRef={(input) => this.getPasscode = input}
@@ -396,6 +408,7 @@ class FormRegister extends Component {
                                                 :
                                                 <Col sm={4}>
                                                     <Input
+                                                        name="postal-code"
                                                         type="text"
                                                         placeholder="Ex.10160"
                                                         innerRef={(input) => this.getPasscode = input}

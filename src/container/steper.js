@@ -152,7 +152,6 @@ class StepControl extends Component {
         this.props.addImage(dataCart)
         this.props.addOrderList(dataCart)
         this.props.addOrderlistFull(dataCart)
-        this.props.setTotalPrice(0)
         this.props.setQuantity(0)
     }
     controlPage() {
@@ -184,12 +183,16 @@ class StepControl extends Component {
             })
         }
         else if (currentStep === 3) {
-            // this.setState({
-            //     isOpenCart: false,
-            //     isOpenForm: false,
-            //     isOpenPayment: false,
-            //     isOpenInvoice: true
-            // })
+            setTimeout(()=>{
+                this.setState({
+                    isOpenCart: false,
+                    isOpenForm: false,
+                    isOpenPayment: false,
+                    isOpenInvoice: true,
+                    quantity : 0
+                })
+            },500)
+            this._disCancel()
             this.props.setCurrentPage(false)
         }
     }
@@ -243,7 +246,10 @@ class StepControl extends Component {
                                         />
                                     }
                                     {this.state.isOpenInvoice &&
-                                        <Invoice />
+                                        <Invoice 
+                                            invoice={true}
+                                            quantity={this.state.quantity}
+                                        />
                                     }
                                 </div>
                                 {dataCart.length != 0 ?

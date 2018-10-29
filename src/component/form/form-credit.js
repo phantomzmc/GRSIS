@@ -155,14 +155,14 @@ class FormRegister extends Component {
                                         <Col sm={10}>
                                             <Input
                                                 type="text"
-                                                name="name"
+                                                name="cardname"
                                                 placeholder="Ex.Thunnathorn"
                                                 innerRef={(input) => this.getName = input} />
                                         </Col> :
                                         <Col sm={10}>
                                             <Input
                                                 type="text"
-                                                name="name"
+                                                name="cardname"
                                                 placeholder="Ex.Thunnathorn"
                                                 innerRef={(input) => this.getName = input}
                                                 invalid
@@ -176,6 +176,7 @@ class FormRegister extends Component {
                                     {this.state.errorCardNumber == false ?
                                         <Col sm={10}>
                                             <Input
+                                                name="cardnumber"
                                                 type="tel"
                                                 maxLength="16"
                                                 placeholder="Ex.5555 9999 0000 9999"
@@ -184,6 +185,7 @@ class FormRegister extends Component {
                                         :
                                         <Col sm={10}>
                                             <Input
+                                                name="cardnumber"
                                                 type="tel"
                                                 maxLength="16"
                                                 placeholder="Ex.5555 9999 0000 9999"
@@ -199,6 +201,7 @@ class FormRegister extends Component {
                                     {this.state.errorExpMonth == false ?
                                         <Col sm={5}>
                                             <Input
+                                                name="expmonth"
                                                 type="tel"
                                                 placeholder="Ex.เดือนที่หมดอายุ"
                                                 innerRef={(input) => this.getExpMonth = input} />
@@ -206,6 +209,7 @@ class FormRegister extends Component {
                                         :
                                         <Col sm={5}>
                                             <Input
+                                                name="expmonth"
                                                 type="tel"
                                                 placeholder="Ex.เดือนที่หมดอายุ"
                                                 innerRef={(input) => this.getExpMonth = input}
@@ -216,6 +220,7 @@ class FormRegister extends Component {
                                     {this.state.errorExpYear == false ?
                                         <Col sm={5}>
                                             <Input
+                                                name="expyear"
                                                 type="tel"
                                                 placeholder="Ex.ปีที่หมดอายุ"
                                                 innerRef={(input) => this.getExpYear = input} />
@@ -223,6 +228,7 @@ class FormRegister extends Component {
                                         :
                                         <Col sm={5}>
                                             <Input
+                                                name="expyear"
                                                 type="tel"
                                                 placeholder="Ex.ปีที่หมดอายุ"
                                                 innerRef={(input) => this.getExpYear = input}
@@ -237,6 +243,7 @@ class FormRegister extends Component {
                                     {this.state.errorCVC == false ?
                                         <Col sm={10}>
                                             <Input
+                                                name="cvv"
                                                 type="tel"
                                                 maxLength="4"
                                                 placeholder="Ex.XXX"
@@ -245,6 +252,7 @@ class FormRegister extends Component {
                                         :
                                         <Col sm={10}>
                                             <Input
+                                                name="cvv"
                                                 type="tel"
                                                 maxLength="4"
                                                 placeholder="Ex.XXX"

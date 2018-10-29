@@ -38,9 +38,10 @@ class ReactOmise {
      */
     getHeaders() {
         let headers = {
+            'Access-Control-Allow-Origin':'*',
             'Authorization': 'Basic ' + base64.encode(_publicKey + ":"),
-
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers' : 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
         };
         if (_apiVersion && _apiVersion !== "") {
             headers['Omise-Version'] = _apiVersion;
@@ -50,6 +51,7 @@ class ReactOmise {
     }
     getHeaders2() {
         let headers = {
+            // 'Origin' : 'https://api.omise.co',
             'Authorization': 'Basic ' + base64.encode(_secretKey + ":"),
             'Content-Type': 'application/json',
         };

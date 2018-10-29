@@ -95,7 +95,7 @@ class ImageLayout extends React.Component {
         }
     }
     feedImage(eventid) {
-        console.log("image-grid" + this.props.searchTime)
+        console.log("image-grid" + this.state.pageNo)
         const uri = req[0].uspGetImageLists_
         const api_key = apikey[0].apikey
         let data = ({
@@ -122,7 +122,7 @@ class ImageLayout extends React.Component {
             .then((response) => {
                 this.setState({ showimage: true, images: response.data });
                 console.log(this.state.images)
-                this.checkSuggest(this.state.images)
+                this.checkSuggest(response.data)
             }).catch((error) => {
                 this.setState({ isLoad: true, showimage: false })
                 setTimeout(() => {
@@ -172,6 +172,7 @@ class ImageLayout extends React.Component {
     }
     sendQuantity() {
         console.log(this.props.order.quantity)
+        this.props.setQuantity(this.props.order.quantity)
         this.props.onSentQuantity(this.props.order.quantity)
     }
 
@@ -193,6 +194,7 @@ class ImageLayout extends React.Component {
         })
     };
     onChangePage = (pageNum) => {
+        images.splice(0)
         this.setState({ pageNo: pageNum, showimage: false });
         console.log("pageNum" + pageNum)
         setTimeout(() => {
@@ -379,7 +381,13 @@ const mapDispatchToProps = dispatch => {
                 type: "addOrderListFull",
                 payload: orderlistFull
             })
-        }
+        },
+        setQuantity: (quantity) => {
+            dispatch({
+              type: "setQuantity",
+              payload: quantity
+            })
+          }
     }
 }
 

@@ -23,9 +23,9 @@ class ShowImageEvent extends Component {
             imagegrid: true,
             photograname: "",
             statusPhotoname: false,
-            quantity: 0,
-            eventid : this.props.event.event.EventID,
-            photograid : ""
+            quantity: this.props.order.quantity,
+            eventid: this.props.event.event.EventID,
+            photograid: ""
 
         }
     }
@@ -47,8 +47,9 @@ class ShowImageEvent extends Component {
         if (nextProps.order.quantity != this.props.order.quantity) {
             console.log("จำนวน" + nextProps.order.quantity)
             console.log("จำนวน" + this.props.order.quantity)
+            return false
         }
-        
+        return false
     }
     sendIdPhotogra(id) {
         var id = id
@@ -70,13 +71,13 @@ class ShowImageEvent extends Component {
             this.setState({ time: value, bib: "", imagegrid: true })
             console.log(value)
         }
-        else if (type == 0){
+        else if (type == 0) {
             this.setState({ time: "", bib: "", imagegrid: true })
         }
     }
-    passQuantity(value) {
-        console.log(value)
-        this.setState({ quantity: value })
+    passQuantity() {
+        this.setState({ quantity: this.props.order.quantity })
+        this.props.setQuantity(this.props.order.quantity)
     }
     render() {
         return (
@@ -84,6 +85,8 @@ class ShowImageEvent extends Component {
                 <div className="nav-bar">
                     <Navbar
                         quantity={this.state.quantity}
+                    // quantity={this.props.order.quantity}
+
                     />
                 </div>
                 {/* <header className="App-header"></header> */}
@@ -156,6 +159,12 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: "setPhotoGraID",
                 payload: photograID
+            })
+        },
+        setQuantity: (quantity) => {
+            dispatch({
+                type: "setQuantity",
+                payload: quantity
             })
         }
     }

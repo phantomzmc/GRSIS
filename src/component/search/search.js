@@ -166,6 +166,13 @@ class SearchEvent extends Component {
         console.log(time)
         this.props.getValueBib(time, type)
     }
+    handleClear = (txt)=> {
+        if(txt.target.value === ""){
+            console.log("null")
+            const type = 0
+            this.props.getValueBib(null, type)
+        }
+    }
     render() {
         const { value, suggestions, eventSugestion, dataSource } = this.state;
         const uri = "https://shutterrunning.com/assets/img/eventbanner/"
@@ -252,6 +259,7 @@ class SearchEvent extends Component {
                                                 bsSize="lg"
                                                 placeholder="Ex.A1234"
                                                 innerRef={(input) => this.getSearch = input}
+                                                onChange={this.handleClear}
                                             />
                                         </FormGroup>
                                         <div className="btn-gobib">
@@ -272,6 +280,7 @@ class SearchEvent extends Component {
                                                 id="typeInputTime"
                                                 placeholder="Ex.06:59"
                                                 innerRef={(input) => this.getTime = input}
+                                                onChange={this.handleClear}
                                             />
                                         </FormGroup>
                                         <div className="btn-gobib">

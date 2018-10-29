@@ -2,21 +2,29 @@ import React, { Component } from 'react'
 import dataCart from '../../data/dataCart'
 
 class MailInvoice extends Component {
-    
+
     render() {
         return (
             <div>
                 <html>
-                    <body style={{ margin: 0, padding: 0 }}>
+                    <body style={{ margin: 5, padding: 5 }}>
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style={{ textAlign: 'center' }}>
-                                    <h3>Order รอการตรวจสอบการชำระเงิน</h3>
+                                    {this.props.status === 1 ?
+                                        <h3>Order ชำระเงินเรียบร้อยแล้ว</h3>
+                                        :
+                                        <h3>Order รอการตรวจสอบการชำระเงิน</h3>
+                                    }
                                 </td>
                             </tr>
                             <tr>
                                 <td style={{ textAlign: 'center', color: "#FA8601" }}>
-                                    <p>ข้อมูลการสั่งซื้อของท่านถูกบันทึกไว้ในระบบแล้ว กรุณารออีเมล์เพื่อแจ้งการจัดส่งภาพอีกครั้ง</p>
+                                    {this.props.status === 1 ?
+                                        <p>ข้อมูลการสั่งซื้อของท่านถูกบันทึกไว้ในระบบแล้ว กรุณารออีเมล์เพื่อแจ้งการจัดส่งภาพอีกครั้ง</p>
+                                        :
+                                        <p>ข้อมูลการสั่งซื้อของท่านถูกบันทึกไว้ในระบบแล้ว</p>
+                                    }
                                 </td>
                             </tr>
                             <tr>
@@ -34,10 +42,10 @@ class MailInvoice extends Component {
                                 <th>จำนวน</th>
                                 <th style={{ textAlign: 'right' }}>ทั้งหมด</th>
                             </tr>
-                            {dataCart.map((item) =>
+                            {dataCart.map((item, index) =>
                                 <tr style={{ textAlign: 'center' }}>
                                     <td>
-                                        <p></p>
+                                        <p>{index + 1}</p>
                                     </td>
                                     <td>{item.Detail}</td>
                                     <td>{item.Size}</td>

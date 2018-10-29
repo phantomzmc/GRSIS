@@ -18,8 +18,19 @@ class Home extends Component {
     this.state = {
       titleSearch: "ค้นหารายการวิ่ง",
       text1: "Shutter Running ",
-      text2: " ImageSevice"
+      text2: " ImageSevice",
+      quantity: this.props.order.quantity
     }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.order.quantity != this.props.order.quantity) {
+      console.log("จำนวน" + nextProps.order.quantity)
+      console.log("จำนวน" + this.props.order.quantity)
+      this.passQuantity(nextProps.order.quantity)
+    }
+  }
+  passQuantity(value) {
+    this.setState({ quantity: value })
   }
   componentDidMount() {
     let data = {
@@ -45,7 +56,9 @@ class Home extends Component {
     return (
       <div className="App">
         <div className="nav-bar">
-          <Navbar />
+          <Navbar
+            quantity={this.state.quantity}
+          />
         </div>
         {/* <header className="App-header"></header> */}
         <VdoHeader />
@@ -96,7 +109,11 @@ class Home extends Component {
     );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+    order: state.order
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     setToken: (token) => {
@@ -108,4 +125,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -15,9 +15,13 @@ class CartImages extends Component {
         }
     }
     componentDidMount() {
-        this.sumPriceBuy()
-        console.log(dataPrice)
-        console.log(dataCart)
+        if (this.props.order.invoice === "" ) {
+            this.sumPriceBuy()
+        }
+        else if (this.props.order.invoice !== "" ) {
+            console.log(dataPrice)
+            console.log(dataCart)
+        }
     }
 
     componentWillReceiveProps(prevProps) {
@@ -118,8 +122,8 @@ class CartImages extends Component {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {dataCart.length === 0 ?
-                                this.props.cartImage.currentpage &&
+                            {/* {dataCart.length === 0 ? */}
+                            {this.props.order.quantity === 0 ?
                                 <Table.Row negative>
                                     <Table.Cell textAlign='center' colSpan='6'>
                                         <h3 style={{ padding: 20 }}>ยังไม่มีรายการสั่งซื้อ</h3>
@@ -127,7 +131,6 @@ class CartImages extends Component {
                                 </Table.Row>
                                 :
                                 dataCart.map((dynamicData, i) =>
-
                                     <Table.Row>
                                         <Table.Cell textAlign='center'>
                                             <div className="icon-del">
@@ -146,7 +149,7 @@ class CartImages extends Component {
                                         <Table.Cell textAlign='center'>
                                             <div>
                                                 <h5>{dynamicData.Detail}</h5>
-                                                <p>Size : {dynamicData.Size}<br /> Price : {dynamicData.PriceDisplay} </p>
+                                                <p textAlign="center">Size : {dynamicData.Size}<br /> Price : {dynamicData.PriceDisplay} </p>
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell textAlign='center'>
@@ -161,7 +164,7 @@ class CartImages extends Component {
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell textAlign='right'>
-                                            {dynamicData.Price} บาท
+                                            {parseFloat(dynamicData.Price).toFixed(1)} บาท
                                     </Table.Cell>
                                     </Table.Row>
                                 )

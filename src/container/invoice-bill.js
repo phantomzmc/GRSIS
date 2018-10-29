@@ -50,13 +50,19 @@ class Invoice extends Component {
     componentDidMount() {
         if (this.props.payment.type === 1) {
             setTimeout(() => {
-                this.sendEmailInvoice()
+                this.sendEmailInvoice(1)
+            }, 3000)
+        }
+        else if (this.props.payment.type === 2) {
+            setTimeout(() => {
+                this.sendEmailInvoice(2)
             }, 3000)
         }
     }
-    async sendEmailInvoice() {
+    async sendEmailInvoice(type) {
         const html = ReactDOMServer.renderToString(
             <TempleteInvoice
+                status={type}
                 idinvoice={this.props.order.invoice.OrderID}
                 creditPrice={parseFloat(this.props.order.credit).toFixed(2)}
                 postPrice={parseFloat(this.props.order.pricePost).toFixed(2)}

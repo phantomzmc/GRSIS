@@ -78,6 +78,9 @@ class NavBar extends React.Component {
       this.setState({ cartItem: true })
     })
   }
+  passQuantity(value) {
+    this.props.setQuantity(value)
+  }
 
   render() {
     return (
@@ -104,18 +107,19 @@ class NavBar extends React.Component {
           <Nav pullRight>
             {this.state.cartItem &&
               <NavItem style={{ padding: "10px" }}>
-                {this.props.cartImage.currentpage === true ?
+                {this.props.order.quantity !== 0 ?
                   <div>
                     <NotificationBadge count={this.props.quantity} effect={Effect.SCALE} frameLength={120.0} />
                     <Icon name='shopping cart' size='big' inverted color='white' onClick={() => this.setState({ layoutCart: !this.state.layoutCart })} />
                   </div>
                   :
-                  <div></div>
+                  <div>
+                    <NotificationBadge count={this.props.quantity} effect={Effect.SCALE} frameLength={120.0} />
+                    <Icon name='shopping cart' size='big' inverted color='white' onClick={() => this.setState({ layoutCart: !this.state.layoutCart })} />
+                  </div>
                 }
               </NavItem>
             }
-            <NavItem onClick={() => this.test()}><b>test{this.props.quantity}</b>
-            </NavItem>
           </Nav>
         </Navbar>
         <Row>
@@ -127,6 +131,7 @@ class NavBar extends React.Component {
                 statusBtn={true}
                 onCancel={() => this.cancelOrder.bind(this)}
                 onGotoStepper={() => this.onClickPrev.bind(this)}
+                onSentQuantity={this.passQuantity.bind(this)}
               />
             </Modal>
           </Col>
