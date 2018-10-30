@@ -81,6 +81,9 @@ class NavBar extends React.Component {
   passQuantity(value) {
     this.props.setQuantity(value)
   }
+  goHome() {
+    this.props.history.push("/")
+  }
 
   render() {
     return (
@@ -103,19 +106,19 @@ class NavBar extends React.Component {
               </NavItem>
             </Nav>
           </Collapse>
-          <NavbarBrand href="/" className="mr-auto">shutterruning <b>imageService</b></NavbarBrand>
+          <NavbarBrand href="#" onClick={() => this.props.history.push("/")} className="mr-auto">shutterruning <b>imageService</b></NavbarBrand>
           <Nav pullRight>
             {this.state.cartItem &&
-              <NavItem style={{ padding: "10px" }}>
+              <NavItem style={{ padding: "10px" }} onClick={() => this.props.history.push("/stepcontrol")}>
                 {this.props.order.quantity !== 0 ?
                   <div>
                     <NotificationBadge count={this.props.quantity} effect={Effect.SCALE} frameLength={120.0} />
-                    <Icon name='shopping cart' size='big' inverted color='white' onClick={() => this.setState({ layoutCart: !this.state.layoutCart })} />
+                    <Icon name='shopping cart' size='big' inverted color='white' />
                   </div>
                   :
                   <div>
                     <NotificationBadge count={this.props.quantity} effect={Effect.SCALE} frameLength={120.0} />
-                    <Icon name='shopping cart' size='big' inverted color='white' onClick={() => this.setState({ layoutCart: !this.state.layoutCart })} />
+                    <Icon name='shopping cart' size='big' inverted color='white' />
                   </div>
                 }
               </NavItem>
