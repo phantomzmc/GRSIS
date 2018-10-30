@@ -28,13 +28,18 @@ class CardEvents extends Component {
             imgPhoGra: [],
             pageNo: 1,
             isLoad: true,
-            isEvent: false
+            isEvent: false,
+            eventcount: ""
         }
         this.gotoShowimage = this.gotoShowimage.bind(this)
+    }
+    componentWillMount() {
+        this.getCountEvent()
     }
     componentDidMount = () => {
         setTimeout(() => {
             this.getEvent()
+            this.getCountEvent()
         }, 1000)
     }
     componentWillReceiveProps = (nextState, nextProps) => {
@@ -82,6 +87,36 @@ class CardEvents extends Component {
                 this.setState({ isLoad: true, isEvent: false })
                 setTimeout(() => {
                     this.getEvent()
+                }, 1000)
+            });
+    }
+    getCountEvent() {
+        let uri = req[0].uspCountEventLists
+        let api_key = apikey[0].apikey
+        let data = ({
+            params: [
+                { name: "Keyword", value: "" },
+                { name: "EventStatus", value: 1 }
+            ]
+        })
+        axios.post(uri, data, {
+            mode: 'no-cors',
+            headers: {
+                "X-DreamFactory-API-Key": api_key,
+                "X-DreamFactory-Session-Token": this.props.token.token
+            },
+            responseType: 'json'
+        })
+            .then((response) => {
+                this.setState({ eventcount: response.data[0].CountEvent });
+                setTimeout(() => {
+                    this.setState({ isLoad: false, isEvent: true })
+                }, 1000)
+                console.log(this.state.dataSource)
+            }).catch((error) => {
+                this.setState({ isLoad: true, isEvent: false })
+                setTimeout(() => {
+                    this.getCountEvent()
                 }, 1000)
             });
     }
@@ -169,12 +204,15 @@ class CardEvents extends Component {
                                 )
                             }
                         </Row>
-
                     }
+                    <div id="total-img">
+                        <span>จำนวนงานวิ่ง : {this.state.eventcount}</span>
+                    </div>
                 </Container>
                 <div className="pagenation">
                     <Pagenation
-                        totalPage={0}
+                        allTotalPage={parseInt(this.state.eventcount)}
+                        totalPage={parseInt(this.state.eventcount) / 15}
                         numPage={(pageNum) => this.onChangePage(pageNum)}
                     />
                 </div>

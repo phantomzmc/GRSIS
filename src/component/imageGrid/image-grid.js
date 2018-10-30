@@ -209,7 +209,7 @@ class ImageLayout extends React.Component {
         const totalPage = (parseInt(this.props.event.event.ImageTotal) / 33)
         return (
             <div>
-                <Container>
+                <Container style={{ marginBottom: 20 }}>
                     {/* <Container id="contai"> */}
                     {
                         this.state.isLoad &&
@@ -250,6 +250,9 @@ class ImageLayout extends React.Component {
                             </Row>
                         </Container>
                     }
+                    <div id="total-img">
+                        <span>จำนวนภาพ : {parseInt(this.props.event.event.ImageTotal)}</span>
+                    </div>
                 </Container>
                 {isOpen &&
                     <Lightbox

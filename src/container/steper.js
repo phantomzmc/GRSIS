@@ -147,6 +147,7 @@ class StepControl extends Component {
         dataPrice.splice(0, dataPrice.length)
         dataQuantity.splice(0)
         this.props.setQuantity(0)
+        this.props.setTotalPrice(0)
         this._disCancel()
         this.setState({ listOrder: !this.state.listOrder })
     }

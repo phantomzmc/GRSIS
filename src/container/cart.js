@@ -59,6 +59,7 @@ class CartImages extends Component {
         this.setState({ listview: false })
         setTimeout(() => {
             this.props.addImage(dataCart)
+            this.props.setTotalPrice(0)
             this.setState({ listview: true })
         })
     }
@@ -78,7 +79,7 @@ class CartImages extends Component {
         }, 100)
     }
     disQuantityItem = (i) => {
-        if (parseInt(dataCart[i].Quantity) > 1){
+        if (parseInt(dataCart[i].Quantity) > 1) {
             const quantity = parseInt(dataCart[i].Quantity) - 1
             const fixPrice = parseInt(dataCart[i].PriceDisplay)
             setTimeout(() => {
@@ -96,7 +97,7 @@ class CartImages extends Component {
         else {
             console.log(parseInt(dataCart[i].Quantity))
         }
-            
+
     }
     sumQuantity() {
         const add = (a, b) => a + b
@@ -159,15 +160,22 @@ class CartImages extends Component {
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell textAlign='center'>
-                                            <div className="quantity">
-                                                {this.props.statusBtn &&
-                                                    <Button size='mini' color='black' onClick={() => this.addQuantityItem(i)} icon> + </Button>
-                                                }
-                                                <p>{dynamicData.Quantity}</p>
-                                                {this.props.statusBtn &&
-                                                    <Button size='mini' color='black' onClick={() => this.disQuantityItem(i)} icon> - </Button>
-                                                }
-                                            </div>
+                                            {this.props.statusBtn === true ?
+                                                <div className="quantity">
+                                                    {this.props.statusBtn &&
+                                                        <Button size='mini' color='black' onClick={() => this.addQuantityItem(i)} icon> + </Button>
+                                                    }
+                                                    <p textAlign='center'>{dynamicData.Quantity}</p>
+                                                    {this.props.statusBtn &&
+                                                        <Button size='mini' color='black' onClick={() => this.disQuantityItem(i)} icon> - </Button>
+                                                    }
+                                                </div>
+                                                :
+                                                <div className="quantity2">
+                                                    <p textAlign='center'>{dynamicData.Quantity}</p>
+                                                </div>
+                                            }
+
                                         </Table.Cell>
                                         <Table.Cell textAlign='right'>
                                             {parseFloat(dynamicData.Price).toFixed(1)} บาท

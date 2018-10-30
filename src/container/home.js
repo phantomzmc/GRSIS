@@ -121,6 +121,12 @@ const mapDispatchToProps = dispatch => {
         type: "setToken",
         payload: token
       })
+    },
+    setTotalPrice: (totalprice) => {
+      dispatch({
+        type: "setTotalPrice",
+        payload: totalprice
+      })
     }
   }
 }

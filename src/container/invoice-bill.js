@@ -115,6 +115,7 @@ class Invoice extends Component {
         dataOrderList.splice(0)
         dataPrice.splice(0)
         dataQuantity.splice(0)
+        this.props.setTotalPrice(0)
         this.props.history.push("/")
     }
     sumQuantity() {
@@ -273,5 +274,15 @@ const mapStateToProps = state => {
         payment: state.payment
     }
 }
+const mapDispatchToProps = dispatch => {
+    return {
+        setTotalPrice: (totalprice) => {
+            dispatch({
+                type: "setTotalPrice",
+                payload: totalprice
+            })
+        }
+    }
+}
 
-export default withRouter(connect(mapStateToProps)(Invoice))
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Invoice))
