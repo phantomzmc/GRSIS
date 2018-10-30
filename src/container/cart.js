@@ -15,10 +15,10 @@ class CartImages extends Component {
         }
     }
     componentDidMount() {
-        if (this.props.order.invoice === "" ) {
+        if (this.props.order.invoice === "") {
             this.sumPriceBuy()
         }
-        else if (this.props.order.invoice !== "" ) {
+        else if (this.props.order.invoice !== "") {
             console.log(dataPrice)
             console.log(dataCart)
         }
@@ -78,19 +78,25 @@ class CartImages extends Component {
         }, 100)
     }
     disQuantityItem = (i) => {
-        const quantity = parseInt(dataCart[i].Quantity) - 1
-        const fixPrice = parseInt(dataCart[i].PriceDisplay)
-        setTimeout(() => {
-            const priceItem = parseInt(dataCart[i].Price) - fixPrice
-            dataCart[i].Price = parseFloat(priceItem).toFixed(1)
-            dataCart[i].Quantity = quantity
-            dataPrice[i] = priceItem
-            dataQuantity[i] = quantity
-            this.setState({ listview: true })
-            this.sumPriceBuy()
-            this.sumQuantity()
-            this.sendQuantity()
-        }, 100)
+        if (parseInt(dataCart[i].Quantity) > 1){
+            const quantity = parseInt(dataCart[i].Quantity) - 1
+            const fixPrice = parseInt(dataCart[i].PriceDisplay)
+            setTimeout(() => {
+                const priceItem = parseInt(dataCart[i].Price) - fixPrice
+                dataCart[i].Price = parseFloat(priceItem).toFixed(1)
+                dataCart[i].Quantity = quantity
+                dataPrice[i] = priceItem
+                dataQuantity[i] = quantity
+                this.setState({ listview: true })
+                this.sumPriceBuy()
+                this.sumQuantity()
+                this.sendQuantity()
+            }, 100)
+        }
+        else {
+            console.log(parseInt(dataCart[i].Quantity))
+        }
+            
     }
     sumQuantity() {
         const add = (a, b) => a + b

@@ -93,7 +93,7 @@ class NavBar extends React.Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/">หน้าแรก</NavLink>
+                <NavLink href="#" onClick={() => this.props.history.push("/")}>หน้าแรก</NavLink>
               </NavItem>
               {/* <NavItem>
                 <NavLink href="/">รายการวิ่ง</NavLink>
