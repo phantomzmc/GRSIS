@@ -145,6 +145,8 @@ class StepControl extends Component {
     cancelOrder = () => {
         dataCart.splice(0, dataCart.length)
         dataPrice.splice(0, dataPrice.length)
+        dataQuantity.splice(0)
+        this.props.setQuantity(0)
         this._disCancel()
         this.setState({ listOrder: !this.state.listOrder })
     }
