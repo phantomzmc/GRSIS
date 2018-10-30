@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button,Form,Input } from 'reactstrap'
+import { Button, Form, Input } from 'reactstrap'
 import { Icon } from "semantic-ui-react";
 import './pagenation.css'
 
@@ -63,20 +63,19 @@ class Pagenation extends React.Component {
                     </Form>
                 </div>
                 <span className="textPage">จากหน้าที่</span>
-                <div>
-                    {this.state.pageNo == 0 ?
-                        <Button className="btn-page" disabled>
-                            <Icon name="backward" />
-                        </Button> :
-                        <div className="btn-page">
-                            <Button
-                                className="btn-page"
-                                onClick={() => this.nextPage()}>
-                                <Icon name="forward" />
-                            </Button>
-                        </div>
-                    }
-                </div>
+                <span className="textPage">{this.props.totalPage}</span>
+                {this.state.pageNo == 0 ?
+                    <Button className="btn-page" disabled>
+                        <Icon name="backward" />
+                    </Button> :
+                    <div className="btn-page">
+                        <Button
+                            className="btn-page"
+                            onClick={() => this.nextPage()}>
+                            <Icon name="forward" />
+                        </Button>
+                    </div>
+                }
             </div>
         )
 

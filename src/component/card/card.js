@@ -174,6 +174,7 @@ class CardEvents extends Component {
                 </Container>
                 <div className="pagenation">
                     <Pagenation
+                        totalPage={0}
                         numPage={(pageNum) => this.onChangePage(pageNum)}
                     />
                 </div>

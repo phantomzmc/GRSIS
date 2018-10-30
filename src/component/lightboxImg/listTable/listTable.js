@@ -51,7 +51,7 @@ class ListTable1 extends React.Component {
         console.log("price" + sumPrice)
         this.props.setPostPrice(this.props.postPrice)
     }
-    
+
     handleClick() {
         const { index } = this.state
         console.log(this.props.details)
@@ -95,17 +95,19 @@ class ListTable1 extends React.Component {
                             </Table.Row>
                         </Table.Header>
                         {this.props.propertyImg[0].Price == -2 ?
-                            <Table.Body>
-                                <Table.Row>
-                                    <Table.Cell colSpan="4">
-                                        <div className="choice-contai">
-                                            <Button color='orange' fluid>
-                                                <p>Download Free</p>
-                                            </Button>
-                                        </div>
-                                    </Table.Cell>
-                                </Table.Row>
-                            </Table.Body>
+                            this.props.propertyImg.map((item, index) =>
+                                <Table.Body>
+                                    <Table.Row>
+                                        <Table.Cell colSpan="4">
+                                            <div className="choice-contai">
+                                                <Button href={"https://original.shutterrunning.com/" + item[index].ImageFileName} color='orange' fluid >
+                                                    <p>Download Free</p>
+                                                </Button>
+                                            </div>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                </Table.Body>
+                            )
                             :
                             this.props.propertyImg[0].Price == -1 ?
                                 <Table.Body>

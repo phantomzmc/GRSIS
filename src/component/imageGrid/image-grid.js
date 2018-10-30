@@ -85,11 +85,11 @@ class ImageLayout extends React.Component {
             images.splice(0)
             this.feedImage(this.props.evenid)
         }
-        else if(prevProps.photograID !== this.props.photograID){
+        else if (prevProps.photograID !== this.props.photograID) {
             images.splice(0)
             this.feedImage(this.props.evenid)
         }
-        else if(prevProps.photograID !== this.props.photograID){
+        else if (prevProps.photograID !== this.props.photograID) {
             images.splice(0)
             this.feedImage(this.props.evenid)
         }
@@ -144,7 +144,7 @@ class ImageLayout extends React.Component {
                 }
                 images.splice(index, 1, tem)
                 setTimeout(() => {
-                    // console.log(images)
+                    console.log(images)
                     this.setState({ showimage: true, isLoad: false })
                 })
             })
@@ -206,6 +206,7 @@ class ImageLayout extends React.Component {
 
     render() {
         let { photoIndex, isOpen, isOpenImage, index } = this.state
+        const totalPage = (parseInt(this.props.event.event.ImageTotal) / 33)
         return (
             <div>
                 <Container>
@@ -342,6 +343,7 @@ class ImageLayout extends React.Component {
                 } */}
                 <div className="pagenation">
                     <Pagenation
+                        totalPage={parseInt(totalPage)}
                         numPage={(page) => this.onChangePage(page)} />
                 </div>
             </div>
@@ -384,10 +386,10 @@ const mapDispatchToProps = dispatch => {
         },
         setQuantity: (quantity) => {
             dispatch({
-              type: "setQuantity",
-              payload: quantity
+                type: "setQuantity",
+                payload: quantity
             })
-          }
+        }
     }
 }
 
