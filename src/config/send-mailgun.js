@@ -23,6 +23,8 @@ class MailGunSend {
         fetch(url, {
             method: 'POST',
             headers: headers,
+            mode : 'no-cors',
+            cache: 'no-cache',
             body: formBody,
 
         }).then((response) => response.json())

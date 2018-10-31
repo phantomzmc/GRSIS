@@ -68,7 +68,7 @@ class CartImages extends Component {
         const fixPrice = parseInt(dataCart[i].PriceDisplay)
         setTimeout(() => {
             const priceItem = parseInt(dataCart[i].Price) + fixPrice
-            dataCart[i].Price = parseFloat(priceItem).toFixed(1)
+            dataCart[i].Price = parseFloat(priceItem).toFixed(2)
             dataCart[i].Quantity = quantity
             dataPrice[i] = priceItem
             dataQuantity[i] = quantity
@@ -84,7 +84,7 @@ class CartImages extends Component {
             const fixPrice = parseInt(dataCart[i].PriceDisplay)
             setTimeout(() => {
                 const priceItem = parseInt(dataCart[i].Price) - fixPrice
-                dataCart[i].Price = parseFloat(priceItem).toFixed(1)
+                dataCart[i].Price = parseFloat(priceItem).toFixed(2)
                 dataCart[i].Quantity = quantity
                 dataPrice[i] = priceItem
                 dataQuantity[i] = quantity
@@ -178,7 +178,7 @@ class CartImages extends Component {
 
                                         </Table.Cell>
                                         <Table.Cell textAlign='right'>
-                                            {parseFloat(dynamicData.Price).toFixed(1)} บาท
+                                            {parseFloat(dynamicData.Price).toFixed(2)} บาท
                                     </Table.Cell>
                                     </Table.Row>
                                 )

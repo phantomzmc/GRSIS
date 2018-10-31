@@ -6,7 +6,10 @@ import Omise from '../../config/omisePayment'
 import Loader from 'react-loader-spinner'
 import Cards from 'react-credit-cards';
 import './form-credit.css'
+import axios from 'axios'
 // import './Form.css'
+const base64 = require("base-64");
+
 
 const ibit_pkey = 'pkey_test_5b7nut5dlzyudruopsl'
 const ibit_skey = 'skey_test_5b7nwwrac7mvps7l3mp'
@@ -77,6 +80,40 @@ class FormRegister extends Component {
         this.checkPaymentModal(data)
         // this.props.setCharge(data)
     }
+    // getCharges(tokenId) {
+    //     const uri = "https://api.omise.co/charges";
+    //     const totalPrice = this.props.totalPrice
+    //     const totalRegis = Number(totalPrice * 100)
+    //     this.setState({
+    //         amount: String(totalRegis)
+    //     })
+    //     let data = ({
+    //         "amount": totalRegis,
+    //         "currency": 'thb',
+    //         "capture": true,
+    //         "return_url": '',
+    //         "card": tokenId
+    //     })
+
+    //     axios.post(uri, data, {
+    //         headers: {
+    //             // 'Access-Control-Allow-Origin': '*',
+    //             'Authorization': 'Basic ' + base64.encode(ibit_skey + ":"),
+    //             'Content-Type': 'application/json',
+    //             // 'Access-Control-Allow-Headers': 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
+    //         },
+    //         responseType: 'json',
+    //     })
+    //         .then((response) => {
+    //             this.setState({ dataSource: response.data });
+    //             console.log(this.state.dataSource)
+    //             console.log(response.data)
+    //             this.checkPaymentModal(response.data)
+    //         }).catch((error) => {
+    //             this.getCharges(tokenId)
+    //             console.error(error)
+    //         });
+    // }
     checkPaymentModal(data) {
         if (data.status == "successful") {
             this.setState({ statusPayment: true })

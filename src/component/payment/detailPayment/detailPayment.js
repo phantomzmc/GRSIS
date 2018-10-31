@@ -36,23 +36,23 @@ class DetailPayment extends Component {
                         <Table.Row>
                             <Table.Cell>{dynamicData.Detail} {dynamicData.Size}</Table.Cell>
                             <Table.Cell> - </Table.Cell>
-                            <Table.Cell textAlign='right'>{dynamicData.Price} บาท</Table.Cell>
+                            <Table.Cell textAlign='right'>{parseFloat(dynamicData.Price).toFixed(2)} บาท</Table.Cell>
                         </Table.Row>
                     )}
                         <Table.Row positive>
                             <Table.Cell>ค่าจัดส่ง</Table.Cell>
                             <Table.Cell> - </Table.Cell>
-                            <Table.Cell textAlign='right'>{this.state.pricePost} บาท</Table.Cell>
+                            <Table.Cell textAlign='right'>{parseFloat(this.state.pricePost).toFixed(2)} บาท</Table.Cell>
                         </Table.Row>
                         <Table.Row>
                             <Table.Cell>ค่าธรรมเนียมการใช้บัตรเครดิต/เดบิต</Table.Cell>
                             <Table.Cell> - </Table.Cell>
-                            <Table.Cell textAlign='right'>{this.state.creditCharge} บาท</Table.Cell>
+                            <Table.Cell textAlign='right'>{parseFloat(this.state.creditCharge).toFixed(2)} บาท</Table.Cell>
                         </Table.Row>
                         <Table.Row active>
                             <Table.Cell>ยอดชำระทั้งหมด</Table.Cell>
                             <Table.Cell> - </Table.Cell>
-                            <Table.Cell textAlign='right'>{this.state.totalPrice} บาท</Table.Cell>
+                            <Table.Cell textAlign='right'>{parseFloat(this.state.totalPrice).toFixed(2)} บาท</Table.Cell>
                         </Table.Row>
                     </Table.Body>
                 </Table>

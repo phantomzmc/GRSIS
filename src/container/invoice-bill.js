@@ -48,12 +48,14 @@ class Invoice extends Component {
         this.sumQuantity()
     }
     componentDidMount() {
-        if (this.props.payment.type === 1) {
+        if (this.props.payment.type == "1") {
+            console.log("this.props.payment.type === 1")
             setTimeout(() => {
                 this.sendEmailInvoice(1)
             }, 3000)
         }
-        else if (this.props.payment.type === 2) {
+        else if (this.props.payment.type == "2") {
+            console.log("this.props.payment.type === 2")
             setTimeout(() => {
                 this.sendEmailInvoice(2)
             }, 3000)
@@ -116,6 +118,8 @@ class Invoice extends Component {
         dataPrice.splice(0)
         dataQuantity.splice(0)
         this.props.setTotalPrice(0)
+        this.props.setCreditCharge(0)
+        this.props.setPricePost(0)
         this.props.history.push("/")
     }
     sumQuantity() {
@@ -281,7 +285,20 @@ const mapDispatchToProps = dispatch => {
                 type: "setTotalPrice",
                 payload: totalprice
             })
-        }
+        },
+        setCreditCharge: (credit) => {
+            dispatch({
+                type: "setCreditCharge",
+                payload: credit
+            })
+        },
+        setPricePost: (pricePost) => {
+            dispatch({
+                type: "setPricePost",
+                payload: pricePost
+            })
+        },
+        
     }
 }
 
